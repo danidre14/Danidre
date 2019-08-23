@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/main.css">
     <title>Danidre</title>
 </head>
 <body>
-    <%- include('../partials/header.ejs') %>
-    <br>
-    <%- body %>
-    <br>
-    <%- include('../partials/footer.ejs') %>
+    <div class="container">
+        <%- include('../partials/header.ejs') %>
+        <div class="content">
+            <%- body %>
+        </div>
+        <%- include('../partials/footer.ejs') %>
+    </div>
 </body>
 </html>

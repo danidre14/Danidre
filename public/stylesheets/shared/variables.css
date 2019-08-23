@@ -1,0 +1,32 @@
+:root {
+    --color-base-hue: 19;
+    --color-base-saturation: 14%;
+
+    --color-background: hsl(var(--color-base-hue), var(--color-base-saturation), 70%);
+
+    --color-text-light: hsl(var(--color-base-hue), var(--color-base-saturation), 87%);
+    --color-text-dark: hsl(var(--color-base-hue), var(--color-base-saturation), 17%);
+
+    --color-link-light: var(--color-text-dark);
+    --color-link-dark: hsl(var(--color-base-hue), var(--color-base-saturation), 50%);
+
+
+    --color-button-default: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
+    --color-button-hover: hsl(var(--color-base-hue), var(--color-base-saturation), 58%);
+    --color-button-active: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
+
+
+    --color-button-current-page: hsl(var(--color-base-hue), var(--color-base-saturation), 38%);
+    --color-button-current-page-hover: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
+    --color-button-current-page-active: hsl(var(--color-base-hue), var(--color-base-saturation), 48%);
+
+
+    --color-line: var(--color-button-default);
+    --color-footer: var(--color-button-default);
+    --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 83%);
+    
+    --footer-size:2em;
+    
+    --default-spacing-x:1rem;
+    --default-spacing-y:1rem;
+  }

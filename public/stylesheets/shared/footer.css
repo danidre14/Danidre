@@ -1,0 +1,19 @@
+.footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:var(--footer-size);			/* Height of the footer */
+    background: var(--color-footer);
+
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-between;
+    align-content: space-around;
+
+    padding: 0 var(--default-spacing-x);
+}
+
+.footer nav a {
+    font-weight: bold;
+    color: var(--color-link-light);
+}

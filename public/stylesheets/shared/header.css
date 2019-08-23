@@ -1,0 +1,75 @@
+header {
+    background-color: var(--color-background);
+    background-image: url("../../images/Danidrebackground.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    text-align: center;
+}
+
+.header-title {
+    font-size: 3rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.header-ul {
+    text-transform: uppercase;
+    display:flex;
+    justify-content: space-around;
+}
+
+.header-ul li {
+    display:flex;
+    width: 100%;
+}
+
+.header-ul li a {
+    background:  var(--color-button-default);
+    border-right: solid 1px  var(--color-section);;
+    flex: 1 1 0;
+    width: inherit;
+    height:1.6rem;
+    
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+.header-ul li:last-child a {
+    border:none;
+}
+
+.header-ul li a:hover {
+    background:  var(--color-button-hover);
+}
+
+.header-ul li a:active {
+    background:  var(--color-button-active);
+}
+
+.header-ul li.current-page a {
+    background:  var(--color-button-current-page);
+}
+
+.header-ul li.current-page a:hover {
+    background:  var(--color-button-current-page-hover);
+}
+
+.header-ul li.current-page a:active {
+    background:  var(--color-button-current-page-active);
+}
+
+@media screen and (max-width: 500px) {
+    .header-ul li.home-btn {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .header-ul li.games-btn {
+        display: none;
+    }
+}
