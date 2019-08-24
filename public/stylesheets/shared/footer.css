@@ -13,7 +13,83 @@
     padding: 0 var(--default-spacing-x);
 }
 
+.footer nav {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-between;
+    align-content: space-around;
+}
+
 .footer nav a {
     font-weight: bold;
     color: var(--color-link-light);
+
+}    
+
+.footer nav a.discord {
+    background-image: url("../../images/DiscordLogo.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+    top: var(--footer-image-top);
+
+}
+
+.footer nav a.twitter {
+    background-image: url("../../images/TwitterLogo.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+    top: var(--footer-image-top);
+
+}
+
+.footer nav a.youtube {
+    background-image: url("../../images/YoutubeLogo.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+    top: var(--footer-image-top);
+
+}
+
+.footer nav a.newgrounds {
+    background-image: url("../../images/NewgroundsLogo.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+    top: var(--footer-image-top);
+
+}
+
+/* Responsivity */
+@media screen and (max-width: 500px) {
+    :root {
+        --footer-image-top: 2px;
+        --footer-image-size: 23px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    :root {
+        --footer-image-size: 50px;
+    }
+}
+@media screen and (min-width: 2000px) {
+    :root {
+        --footer-image-top: 6px;
+        --footer-image-size: 70px;
+    }
 }

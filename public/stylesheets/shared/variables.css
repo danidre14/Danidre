@@ -24,9 +24,12 @@
     --color-line: var(--color-button-default);
     --color-footer: var(--color-button-default);
     --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 83%);
-    
+
     --footer-size:2em;
     
     --default-spacing-x:1rem;
     --default-spacing-y:1rem;
+
+    --footer-image-size:40px;
+    --footer-image-top: 4px;
   }
