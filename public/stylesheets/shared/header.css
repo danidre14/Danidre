@@ -15,50 +15,52 @@ header {
 
 .header-ul {
     text-transform: uppercase;
-    display:flex;
+    display: flex;
     justify-content: space-around;
 }
 
 .header-ul li {
-    display:flex;
+    display: flex;
     width: 100%;
 }
 
 .header-ul li a {
     background:  var(--color-button-default);
-    border-right: solid 1px  var(--color-section);;
+    border-right: solid 1px var(--color-section);
     flex: 1 1 0;
     width: inherit;
-    height:1.6rem;
+    height: 1.6rem;
     
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
+    
+    font-weight: 500;
 }
 
 .header-ul li:last-child a {
-    border:none;
+    border: none;
 }
 
 .header-ul li a:hover {
-    background:  var(--color-button-hover);
+    background: var(--color-button-hover);
 }
 
 .header-ul li a:active {
-    background:  var(--color-button-active);
+    background: var(--color-button-active);
 }
 
 .header-ul li.current-page a {
-    background:  var(--color-button-current-page);
+    background: var(--color-button-current-page);
 }
 
 .header-ul li.current-page a:hover {
-    background:  var(--color-button-current-page-hover);
+    background: var(--color-button-current-page-hover);
 }
 
 .header-ul li.current-page a:active {
-    background:  var(--color-button-current-page-active);
+    background: var(--color-button-current-page-active);
 }
 
 @media screen and (max-width: 500px) {

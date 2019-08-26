@@ -23,7 +23,7 @@
 }
 
 @font-face {
-	font-family: 'Gotham Rounded Book';
+	font-family: 'Gotham Rounded';
 	src: url('/fonts/GothamRounded-Book.woff2') format('woff2'),
 		url('/fonts/GothamRounded-Book.woff') format('woff');
 	font-weight: normal;

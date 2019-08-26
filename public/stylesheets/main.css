@@ -1,13 +1,13 @@
 @import 'shared/reset.css';
 @import 'shared/variables.css';
-/*@import 'shared/fonts.css';
-@import 'shared/buttons.css'; */
+@import 'shared/fonts.css';
 @import 'shared/header.css';
 @import 'shared/footer.css';
 
 :root {
-  font-family: 'Gotham Rounded';
+  font-family: 'Gotham Rounded', 'Helvetica';
   font-size: 1.5rem;
+  font-weight: normal;
   color: var(--color-text-light);
 }
 
@@ -28,68 +28,66 @@ body {
   max-width: 800px;
   margin: auto;
   min-height:100%;
-  position:relative;
+  position: relative;
 
   background: var(--color-section);
 }
 
 .content {
   color: var(--color-text-dark);
-  padding:var(--default-spacing-x);
-  padding-bottom:calc(var(--default-spacing-y) + var(--footer-size));	/* Height of the footer */
+  padding: var(--default-spacing-x);
+  padding-bottom: var(--footer-size);
   padding-top: 0px;
 }
 
 .content a {
-  font-weight: bold;
+  font-weight: 500;
   color: var(--color-link-dark);
   text-decoration: underline;
 }
 
+section article {
+  border-top: solid 2px var(--color-line);
+  padding: var(--default-spacing-y) 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-weight: bold;
+}
+
 h2 {
   font-size: 2rem;
+  font-weight: 500;
   text-align: center;
-  border-bottom: solid 2px var(--color-line);
-  margin: var(--default-spacing-x);
-  margin-top: 0px;
+  padding: var(--heading-spacing);
+}
+
+p {
+  margin-bottom: var(--paragraph-spacing);
 }
 
 /* Home Page Specifics */
 section.home {
   text-align: center;
 }
-section.home p, section.home ul {
-  margin-bottom: var(--default-spacing-y);
-}
-
-section.home article {
-  border-top: solid 2px var(--color-line);
-  margin: 0px var(--default-spacing-x);
-  padding-top: var(--default-spacing-y);
-}
 
 /* About Page Specifics */
 section.about label {
-  font-weight: bold;
+  font-weight: 500;
 }
 section.about p {
-  margin-bottom: var(--default-spacing-y);
+  margin-bottom: calc(var(--paragraph-spacing)*2);
 }
 
 /* News Page Specifics */
 section.news {
   text-align: center;
 }
-section.news p {
-  margin-bottom: var(--default-spacing-y);
-}
 
 /* Contact Page Specifics */
 section.contact {
   text-align: center;
-}
-section.contact p {
-  margin-bottom: var(--default-spacing-y);
 }
 
 /* Responsivity */

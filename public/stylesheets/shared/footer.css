@@ -21,7 +21,7 @@
 }
 
 .footer nav a {
-    font-weight: bold;
+    font-weight: 500;
     color: var(--color-link-light);
 
 }    

@@ -28,7 +28,9 @@
     --footer-size:2em;
     
     --default-spacing-x:1rem;
-    --default-spacing-y:1rem;
+    --default-spacing-y:1.5rem;
+    --heading-spacing:1rem;
+    --paragraph-spacing:0.8rem;
 
     --footer-image-size:40px;
     --footer-image-top: 4px;
