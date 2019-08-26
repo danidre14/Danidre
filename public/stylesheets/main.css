@@ -27,7 +27,7 @@ body {
 .container {
   max-width: 800px;
   margin: auto;
-  min-height:100%;
+  min-height: 100%;
   position: relative;
 
   background: var(--color-section);
@@ -36,7 +36,8 @@ body {
 .content {
   color: var(--color-text-dark);
   padding: var(--default-spacing-x);
-  padding-bottom: var(--footer-size);
+  /* padding-bottom: var(--footer-size); */
+  padding-bottom:calc(var(--default-spacing-y) + var(--footer-size));	/* Height of the footer */
   padding-top: 0px;
 }
 

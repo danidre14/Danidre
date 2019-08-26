@@ -1,12 +1,12 @@
 .footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:var(--footer-size);			/* Height of the footer */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: var(--footer-size);			/* Height of the footer */
     background: var(--color-footer);
 
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-around;
 
@@ -14,8 +14,8 @@
 }
 
 .footer nav {
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-around;
 }
@@ -77,7 +77,7 @@
 /* Responsivity */
 @media screen and (max-width: 500px) {
     :root {
-        --footer-image-top: 2px;
+        --footer-image-top: 1px;
         --footer-image-size: 23px;
     }
 }
