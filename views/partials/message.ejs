@@ -1,0 +1,20 @@
+<% let message;%>
+<% if (messages.outsert) { %>
+    <% message = messages.outsert[0]; %>
+<% } else if (messages.error) { %>
+    <% message = messages.error; %>
+<% } %>
+<% if (message) { %>
+<div id="msgPanel" class="message">
+    <nav class="txt">
+        <div class="msg">
+            <%= message.error? 'Error' : 'Note'  %>: <%= message.message || message %>
+        </div>
+    </nav>
+    <nav class="btn">
+        <button id="messageCancel" class="btn btn-primary">OK</button>
+    </nav>
+</div>
+
+<script defer src="<%=message.note? '/javascripts/message-note.js' : '/javascripts/message.js'%>"></script>
+<% } %>

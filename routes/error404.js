@@ -6,7 +6,12 @@ router.use((req, res, next) => {
     // respond with html page
     if (req.accepts('html')) {
         //res.send('html not found');
-        res.render('partials/error404', { url: req.url });
+        let vars = {cPage: "", searchOptions: req.query};
+        vars.url = req.url;
+        if(req.isAuthenticated()) {
+            vars.username = req.user.username;
+        }
+        res.render('partials/error404', vars);
         return;
     }
     // respond with json

@@ -7,11 +7,142 @@ header {
     text-align: center;
 }
 
+/* User Navigation Area */
+
+.usernavauth {
+    /* position: absolute; */
+    top: 0;
+    width: 100%;
+    height: var(--header-bar-size);			/* Height of the bar */
+    background: var(--color-footer);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+
+    padding: 0 var(--default-spacing-x);
+}
+
+.usernavauth nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+
+    height: var(--header-bar-size);
+}
+
+.usernavauth nav .header-username {
+    display: inline-block;
+    font-size: 1.4rem;
+    height: 1.3rem; /*usually one more*/
+    line-height: 1.4rem;
+}
+
+.usernavauth nav a.userIcon {
+    background-image: url("../../images/UsersIcon.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--header-bar-image-size);
+    height: var(--header-bar-image-size);
+    display: inline-block;
+    position: relative;
+    margin-right: var(--header-bar-spacing);
+    /* top: var(--footer-image-top); */
+
+}
+
+.btn-so {
+    border: none;
+    height: var(--header-bar-size);
+    padding: 0 .4rem;
+    font-size: 1rem;
+    font-family: var(--global-fonts);
+    color: var(--color-text-light);
+    background-color: inherit;
+}
+
+.btn-so:hover {
+    background-color: var(--color-button-hover);
+}
+
+.btn-so:active {
+    background-color: var(--color-button-active);
+}
+
+/* Sign In/ Up Area */
+
+.signinupnav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 75%;
+}
+
+.signinupnav-ul {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-around;
+}
+
+.signinupnav-ul li {
+    display: flex;
+    width: 100%;
+}
+
+.signinupnav-ul li a {
+    background:  var(--color-button-default);
+    border-right: solid 1px var(--color-section);
+    flex: 1 1 0;
+    width: inherit;
+    height: var(--header-bar-size);
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    
+    font-weight: 500;
+}
+
+.signinupnav-ul li:first-child a {
+    border-bottom-left-radius: 1rem;
+}
+
+.signinupnav-ul li:last-child a {
+    border: none;
+}
+
+.signinupnav-ul li a:hover {
+    background: var(--color-button-hover);
+}
+
+.signinupnav-ul li a:active {
+    background: var(--color-button-active);
+}
+
+.signinupnav-ul li.current-page a {
+    background: var(--color-button-current-page);
+}
+
+.signinupnav-ul li.current-page a:hover {
+    background: var(--color-button-current-page-hover);
+}
+
+.signinupnav-ul li.current-page a:active {
+    background: var(--color-button-current-page-active);
+}
+
+/* Homepage Title */
+
 .header-title {
     font-size: 3rem;
     text-align: center;
     padding: 1rem 0;
 }
+
+/* Homepage Buttons */
 
 .header-ul {
     text-transform: uppercase;
@@ -29,7 +160,7 @@ header {
     border-right: solid 1px var(--color-section);
     flex: 1 1 0;
     width: inherit;
-    height: 1.6rem;
+    height: var(--header-bar-size);
     
     display: flex;
     flex-wrap: wrap;

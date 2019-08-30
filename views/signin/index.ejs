@@ -1,0 +1,19 @@
+<h2>Sign In</h2>
+<section>
+    <article>
+        <form action="/signin" method="POST">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" autocomplete="off" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="off" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Sign In</button>
+        </form>
+    </article>
+    <article>
+        <p> Don't have an account? <a href="/signup">Sign Up</a></p>
+    </article>
+</section>

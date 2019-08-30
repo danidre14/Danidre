@@ -20,18 +20,28 @@
     --color-button-current-page-hover: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
     --color-button-current-page-active: hsl(var(--color-base-hue), var(--color-base-saturation), 48%);
 
+    --color-messager: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
+
 
     --color-line: var(--color-button-default);
     --color-footer: var(--color-button-default);
     --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 83%);
 
-    --footer-size:2em;
+    --footer-size:2rem;
+    --header-bar-size:1.6rem;
     
     --default-spacing-x:1rem;
     --default-spacing-y:1.5rem;
     --heading-spacing:1rem;
+    --message-spacing:calc(var(--default-spacing-y)/2);
     --paragraph-spacing:0.8rem;
+    --header-bar-spacing:0.6rem;
 
-    --footer-image-size:40px;
-    --footer-image-top: 4px;
+    --footer-image-size:calc(var(--footer-size)/(10/8));
+    --header-bar-image-size:calc(var(--header-bar-size)/(10/8)); 
+
+    --container-width: 100vw;
+    --wildf: calc(100vw - var(--container-width)  - (100vw - 100%));
+
+    --global-fonts: 'Gotham Rounded', Helvetica;
   }

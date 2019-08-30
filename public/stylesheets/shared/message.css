@@ -1,0 +1,42 @@
+.message {
+    position: fixed;
+    top: 0;
+    left: calc(var(--wildf)/2);
+    max-width: var(--container-width);
+    width: var(--container-width);
+    height: auto;			
+    background: var(--color-messager);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+
+    padding: var(--message-spacing) var(--default-spacing-x);
+}
+
+.message nav {
+    min-width: 0;
+}
+
+.message nav.txt {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+    width: 100%;
+
+    flex: 1 1 0;
+}
+.message nav.btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+}
+
+.message div.msg {
+    width: 100%;
+    overflow-wrap: break-word;
+    font-size: .7rem;
+}

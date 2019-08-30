@@ -1,0 +1,21 @@
+.btn {
+    border: none;
+    border-radius: .5rem;
+    padding: .2rem .5rem;
+    font-size: 1rem;
+    text-decoration: none;
+    font-family: var(--global-fonts);
+    color: var(--color-text-light);
+}
+
+.btn-primary {
+     background-color: var(--color-button-default);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-button-hover);
+}
+
+.btn-primary:active {
+    background-color: var(--color-button-active);
+}

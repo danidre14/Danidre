@@ -111,7 +111,7 @@ sup {top: -0.5em;}
 sub {bottom: -0.25em;}
 
 /* standardize any monospaced elements */
-pre, code, kbd, samp {font-family: monospace, sans-serif;}
+pre, code, kbd, samp {font-family: Arial, Helvetica, monospace, sans-serif;}
 
 /* hand cursor on clickable elements */
 .clickable,

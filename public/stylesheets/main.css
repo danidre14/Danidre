@@ -1,11 +1,14 @@
 @import 'shared/reset.css';
 @import 'shared/variables.css';
+@import 'shared/message.css';
 @import 'shared/fonts.css';
 @import 'shared/header.css';
+@import 'shared/body.css';
 @import 'shared/footer.css';
+@import 'shared/buttons.css';
 
 :root {
-  font-family: 'Gotham Rounded', 'Helvetica';
+  font-family: var(--global-fonts);
   font-size: 1.5rem;
   font-weight: normal;
   color: var(--color-text-light);
@@ -24,35 +27,6 @@ body {
   box-sizing: border-box;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
-  min-height: 100%;
-  position: relative;
-
-  background: var(--color-section);
-}
-
-.content {
-  color: var(--color-text-dark);
-  padding: var(--default-spacing-x);
-  /* padding-bottom: var(--footer-size); */
-  padding-bottom:calc(var(--default-spacing-y) + var(--footer-size));	/* Height of the footer */
-  padding-top: 0px;
-}
-
-.content a {
-  font-weight: 500;
-  color: var(--color-link-dark);
-  text-decoration: underline;
-}
-
-section article {
-  border-top: solid 2px var(--color-line);
-  padding: var(--default-spacing-y) 0;
-  margin-bottom: 0;
-}
-
 h1 {
   font-weight: bold;
 }
@@ -64,8 +38,9 @@ h2 {
   padding: var(--heading-spacing);
 }
 
-p {
-  margin-bottom: var(--paragraph-spacing);
+input {
+  font-family: var(--global-fonts);
+  font-weight: normal;
 }
 
 /* Home Page Specifics */
@@ -74,7 +49,7 @@ section.home {
 }
 
 /* About Page Specifics */
-section.about label {
+section.about desc {
   font-weight: 500;
 }
 section.about p {
@@ -91,33 +66,48 @@ section.contact {
   text-align: center;
 }
 
+/* Sign Up Specifics */
+section.signup div {
+    margin-bottom: var(--default-spacing-y);
+}
+
+section.signup pre {
+    position: absolute;
+    color: var(--color-button-default);
+    font-size: .7rem;
+    font-family: var(--global-fonts);
+}
+
+/* Profile Page Specifics */
+section.profile desc {
+  font-weight: 500;
+}
+section.profile p {
+  margin-bottom: calc(var(--paragraph-spacing)*2);
+}
+
 /* Responsivity */
 @media screen and (max-width: 500px) {
   :root {
     font-size: 1rem;
-  }
-  .container {
-    max-width: 1200px;
+    --container-width: 100vw;
+    --wildf: calc(100vw - var(--container-width));
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
   :root {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     --default-spacing-x:1.5rem;
-    --default-spacing-y:2rem;
-  }
-  .container {
-    max-width: 1000px;
+    --default-spacing-y:1.8rem;
+    --container-width: 1024px;
   }
 }
 
 @media screen and (min-width: 1400px) {
   :root {
     font-size: 1.8rem;
-  }
-  .container {
-    max-width: 1200px;
+    --container-width: 1200px;
   }
 }
 
@@ -125,9 +115,7 @@ section.contact {
 @media screen and (min-width: 2000px) {
   :root {
     font-size: 3rem;
-  }
-  .container {
-    max-width: 1750px;
+    --container-width: 1750px;
   }
 }
 
@@ -135,3 +123,4 @@ section.contact {
 section.error404 {
   text-align: right;
 }
+

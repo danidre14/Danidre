@@ -1,0 +1,12 @@
+<h2>Users</h2>
+<section class="users">
+    <article>
+        <div>
+            <% users.forEach(user => {%>
+                <div><a href="/u/<%= user.username %>">
+                    <p><%= user.username %><%= user.createdAt%> <%= user.email %></p>
+                </a></div>
+            <% }); %>
+        </div>
+    </article>
+</section>
