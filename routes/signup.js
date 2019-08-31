@@ -126,12 +126,12 @@ async function createUser(req, res) {
             password: hashedPassword
         });
 
-        // if(process.env.NODE_ENV !== 'production') {
-        //     user.isVerified = true; //verified by default if not in production
-        //     await user.save();
-        //     req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
-        //     return res.redirect('signin');
-        // }
+        if(process.env.NODE_ENV !== 'production') {
+            user.isVerified = true; //verified by default if not in production
+            await user.save();
+            req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
+            return res.redirect('signin');
+        }
 
         await user.save();
         // Create a verification token
@@ -230,10 +230,10 @@ function getMailOptions(username='User', email, host, token) {
 
 
 function sendMail(mailOptions, email) {
-    // if(process.env.NODE_ENV !== 'production') {
-    //     //development environment
-    //     return console.log('Mail sent, make sure to actually send here');
-    // }
+    if(process.env.NODE_ENV !== 'production') {
+        //development environment
+        return console.log('Mail sent, make sure to actually send here');
+    }
     
     //otherwise, send mail
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
