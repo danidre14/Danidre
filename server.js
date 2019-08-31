@@ -1,5 +1,6 @@
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
+    console.log('Reminder to put many try catches in all necessary functions');
 }
 
 const express = require('express');
@@ -48,7 +49,7 @@ if(process.env.NODE_ENV === 'production') {
         // Don't allow user to hit Heroku now that we have a domain
         var host = req.get('Host');
         if (host === 'danidre.herokuapp.com') {
-            return res.redirect(301, 'http://danidre.com/' + req.originalUrl);
+            return res.redirect(301, 'http://danidre.com' + req.originalUrl);
         }
         return next();
     });
