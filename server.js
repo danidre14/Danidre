@@ -45,14 +45,14 @@ db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(function forceLiveDomain(req, res, next) {
-        // Don't allow user to hit Heroku now that we have a domain
-        var host = req.get('Host');
-        if (host === 'danidre.herokuapp.com') {
-            return res.redirect(301, 'http://danidre.com' + req.originalUrl);
-        }
-        return next();
-    });
+app.use(function forceLiveDomain(req, res, next) {
+    // Don't allow user to hit Heroku now that we have a domain
+    var host = req.get('Host');
+    if (host === 'danidre.herokuapp.com') {
+        return res.redirect(301, 'http://danidre.com' + req.originalUrl);
+    }
+    return next();
+});
 }
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);

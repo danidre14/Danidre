@@ -1,0 +1,15 @@
+<%var cPage;%>
+<% var username; %>
+<nav class=" <%=username !== undefined? 'usernavauth':''%>">
+    <% if(username !== undefined) {%>
+        <nav>
+            <a class="userIcon" href="/u"></a>
+            <span><a class="header-username" href="/u/<%= username %>"><%= username %></a></span>
+        </nav>
+        <nav>
+        <form action="/signout?_method=DELETE" method="POST">
+            <button class="btn-so" type="submit">Sign Out</button>
+        </form>
+        </nav>
+    <% } %>
+</nav>

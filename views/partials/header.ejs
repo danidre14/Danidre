@@ -1,22 +1,12 @@
 <%var cPage;%>
 <% var username; %>
 <header>
-    <nav class=" <%=username !== undefined? 'usernavauth':'signinupnav'%>">
-        <% if(username !== undefined) {%>
-            <nav>
-                <a class="userIcon" href="/u"></a>
-                <span><a class="header-username" href="/u/<%= username %>"><%= username %></a></span>
-            </nav>
-            <nav>
-            <form action="/signout?_method=DELETE" method="POST">
-                <button class="btn-so" type="submit">Sign Out</button>
-            </form>
-            </nav>
-        <% } else { %>
+    <nav class="signinupnav">
+        <% if(username === undefined) {%>
             <ul class="signinupnav-ul">
                 <li class="<%=cPage==='signin'? 'current-page':''%>"><a href="/signin">Sign In</a></li>
                 <li class="<%=cPage==='signup'? 'current-page':''%>"><a href="/signup">Sign Up</a></li>
-                <li class="<%=cPage==='u'? 'current-page':''%>"><a href="/u">Users</a></li>
+                <!-- <% // <li class=" %><%=cPage==='u'? 'current-page':''%><%//"><a href="/u">Users</a></li> %> -->
             </ul>
         <% } %>
     </nav>

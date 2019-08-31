@@ -43,5 +43,7 @@
     --container-width: 100vw;
     --wildf: calc(100vw - var(--container-width)  - (100vw - 100%));
 
+    --signinupnav-width: 50%;
+
     --global-fonts: 'Gotham Rounded', Helvetica;
   }

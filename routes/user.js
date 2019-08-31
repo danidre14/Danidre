@@ -29,6 +29,7 @@ router.get('/:name', async (req, res) => { //add authentication check
 
 function checkAuthenticatedAccess(req, res, next) {
     if(!req.isAuthenticated()) { //unauthenticated user
+        req.flash('outsert', {message: 'Access denied', note: true});
         return res.redirect('back');
     }
     next();
@@ -36,6 +37,7 @@ function checkAuthenticatedAccess(req, res, next) {
 
 function checkAuthorizedAccess(req, res, next) {
     if(req.user.username !== req.params.name) { //unauthorized user    
+        req.flash('outsert', {message: 'Missing permissions. Access denied.', note: true});
         return res.redirect('back');
     }
     next();
