@@ -1,6 +1,6 @@
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
-    console.log('Reminder to put many try catches in all necessary functions');
+    console.log('Check Sticky Notes For Todo');
 }
 
 const express = require('express');
@@ -46,10 +46,13 @@ db.once('open', () => console.log('Connected to Mongoose'));
 
 if(process.env.NODE_ENV === 'production') {
 app.use(function forceLiveDomain(req, res, next) {
+    const preferredSite = "Heroku"; //or Danidre
+    const hosts = {"Heroku":"danidre.com","Danidre":"danidre.herokuapp.com"};
+    const redirects = {"Heroku":"https://danidre.herokuapp.com","Danidre":"http://danidre.com"}
     // Don't allow user to hit Heroku now that we have a domain
-    var host = req.get('Host');
-    if (host === 'danidre.herokuapp.com') {
-        return res.redirect(301, 'http://danidre.com' + req.originalUrl);
+    const host = req.get('Host');
+    if (host === hosts[preferredSite]) {
+        return res.redirect(301, redirects[preferredSite] + req.originalUrl);
     }
     return next();
 });
