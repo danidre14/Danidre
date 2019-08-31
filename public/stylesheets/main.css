@@ -5,6 +5,7 @@
 @import 'shared/header.css';
 @import 'shared/body.css';
 @import 'shared/footer.css';
+@import 'shared/form.css';
 @import 'shared/buttons.css';
 
 :root {
@@ -67,10 +68,6 @@ section.contact {
 }
 
 /* Sign Up Specifics */
-section.signup div {
-    margin-bottom: var(--default-spacing-y);
-}
-
 section.signup pre {
     position: absolute;
     color: var(--color-button-default);

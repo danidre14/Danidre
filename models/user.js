@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         required: true,
-        default: true
+        default: false
     },
     createdAt: {
         type: Date,
@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
     },
     lastName: {
         type: String
+    },
+    bio: {
+        type: String,
+        default: "New user"
     }
     /*
     ,
@@ -52,11 +56,6 @@ const userSchema = new mongoose.Schema({
     DOB: {
         type: Date,
         required: true
-    },
-    signedUpAt: {
-        type: Date,
-        required: true,
-        default: Date.now
     }*/
 });
 

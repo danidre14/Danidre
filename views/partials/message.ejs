@@ -2,7 +2,9 @@
 <% if (messages.outsert) { %>
     <% message = messages.outsert[0]; %>
 <% } else if (messages.error) { %>
-    <% message = messages.error; %>
+    <% message = {}; %>
+    <% message.message = messages.error; %>
+    <% message.note = true %>
 <% } %>
 <% if (message) { %>
 <div id="msgPanel" class="message">

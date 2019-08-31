@@ -1,14 +1,18 @@
 <% var username; %>
-<% let fullName = profile.firstName + " " + profile.lastName; %>
+<% let fullName = (profile.firstName || "") + " " + (profile.lastName || ""); %>
 <h2><%=profile.username %></h2>
 <section class="profile">
     <article>
         <desc>Name:</desc>
         <p><%= fullName==" "? 'Not entered' : fullName %></p>
+        <desc>Bio:</desc>
+        <p><%= profile.bio %></p>
         <desc>Roles:</desc>
         <p><%= profile.roles %></p>
         <desc>Created At:</desc>
-        <p><%= profile.createdAt.toDateString() %></p>
+        <p><%= profile.createdAt.toLocaleString() %></p>
+        <desc>Updated At:</desc>
+        <p><%= profile.updatedAt.toLocaleString() || profile.createdAt.toLocaleString() %></p>
         <% if(username !== undefined && username == profile.username) { %>
             <a href="/u/<%= username %>/edit">Edit Profile</a>
         <% } %>

@@ -2,6 +2,27 @@
 <h2><%=profile.username %></h2>
 <section class="profile-edit">
     <article>
-        Editing Coming Soon
+        <form class="signings" action="/u/<%= profile.username %>?_method=PUT" method="POST">
+
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName" id="firstName" value="<%= profile.firstName %>" >
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName" id="lastName" value="<%= profile.lastName %>" >
+            </div>
+            <div>Username: <%= profile.username %></div>
+            <div>
+                <label for="bio">Bio:</label>
+                <textarea name="bio" id="bio"><%= profile.bio %></textarea>
+            </div>
+            <div>Roles: <%= profile.roles %></div>
+            <div>Created At: <%= profile.createdAt.toDateString() %></div>
+            <div>Updated At: <%= profile.updatedAt.toDateString() || profile.createdAt.toDateString() %></div>
+            
+            <a href="/u/<%= profile.username %>">Cancel</a>
+            <button type="submit">Update</button>
+        </form>
     </article>
 </section>

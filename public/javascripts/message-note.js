@@ -16,7 +16,7 @@ grace = setTimeout(function(){
     fade = setTimeout(function(){
         msg.style.display = "none";
         msg.removeEventListener("mousemove", cancelFade);
-    }, 4000);
+    }, 3000);
 }, 1000);
 
 

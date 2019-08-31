@@ -19,10 +19,10 @@ router.get('/', checkNotAuthenticated, (req, res) => {
 });
 
 router.post('/', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '../', //or to their account?
+    //successRedirect: '../', //redirect to homepage
     failureRedirect: '../signin',
     failureFlash: true //so a message can be displayed to the user */
-}));
+}), (req, res) => res.redirect(`/u/${req.user.username}`)); //redirect to user's account page
 
 function checkNotAuthenticated(req, res, next) {
     if(req.isAuthenticated()) {

@@ -53,7 +53,7 @@ router.post('/verify', async (req, res) => {
         }
 
         //Verify user
-        user.isVerified = true; console.log('take out verified true by default');
+        user.isVerified = true;
         await user.save();
 
         req.flash('outsert', {message: 'Account verified. Please sign in.', note: true});
@@ -67,6 +67,7 @@ router.post('/verify', async (req, res) => {
 });
 
 async function checkUserExists(req, res, next) {
+try {
     //look for user
     const user = await User.findOne({username:req.body.username});
 
@@ -113,11 +114,19 @@ async function checkUserExists(req, res, next) {
     //if token exists
     req.flash('outsert', {message: 'Account already registered. Check your email for the verification token.'});
     res.redirect('signin');
+} catch (err) {
+    console.log(err)
+}
 }
 
 function sendMail(mailOptions, email) {
+    if(process.env.NODE_ENV !== 'production') {
+        //development environment
+        return console.log('Mail sent, make sure to actually send here');
+    }
+    
+    //otherwise, send mail
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    return console.log('Mail sent, make sure to actually send here');
     sgMail.send(mailOptions, function (err) {
         if (err) {
             return console.log(err);
@@ -134,9 +143,15 @@ async function createUser(req, res) {
         const user = new User({
             username: req.body.username,
             email: req.body.email,
-            password: hashedPassword,
-            jewel: 'funny'
+            password: hashedPassword
         });
+
+        if(process.env.NODE_ENV !== 'production') {
+            user.isVerified = true; //verified by default if not in production
+            await user.save();
+            req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
+            return res.redirect('signin');
+        }
 
         await user.save();
         // Create a verification token

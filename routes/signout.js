@@ -7,7 +7,7 @@ router.get('/*', (req, res) => {
 
 router.delete('/', checkAuthenticated, (req, res) => {
     req.logOut();
-    res.redirect('back');
+    res.redirect('/');
 });
 
 function checkAuthenticated(req, res, next) {

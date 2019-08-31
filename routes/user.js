@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user')
-// <%= user.username user.createdAt user.email %>
 router.get('/', checkIfLoggedIn, async (req, res) => {
     let vars = {cPage: "u", searchOptions: req.query};
     if(req.isAuthenticated()) {
@@ -13,49 +12,62 @@ router.get('/', checkIfLoggedIn, async (req, res) => {
 });
 
 router.get('/:name', async (req, res) => { //add authentication check
-    const user = await User.findOne({username:req.params.name});
+    const user = await User.findOne({username:req.params.name}, 'username firstName lastName bio roles createdAt updatedAt');
     if(!user) {
         if(!req.isAuthenticated()) {
-            return res.redirect('back');
+            return res.redirect('/');
         }
         return res.redirect('/u');
     }
 
-    let vars = {cPage: "u", searchOptions: req.query, profile: {
-        username: user.username,
-        roles: user.roles || [],
-        createdAt: user.createdAt,
-        firstName: user.firstName || '',
-        lastName: user.lastName || ''
-    }};
+    let vars = {cPage: "u", searchOptions: req.query, profile: user};
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }
     res.render('user/profile', vars);
 });
 
-router.get('/:name/edit', async (req, res) => {
+function checkAuthenticatedAccess(req, res, next) {
     if(!req.isAuthenticated()) { //unauthenticated user
         return res.redirect('back');
     }
-    if(req.user.username !== req.params.name) { //unauthorized user
+    next();
+}
+
+function checkAuthorizedAccess(req, res, next) {
+    if(req.user.username !== req.params.name) { //unauthorized user    
         return res.redirect('back');
     }
+    next();
+}
 
-    const user = await User.findOne({username:req.params.name});
-    if(!user) {
-        return res.redirect('/u');
+router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
+    try {
+        const user = await User.findOne({username:req.params.name}, 'username firstName lastName bio roles createdAt updatedAt');
+        if(!user) {
+            return res.redirect('/u');
+        }
+        let vars = {cPage: "u", searchOptions: req.query, profile: user};
+        vars.username = req.user.username; //because from here its authenticated
+        
+        res.render('user/edit', vars);
+    } catch {}
+});
+
+//Update Profile
+router.put('/:name', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
+    try {
+        let user = await User.findOne({username:req.params.name});
+        user.firstName = req.body.firstName.trim() || user.firstName;
+        user.lastName = req.body.lastName.trim() || user.lastName;
+        user.bio = req.body.bio.trim() || user.bio;
+        user.updatedAt = Date.now() || user.updatedAt;
+        await user.save();
+        res.redirect(`/u/${user.username}`);
+    } catch {
+        console.log(err);
+        res.redirect(`/u/${user.username}`);
     }
-    let vars = {cPage: "u", searchOptions: req.query, profile: {
-        username: user.username,
-        roles: user.roles || [],
-        createdAt: user.createdAt,
-        firstName: user.firstName || '',
-        lastName: user.lastName || ''
-    }};
-    vars.username = req.user.username; //because from here its authenticated
-    
-    res.render('user/edit', vars);
 });
 
 router.use('/*', (req, res) => {
