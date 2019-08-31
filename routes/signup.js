@@ -48,7 +48,7 @@ router.post('/verify', async (req, res) => {
         //Check if user is verified
         token.deleteOne({token:req.body.token}, function (err) {});
         if(user.isVerified) {
-            req.flash('outsert', {message: 'Account already verified. Please sign in.', note: true});
+            req.flash('outsert', {message: 'Account already verified. You can sign in.', note: true});
             return res.redirect('../signin'); //user already verified
         }
 
@@ -56,7 +56,7 @@ router.post('/verify', async (req, res) => {
         user.isVerified = true;
         await user.save();
 
-        req.flash('outsert', {message: 'Account verified. Please sign in.', note: true});
+        req.flash('outsert', {message: 'Account verified. You may now sign in.', note: true});
         res.redirect('../signin'); //Please log in
         
     } catch (err) {
@@ -98,13 +98,9 @@ try {
         const newToken = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex') });
         await newToken.save();
 
-        // Send the email
-        const mailOptions = {
-            from: 'no-reply@danidre.com',
-            to: user.email,
-            subject: 'Account Verification Token',
-            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/signup\/verify?token=' + newToken.token + '.\n'
-        };
+        // Send the email for resend token
+        const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
+        
         sendMail(mailOptions, user.email);
 
         req.flash('outsert', {message: `A token has been resent to ${user.email}. Check your email to verify your account.`});
@@ -119,22 +115,6 @@ try {
 }
 }
 
-function sendMail(mailOptions, email) {
-    if(process.env.NODE_ENV !== 'production') {
-        //development environment
-        return console.log('Mail sent, make sure to actually send here');
-    }
-    
-    //otherwise, send mail
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    sgMail.send(mailOptions, function (err) {
-        if (err) {
-            return console.log(err);
-        }
-        console.log('A verification email has been sent to ' + email + '.');
-    });
-}
-
 async function createUser(req, res) {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -146,12 +126,12 @@ async function createUser(req, res) {
             password: hashedPassword
         });
 
-        if(process.env.NODE_ENV !== 'production') {
-            user.isVerified = true; //verified by default if not in production
-            await user.save();
-            req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
-            return res.redirect('signin');
-        }
+        // if(process.env.NODE_ENV !== 'production') {
+        //     user.isVerified = true; //verified by default if not in production
+        //     await user.save();
+        //     req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
+        //     return res.redirect('signin');
+        // }
 
         await user.save();
         // Create a verification token
@@ -159,15 +139,8 @@ async function createUser(req, res) {
         await token.save();
 
         // Send the email
-        const mailOptions = {
-            from: 'no-reply@danidre.com',
-            to: user.email,
-            subject: 'Account Verification Token',
-            text: `Hello ${user.username},\n\n
-            Please verify your account by clicking the link: \nhttp:\/\/${req.headers.host}\/signup\/verify?token=${token.token}.\n`,
-            html: `Hello ${user.username},<br/><br/>
-            Please verify your account by clicking the link: <br/><a href="http:\/\/${req.headers.host}\/signup\/verify?token=${token.token}">http:\/\/${req.headers.host}\/signup\/verify?token=${token.token}</a>.`
-        };
+        const mailOptions = getMailOptions(user.username, user.email, req.headers.host, token.token);
+
         sendMail(mailOptions, user.email);
         
         req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`, note: true});
@@ -236,6 +209,40 @@ function checkNotAuthenticated(req, res, next) {
     }
   
     next();
+}
+
+
+function getMailOptions(username='User', email, host, token) {
+    const tokenLink = `http:\/\/${host}\/signup\/verify?token=${token}`;
+    const options = {
+        from: 'Danidre <no-reply@danidre.com>',
+        to: `${username} <${email}>`,
+        subject: 'Account Verification Token',
+        text: `Hello ${username},\n\n
+        Please verify your account by clicking the following link: \n${tokenLink}.\n`,
+        html: `Hello ${username},<br/><br/>
+        Please verify your account by clicking the following link: <br/><a href="${tokenLink}">${tokenLink}</a>.`
+
+    };
+    return options;
+}
+
+
+
+function sendMail(mailOptions, email) {
+    // if(process.env.NODE_ENV !== 'production') {
+    //     //development environment
+    //     return console.log('Mail sent, make sure to actually send here');
+    // }
+    
+    //otherwise, send mail
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.send(mailOptions, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log('A verification email has been sent to ' + email + '.');
+    });
 }
 
 router.use('/*', (req, res) => {

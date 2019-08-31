@@ -12,7 +12,7 @@ function initialize(passport, getUserByusername, getUserById) {
         try {
             if(await bcrypt.compare(password, user.password)) {
                 if(!user.isVerified)
-                    return done(null, false, { message: 'Account not activated. Sign up again.' });
+                    return done(null, false, { message: 'Account not activated. Sign up again to re-send token.' });
                 else
                     return done(null, user);
             } else {
