@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user')
+const User = require('../models/user');
+
 router.get('/', checkIfLoggedIn, async (req, res) => {
     let vars = {cPage: "u", searchOptions: req.query};
+    vars.title = "Users";
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }
@@ -21,27 +23,12 @@ router.get('/:name', async (req, res) => { //add authentication check
     }
 
     let vars = {cPage: "u", searchOptions: req.query, profile: user};
+    vars.title = `${user.username}'s Profile`;
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }
     res.render('user/profile', vars);
 });
-
-function checkAuthenticatedAccess(req, res, next) {
-    if(!req.isAuthenticated()) { //unauthenticated user
-        req.flash('outsert', {message: 'Access denied', note: true});
-        return res.redirect('back');
-    }
-    next();
-}
-
-function checkAuthorizedAccess(req, res, next) {
-    if(req.user.username !== req.params.name) { //unauthorized user    
-        req.flash('outsert', {message: 'Missing permissions. Access denied.', note: true});
-        return res.redirect('back');
-    }
-    next();
-}
 
 router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
     try {
@@ -50,10 +37,14 @@ router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async
             return res.redirect('/u');
         }
         let vars = {cPage: "u", searchOptions: req.query, profile: user};
+        vars.title = "Edit Profile";
         vars.username = req.user.username; //because from here its authenticated
         
         res.render('user/edit', vars);
-    } catch {}
+    } catch {        
+        req.flash('outsert', {message: 'Unable to edit page.', note: true, error: true});
+        res.redirect(`/u/${req.user.username}`);
+    }
 });
 
 //Update Profile
@@ -80,6 +71,22 @@ router.use('/*', (req, res) => {
 });
 
 
+
+function checkAuthenticatedAccess(req, res, next) {
+    if(!req.isAuthenticated()) { //unauthenticated user
+        req.flash('outsert', {message: 'Access denied.', note: true});
+        return res.redirect('back');
+    }
+    next();
+}
+
+function checkAuthorizedAccess(req, res, next) {
+    if(req.user.username !== req.params.name) { //unauthorized user    
+        req.flash('outsert', {message: 'Missing permissions. Access denied.', note: true});
+        return res.redirect(`/u/${req.params.name}`);
+    }
+    next();
+}
 
 function checkIfLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {

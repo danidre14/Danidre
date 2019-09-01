@@ -10,6 +10,8 @@ router.get('/', checkNotAuthenticated, (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.uMessage = req.flash('uMessage');
     vars.pMessage = req.flash('pMessage');
+    vars.p2Message = req.flash('p2Message');
+    vars.title = "Sign Up";
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }
@@ -22,6 +24,7 @@ router.post('/', checkNotAuthenticated, validateInfomation, checkUserExists, cre
 //Normal Confimation Page Route
 router.get('/verify', checkNotAuthenticated, (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
+    vars.title = "Verify Account";
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }
@@ -155,48 +158,57 @@ async function createUser(req, res) {
 
 
 function validateInfomation(req, res, next) {
+    let error = false;
+
     //username validation
     let username = req.body.username;
-    let uError = false;
     let uMessage = "";
     if(username.length < 4 || username.length > 15) {
         uMessage += "-Must be 4-15 characters long";
-        uError = true;
+        error = true;
     } else {
         if(username.charAt(0).match(/^[a-z]+$/ig) === null) {
             uMessage += "-Username must start with a letter\n";
-            uError = true;
+            error = true;
         } else if(username.match(/^[a-z][a-z\d]+$/ig) === null) {
             uMessage += "-Symbols/Spaces not allowed";
-            uError = true;
+            error = true;
         } 
     }
     
     //password validation
     let pName = req.body.password;
-    let pError = false;
     let pMessage = "";
     if(pName.length < 8) {
         pMessage += "-Password must be 8 or more characters\n";
-        pError = true;
+        error = true;
     }
     // if(pName.match(/^[a-z\d]+$/ig) === null) {
     //     pMessage += "-Password cannot contain symbols or spaces\n";
-    //     pError = true;
+    //     error = true;
     // }
     if(pName.search(/\d/) === -1) {
         pMessage += "-Must contain at least one number\n";
-        pError = true;
+        error = true;
     }
     if(pName.search(/[A-Z]/) === -1) {
         pMessage += "-Must contain at least one uppercase letter\n";
-        pError = true;
+        error = true;
+    }
+
+    //re-entered password
+    let p2Name = req.body.password2;
+    let p2Message = "";
+    if(pName !== p2Name) {
+        p2Message += "-Password do not match";
+        error = true;
     }
 
     //redirect if needed
-    if(uError || pError) {
+    if(error) {
         req.flash('uMessage', uMessage);
         req.flash('pMessage', pMessage);
+        req.flash('p2Message', p2Message);
         return res.redirect('signup');
     }
 
@@ -205,7 +217,7 @@ function validateInfomation(req, res, next) {
 
 function checkNotAuthenticated(req, res, next) {
     if(req.isAuthenticated()) {
-        return res.redirect('/');
+        return res.redirect(`/u/${req.user.username}`);
     }
   
     next();

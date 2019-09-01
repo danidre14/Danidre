@@ -1,0 +1,12 @@
+<% var description; %>
+<% var title; %>
+<h2><%= title || "Blank Page" %></h2>
+<section>
+    <article>
+        <% if(description) { %>
+        <p><%= description %></p>
+        <% } else { %>
+        <p>This page does not have any content. If you think this is an error, <a href="/contact">contact Danidre</a> and let him know</p>
+        <% } %>
+    </article>
+</section>

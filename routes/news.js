@@ -3,6 +3,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     let vars = {cPage: "news", searchOptions: req.query};
+    vars.title = "News";
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }

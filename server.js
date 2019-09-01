@@ -18,12 +18,16 @@ const contactRouter = require('./routes/contact');
 const signupRouter = require('./routes/signup');
 const signinRouter = require('./routes/signin');
 const signoutRouter = require('./routes/signout');
+const secretRouter = require('./routes/secret');
 const userRouter = require('./routes/user');
 const error404Router = require('./routes/error404');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
+app.set("layout extractMetas", true);
+app.set("layout extractScripts", true);
+// app.set("layout extractStyles", true);
 app.use(expressLayouts);
 app.use(methodOverride('_method'));
 app.use(express.static('public')); //where most server files will be
@@ -45,7 +49,7 @@ db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
 if(process.env.NODE_ENV === 'production') {
-app.use(function forceLiveDomain(req, res, next) {
+app.use(function forceLiveDomainAndHttps(req, res, next) {
     const preferredSite = "Heroku"; //or Danidre
     const hosts = {"Heroku":"danidre.com","Danidre":"danidre.herokuapp.com"};
     const redirects = {"Heroku":"https://danidre.herokuapp.com","Danidre":"http://danidre.com"}
@@ -54,6 +58,14 @@ app.use(function forceLiveDomain(req, res, next) {
     if (host === hosts[preferredSite]) {
         return res.redirect(301, redirects[preferredSite] + req.originalUrl);
     }
+    if(preferredSite === "Heroku")
+        if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+                // request was via http, so redirect to https
+                return res.redirect('https://' + hosts[preferredSite] + req.originalUrl);
+        } else {
+                // request was via https, so do no special handling
+                return next();
+        }
     return next();
 });
 }
@@ -64,6 +76,7 @@ app.use('/contact', contactRouter);
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/signout', signoutRouter);
+app.use('/secret', secretRouter);
 app.use('/u', userRouter);
 
 app.use(error404Router); //make sure to put this after all routes

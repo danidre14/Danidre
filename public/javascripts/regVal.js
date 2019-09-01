@@ -8,13 +8,18 @@ let pWord = document.getElementById("password");
 let pwMessage = document.getElementById("pwMessage");
 let pError = false;
 
+let p2Word = document.getElementById("password2");
+let pw2Message = document.getElementById("pw2Message");
+let p2Error = false;
+
 let sBtn = document.getElementById("sBtn");
 
 regForm.addEventListener('input', function (evt) {
     valU();
     valP();
+    valP2();
 
-    if(!pError && !uError) 
+    if(!uError && !pError && !p2Error) 
         sBtn.style.display = "block";
     else
         sBtn.style.display = "none";
@@ -72,4 +77,24 @@ valP = function() {
         pwMessage.style.display = "block";
     else
         pwMessage.style.display = "none";
+}
+
+valP2 = function() {
+    p2Error = false;
+    let value1 = pWord.value;
+    let value2 = p2Word.value;
+    let message = "";
+    if(value2.length !== 0) {
+        if(value1 !== value2) {
+            message += "-Password do not match";
+            p2Error = true;
+        }
+    } else {
+        p2Error = true;
+    }
+    pw2Message.innerHTML = message;
+    if(message !== "") 
+        pw2Message.style.display = "block";
+    else
+        pw2Message.style.display = "none";
 }

@@ -1,5 +1,6 @@
 <% var uMessage; %>
 <% var pMessage; %>
+<% var p2Message; %>
 <h2>Sign Up</h2>
 <section class="signup">
     <article>
@@ -30,7 +31,18 @@
                     <% } %>
                 </div>
             </div>
-            <!--
+            <div>
+                <label for="password2">Re-Enter Password</label>
+                <input type="password" id="password2" name="password2" required>
+                <div>
+                    <% if (p2Message) { %>
+                        <pre id="pw2Message" style="display:block;"><%= p2Message %></pre>
+                    <% } else { %>
+                        <pre id="pw2Message" style="display:none;"></pre>
+                    <% } %>
+                </div>
+            </div>
+            <%/*<!--
             <div>
                 <label for="fName">First Name</label>
                 <input type="text" id="fName" name="fName" required>
@@ -51,7 +63,7 @@
                 <label for="description">About Me</label>
                 <textarea id="description" name="description"></textarea>
             </div>
-            -->
+            -->*/%>
             <button class="btn btn-primary" id="sBtn" type="submit"
             <% if (uMessage!=''||pMessage!='') { %>
                 style="display:none;"
@@ -66,3 +78,4 @@
     </article>
 </section>
 <script defer src="/javascripts/regVal.js"></script>
+<meta name="description" content="Sign up for a Danidre account.">

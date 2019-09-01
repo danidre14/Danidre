@@ -12,6 +12,7 @@ initializePassport(
 
 router.get('/', checkNotAuthenticated, (req, res) => {
     let vars = {cPage: "signin", searchOptions: req.query};
+    vars.title = "Sign In";
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
     }
@@ -26,7 +27,7 @@ router.post('/', checkNotAuthenticated, passport.authenticate('local', {
 
 function checkNotAuthenticated(req, res, next) {
     if(req.isAuthenticated()) {
-        return res.redirect('/');
+        return res.redirect(`/u/${req.user.username}`);
     }
   
     next();
