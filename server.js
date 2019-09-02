@@ -58,14 +58,14 @@ app.use(function forceLiveDomainAndHttps(req, res, next) {
     if (host === hosts[preferredSite]) {
         return res.redirect(301, redirects[preferredSite] + req.originalUrl);
     }
-    if(preferredSite === "Heroku")
-        if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
-                // request was via http, so redirect to https
-                return res.redirect('https://' + hosts[preferredSite] + req.originalUrl);
-        } else {
-                // request was via https, so do no special handling
-                return next();
-        }
+    // if(preferredSite === "Heroku")
+    //     if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+    //             // request was via http, so redirect to https
+    //             return res.redirect('https://' + hosts[preferredSite] + req.originalUrl);
+    //     } else {
+    //             // request was via https, so do no special handling
+    //             return next();
+    //     }
     return next();
 });
 }
