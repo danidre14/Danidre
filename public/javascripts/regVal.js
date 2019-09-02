@@ -20,9 +20,11 @@ regForm.addEventListener('input', function (evt) {
     valP2();
 
     if(!uError && !pError && !p2Error) 
-        sBtn.style.display = "block";
+        // sBtn.style.display = "block";
+        sBtn.disabled = false;
     else
-        sBtn.style.display = "none";
+        sBtn.disabled = true;
+        // sBtn.style.display = "none";
 });
 
 valU = function() {

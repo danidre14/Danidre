@@ -104,18 +104,32 @@ section.profile-edit textarea {
     height: 5rem;
 }
 
+/* Secrets */
+div.hptt {
+    font-weight: bold;
+    font-size: 1.6rem;
+    text-align: center;
+}
+table td#all_subjects, table td#your_subjects {
+    font-size: 0.8rem;
+}
+
 /* Responsivity */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 400px) {
     :root {
-        font-size: 1rem;
-        /* --container-width: 100vw;
-        --wildf: calc(100vw - var(--container-width)); */
+        font-size: .9rem;
     }
     table td.pttd {
         font-size:0.7rem;
         word-wrap: break-word;
         height: 0.8rem !important;
         text-indent:-9999px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :root {
+        font-size: 1rem;
     }
 }
 

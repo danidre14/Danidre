@@ -20,6 +20,16 @@ router.get('/', checkNotAuthenticated, (req, res) => {
 
 router.post('/', checkNotAuthenticated, validateInfomation, checkUserExists, createUser);
 
+//Verify Prompt Route
+router.get('/v', checkNotAuthenticated, (req, res) => {
+    let vars = {cPage: "secret", searchOptions: req.query};
+    vars.title = "Verify Account";
+    if(req.isAuthenticated()) {
+        vars.username = req.user.username;
+    }
+    vars.description = "Check your email for a link to verify your account. Check your spam folders if you can't find any email.";
+    res.render('misc/blank', vars);
+});
 
 //Normal Confimation Page Route
 router.get('/verify', checkNotAuthenticated, (req, res) => {
@@ -88,8 +98,8 @@ try {
 
     //if user verified
     if(user.isVerified) {
-        req.flash('outsert', {message: 'Username unavailable.', note: true});
-        return res.redirect('signup');
+        req.flash('outsert', {message: 'Username unavailable.'});
+        return res.redirect('/signup');
     }
     
     //if user not verified, look for token
@@ -107,12 +117,12 @@ try {
         sendMail(mailOptions, user.email);
 
         req.flash('outsert', {message: `A token has been resent to ${user.email}. Check your email to verify your account.`});
-        return res.redirect('signin');
+        return res.redirect('/signup/v');
     }
 
     //if token exists
     req.flash('outsert', {message: 'Account already registered. Check your email for the verification token.'});
-    res.redirect('signin');
+    res.redirect('/signin');
 } catch (err) {
     console.log(err)
 }
@@ -133,7 +143,7 @@ async function createUser(req, res) {
             user.isVerified = true; //verified by default if not in production
             await user.save();
             req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
-            return res.redirect('signin');
+            return res.redirect('/signin');
         }
 
         await user.save();
@@ -146,13 +156,13 @@ async function createUser(req, res) {
 
         sendMail(mailOptions, user.email);
         
-        req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`, note: true});
-        res.redirect('signin');
+        req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`});
+        res.redirect('/signup/v');
         //res.redirect(`users/${newUser.username}`);
     } catch (err) {
         console.log(err)
         req.flash('outsert', {message: 'An error has occured. Please try again, or contact support.'});
-        res.redirect('signup');
+        res.redirect('/signup');
     }
 }
 

@@ -222,14 +222,14 @@ const updateSubjectList = function(allS, yourS, shuffle) {
     yourSD.innerHTML = "";
     
     for(i in allSubjects)
-        allSD.innerHTML += '<span style="display:block;" onclick="carrySubject(\'' + allSubjects + '\', \'' + yourSubjects + '\', ' + parseInt(i) + ', \'aToy\',true)">' + subname[allSubjects[i]] + '</span>';
+        allSD.innerHTML += '<span class="btn-primary" style="width:100%;word-wrap:break-word;display:block;border:solid black 1px;padding:.5rem 0;" onclick="carrySubject(\'' + allSubjects + '\', \'' + yourSubjects + '\', ' + parseInt(i) + ', \'aToy\',true)">' + subname[allSubjects[i]] + '</span>';
     for(i in yourSubjects)
-        yourSD.innerHTML += '<span style="display:block;" onclick="carrySubject(\'' + yourSubjects + '\', \'' + allSubjects + '\', ' + parseInt(i) + ', \'yToa\')">' + subname[yourSubjects[i]] + '</span>';
+        yourSD.innerHTML += '<span class="btn-primary" style="width:100%;word-wrap:break-word;display:block;border:solid black 1px;padding:.5rem 0;" onclick="carrySubject(\'' + yourSubjects + '\', \'' + allSubjects + '\', ' + parseInt(i) + ', \'yToa\')">' + subname[yourSubjects[i]] + '</span>';
     if(yourSubjects.length === 4) {
         var ctt = Choices[form]; //all subject choices
         var tsubs = getSubjects(ctt, yourSubjects); //subject categories
     
-    yourSD.innerHTML += '<button class="btn btn-primary" style="font-size:20px;"onclick="considerphase3(\'' + allSubjects + '\', \'' + yourSubjects + '\')">' + ((tsubs.length === 4)? 'Select' : 'Shuffle') + '</button>';
+        yourSD.innerHTML += '<br/><button class="btn btn-primary" onclick="considerphase3(\'' + allSubjects + '\', \'' + yourSubjects + '\')">' + ((tsubs.length === 4)? 'Select' : 'Shuffle') + '</button>';
     }
 }
 const carrySubject = function(aS, yS, index, order, max) {
@@ -258,12 +258,12 @@ const carrySubject = function(aS, yS, index, order, max) {
     
 }
 const phase1 = function() { //choose form
-    var element = '<h1 style="text-align:center;">Choose Your Form</h1><table style="width:100%;text-align:center;font-size:40px;"><tr><th onclick="chooseForm(0)">Lower 6</th><th onclick="chooseForm(1)">Upper 6</th></tr></table>';
+    var element = '<div class="hptt">Choose Your Form</div><table style="width:100%;text-align:center;"><tr><th class="btn btn-primary" onclick="chooseForm(0)">Lower 6</th><th class="btn btn-primary" onclick="chooseForm(1)">Upper 6</th></tr></table>';
     
     mainD.innerHTML = element;
 }
 const phase2 = function() { //choose subjects
-    var element = '<div style="text-align:center;"><span style="font-size:20px" onclick="phase1()">' + form + '</span><h1>Choose Your Subjects</h1><table style="width:100%;text-align:center;font-size:20px;"><tr><th>All Subjects</th><th>Your Subjects</th></tr><tr><td id="all_subjects" style="vertical-align:top;width:50%;"></td><td id="your_subjects" style="vertical-align:top;width:50%;"></td></tr></table></div>';
+    var element = '<div style="text-align:center;"><span onclick="phase1()">' + form + '</span><div class="hptt">Choose Your Subjects</div><table style="width:100%;text-align:center;"><tr><th>All Subjects</th><th>Your Subjects</th></tr><tr><td id="all_subjects" style="word-wrap:break-word;vertical-align:top;width:50%;"></td><td id="your_subjects" style="word-wrap:break-word;vertical-align:top;width:50%;"></td></tr></table></div>';
     
     mainD.innerHTML = element;
     
@@ -289,7 +289,8 @@ const updateChoicesList = function(choices, subjects) {
                     l = j;
                     break;
                 }
-            cD[i].innerHTML += (sel? '<span style="background-color:green;width:100%;' : '<span style="') + 'display:block;" onclick="changeChoice(\'' + subjects + '\', \'' + choices[i] + '\', \'' + choices[i][j] + '\')">' + choices[i][j] + '</span>';
+            cD[i].innerHTML += (sel? '<span class="btn-primary btn-chosen"' : '<span class="btn-primary"') + 'style="border:solid 1px black;display:block;" onclick="changeChoice(\'' + subjects + '\', \'' + choices[i] + '\', \'' + choices[i][j] + '\')">' + choices[i][j] + '</span>';
+                //cD[i].innerHTML += (sel? '<span style="background-color:green;width:100%;' : '<span style="') + 'display:block;" onclick="changeChoice(\'' + subjects + '\', \'' + choices[i] + '\', \'' + choices[i][j] + '\')">' + choices[i][j] + '</span>';
         }
     
     var sortedS = [];
@@ -312,8 +313,7 @@ const updateChoicesList = function(choices, subjects) {
             break;
         }
     if(matching)
-        sD.innerHTML += '<br/><button class="btn btn-primary" style="font-size:30px;"onclick="phase4(\'' + subjects + '\')">View Timetable</button>';
-    //sD.innerHTML += '<br/><button class="btn btn-primary" style="font-size:30px;"onclick="phase4(\'' + subjects + '\')">Select</button>';
+        sD.innerHTML += '<br/><button class="btn btn-primary" onclick="phase4(\'' + subjects + '\')">View Timetable</button>';
 }
 const changeChoice = function(subs, choice, chosen) {
     subs = subs.split(",");
@@ -345,7 +345,7 @@ const phase3 = function(subjects) { //select subject choices
     var ctt = Choices[form]; //all subject choices
     var subs = getSubjects(ctt, subjects); //subject categories
     window.yourSubjects = getSubjects(ctt, subjects);
-    var element = '<div style="text-align:center;"><span style="font-size:20px"><span onclick="phase1()">' + form + '</span><br/><span onclick="phase2(\'' + form +'\')" id="og_subs">Subjects: ';
+    var element = '<div style="text-align:center;"><span><span onclick="phase1()">' + form + '</span><br/><span onclick="phase2(\'' + form +'\')" id="og_subs">Subjects: ';
     
     var sortedS = [];
     for(var i in subs) sortedS.push(subs[i]);
@@ -355,13 +355,13 @@ const phase3 = function(subjects) { //select subject choices
     for(var i in sortedS)
         et += subname[sortedS[i]] + ", ";
     element += et.substr(0, et.length-2);
-    element += '</span></span><h1>Select Your Choices</h1><table style="width:100%;text-align:center;font-size:20px;"><tr>';
+    element += '</span></span><div class="hptt">Select Your Choices</div><table style="width:100%;text-align:center;"><tr>';
     for(var i in ctt)
-        element += '<th style="width:25%;">Choice ' + (parseInt(i) + 1) + '</th>';
+        element += '<th style="width:25%;font-size:0.8rem;">Choice ' + (parseInt(i) + 1) + '</th>';
     element += "</tr><tr>"
     for(var i in ctt)
         element += '<td id="choice_' + i + '" style="vertical-align:top;width:25%"></td>';    
-    element += '</tr></table><h2 id="sumsubs"></h2></div>';
+    element += '</tr></table><div id="sumsubs"></div></div>';
     
     mainD.innerHTML = element;        
     
@@ -407,7 +407,7 @@ const phase5 = function(showd, showl, change) { //displaying time table!
     var dP, dN, dR;
     getLegend(change);
     
-    element += '<span style="display:block;width:100%;background-color:black;color:white;" onclick="phase1()">Sixth Form Government (' + form + ')</span><span style="display:block;width:100%;background-color:black;color:white;"><!--onclick="phase4(\'' + subs + '\')"-->Time Table</span>';
+    element += '<span style="display:block;width:100%;background-color:black;color:white;" onclick="phase1()">Sixth Form Government (' + form + ')</span><div class="hptt" style="display:block;width:100%;background-color:black;color:white;"><!--onclick="phase4(\'' + subs + '\')"-->Time Table</div>';
     element += '<table style="width:100%;table-layout:fixed;"><tr>';
     for(var i in tt)
         element += '<th class="ptth" style="width:' + w + '%;background-color:black;color:white;">' + (day[parseInt(i)]) + '</th>';
@@ -481,7 +481,7 @@ const updateTableList = function(tt, day) {
     
     for(var i in tt) {
         for(var j in tt[i]) {
-            tD[i].innerHTML += '<span style="font-size:20px;display:block;border-top:black solid 2px">' + tt[i][j] + '</span>';
+            tD[i].innerHTML += '<span style="display:block;border-top:black solid 2px">' + tt[i][j] + '</span>';
         }
     }
 }

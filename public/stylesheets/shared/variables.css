@@ -14,6 +14,7 @@
     --color-button-default: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
     --color-button-hover: hsl(var(--color-base-hue), var(--color-base-saturation), 58%);
     --color-button-active: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
+    --color-button-disabled: hsl(var(--color-base-hue), var(--color-base-saturation), 33%);
 
 
     --color-button-current-page: hsl(var(--color-base-hue), var(--color-base-saturation), 38%);

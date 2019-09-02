@@ -6,10 +6,18 @@
     text-decoration: none;
     font-family: var(--global-fonts);
     color: var(--color-text-light);
+    cursor: pointer;
+}
+
+.btn-chosen {
+    cursor: default;
+    background-color: var(--color-button-disabled) !important;
 }
 
 .btn-primary {
-     background-color: var(--color-button-default);
+    cursor: pointer;
+    background-color: var(--color-button-default);
+    color: var(--color-text-light);
 }
 
 .btn-primary:hover {
@@ -18,4 +26,9 @@
 
 .btn-primary:active {
     background-color: var(--color-button-active);
+}
+
+.btn-primary:disabled {
+    cursor: default;
+    background-color: var(--color-button-disabled);
 }
