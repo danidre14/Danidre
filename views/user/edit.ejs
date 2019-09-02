@@ -15,6 +15,7 @@
             <div>Username: <%= profile.username %></div>
             <div>
                 <label for="bio">Bio:</label>
+                <br/>
                 <textarea name="bio" id="bio"><%= profile.bio %></textarea>
             </div>
             <div>Roles: <%= profile.roles %></div>
@@ -22,7 +23,7 @@
             <div>Updated At: <%= profile.updatedAt.toDateString() || profile.createdAt.toDateString() %></div>
             
             <a href="/u/<%= profile.username %>">Cancel</a>
-            <button type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
         </form>
     </article>
 </section>

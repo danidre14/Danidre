@@ -229,7 +229,7 @@ const updateSubjectList = function(allS, yourS, shuffle) {
         var ctt = Choices[form]; //all subject choices
         var tsubs = getSubjects(ctt, yourSubjects); //subject categories
     
-    yourSD.innerHTML += '<button style="font-size:20px;"onclick="considerphase3(\'' + allSubjects + '\', \'' + yourSubjects + '\')">' + ((tsubs.length === 4)? 'Select' : 'Shuffle') + '</button>';
+    yourSD.innerHTML += '<button class="btn btn-primary" style="font-size:20px;"onclick="considerphase3(\'' + allSubjects + '\', \'' + yourSubjects + '\')">' + ((tsubs.length === 4)? 'Select' : 'Shuffle') + '</button>';
     }
 }
 const carrySubject = function(aS, yS, index, order, max) {
@@ -312,7 +312,8 @@ const updateChoicesList = function(choices, subjects) {
             break;
         }
     if(matching)
-        sD.innerHTML += '<br/><button style="font-size:30px;"onclick="phase4(\'' + subjects + '\')">Select</button>';
+        sD.innerHTML += '<br/><button class="btn btn-primary" style="font-size:30px;"onclick="phase4(\'' + subjects + '\')">View Timetable</button>';
+    //sD.innerHTML += '<br/><button class="btn btn-primary" style="font-size:30px;"onclick="phase4(\'' + subjects + '\')">Select</button>';
 }
 const changeChoice = function(subs, choice, chosen) {
     subs = subs.split(",");
@@ -372,8 +373,10 @@ const phase4 = function(subs) {
     var day = ["Mon", "Tues", "Wednes", "Thurs", "Fri"];
     var tt = getTable(dtt, subs);
     window.timetable = getTable(dtt, subs);
+
+    phase5(true, true);
     
-    var element = '<div style="text-align:center;"><span style="font-size:20px"><span onclick="phase1()">' + form + '</span><br/><span onclick="phase2(\'' + form +'\')" id="og_subs">Subjects: ';
+    /*var element = '<div style="text-align:center;"><span style="font-size:20px"><span onclick="phase1()">' + form + '</span><br/><span onclick="phase2(\'' + form +'\')" id="og_subs">Subjects: ';
     var et = "";
     for(var i in subs)
         et += subname[subs[i]] + ", ";
@@ -388,63 +391,85 @@ const phase4 = function(subs) {
     for(var i in tt)
         element += '<td id="tt_' + day[parseInt(i)] + '" style="width:20%;vertical-align:top;border:2px black solid;border-top:none"></td>';
     element += "</tr></table>";
-    element += '<br/><button style="font-size:50px;"onclick="phase5(true, true)">Visualize!</button>';
+    element += '<br/><button class="btn btn-primary" style="font-size:50px;"onclick="phase5(true, true)">Visualize!</button>';
 
-    mainD.innerHTML = element;
+    mainD.innerHTML = element; 
     
-    updateTableList(tt, day);
+    updateTableList(tt, day); */
 }
 const phase5 = function(showd, showl, change) { //displaying time table!
     var element = "";
     var tt = Merge(times, timetable);
-    var day = ["Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    var day = ["Time", "Mon", "Tue", "Wed", "Thu", "Fri"];
     var periodsN = 6, daysN = 6;
     var subs = yourSubjects;
     var w = 100/daysN, h;
     var dP, dN, dR;
     getLegend(change);
     
-    element += '<span style="display:block;width:100%;font-size:30px;background-color:black;color:white;" onclick="phase1()">Sixth Form Givernment (' + form + ')</span><span style="display:block;width:100%;font-size:25px;background-color:black;color:white;" onclick="phase4(\'' + subs + '\')" >Time Table</span>';
+    element += '<span style="display:block;width:100%;background-color:black;color:white;" onclick="phase1()">Sixth Form Government (' + form + ')</span><span style="display:block;width:100%;background-color:black;color:white;"><!--onclick="phase4(\'' + subs + '\')"-->Time Table</span>';
     element += '<table style="width:100%;table-layout:fixed;"><tr>';
     for(var i in tt)
-        element += '<th style="width:' + w + '%;background-color:black;color:white;word-wrap: break-word;">' + (day[parseInt(i)]) + '</th>';
+        element += '<th class="ptth" style="width:' + w + '%;background-color:black;color:white;">' + (day[parseInt(i)]) + '</th>';
+    var lunchAdded = false;
     element += '</tr>';
     for(var j = 0; j < periodsN; j++) {
         element += '<tr style="width:100%;">';
         for(var i = 0; i < daysN; i++) {
-            element += '<td style="width:' + w + '%;height:50px;word-wrap: break-word;padding:2px;">';
-            h = 100/(tt[i][j].length);
-            for(var k in tt[i][j]) {
-                dR = tt[i][j][k];
-                dP = infoparent[dR];
-                dN = infoname[dR];
-                element += '<span style="display:block;text-align:center;width:100%;height:' + h + '%;background-color:' + (legend[dP]!==undefined?legend[dP][0] : 'lightgrey') + ';color:' + (legend[dP]!==undefined?legend[dP][1] : 'black') + ';">' + ((showd || (i == 0))? dR : '') + '</span>';
+            if(j == 2 && !lunchAdded) {
+                if(i==0) {
+                    element += '<td class="pttd" style="width:' + w + '%;height:50px;border:2px solid black;">';
+                    element += '<span style="display:block;text-align:center;width:100%;height:50%;background-color:grey;color:black;">' + '10:00AM' + '</span>';
+                    element += '<span style="display:block;text-align:center;width:100%;height:50%;background-color:grey;color:black;">' + '10:15AM' + '</span>';
+                    element += '</td>';
+                } else {
+                    element += '<td class="pttd" colspan="' + 5 + '" style="width:' + w + '%;height:50px;border:2px solid black;">';
+                    element += '<span style="display:block;text-align:center;width:100%;height:100%;background-color:lightgrey;color:black;">' + (showd? 'Supervised Box Lunch Distribution' : '') + '</span>';
+                    element += '</td>';
+                    break;
+                }
+            } else {
+                element += '<td class="pttd" style="width:' + w + '%;height:50px;border:2px solid black;">';
+                h = 100/(tt[i][j].length);
+                for(var k in tt[i][j]) {
+                    dR = tt[i][j][k];
+                    dP = infoparent[dR];
+                    dN = infoname[dR];
+                    element += '<span style="display:block;text-align:center;width:100%;height:' + h + '%;background-color:' + (legend[dP]!==undefined?legend[dP][0] : 'grey') + ';color:' + (legend[dP]!==undefined?legend[dP][1] : 'black') + ';">' + ((showd || (i == 0))? dR : '') + '</span>';
+                }
             }
+            // lunchAdded = false;
             element += '</td>';
+        }
+        if(j==2 && !lunchAdded) {
+            j =1;
+            lunchAdded = true;
         }
         element += "</tr>";
     }
     element += "</tr></table>";
-    element += '<span style="display:block;width:100%;font-size:20px;background-color:black;color:white;" onclick="phase2(\'' + form +'\')" id="og_subs">';
+    element += '<span style="display:block;width:100%;background-color:black;color:white;" onclick="phase2(\'' + form +'\')" id="og_subs">';
     var et = "";
     for(var i in subs)
         et += subname[subs[i]] + ", ";
-    element += et.substr(0, et.length-2) + '</span><span style="display:block;width:100%;font-size:20px;background-color:black;color:white;" onclick="phase3(\'' + subs +'\')">';
+    element += et.substr(0, et.length-2) + '</span><span style="display:block;width:100%;background-color:black;color:white;" onclick="phase3(\'' + subs +'\')">';
     et = "";
     for(var i in subs)
         et += subs[i] + ", ";
     element += et.substr(0, et.length-2) + '</span>';
-    element += '<span style="display:block;width:100%;font-size:35px;background-color:black;color:white;" onclick="phase5(' + showd + ',' + !showl + ')">Legend (' + (showl? 'Hide' : 'Show') + ' )</span>';
-    if(showl)
+    element += '<span style="display:block;width:100%;background-color:black;color:white;" onclick="phase5(' + showd + ',' + !showl + ')">Legend (' + (showl? 'Hide' : 'Show') + ')</span>';
+    if(showl) {
         for(var i in legend)
-            element += '<span style="display:block;width=100%;font-size:25px;text-align:center;background-color:' + legend[i][0] + ';color:' + legend[i][1] + ';">' + keys[i] + (showd? ' (' + i + ')' : '') + '</span>';
+            element += '<span style="display:block;width=100%;text-align:center;background-color:' + legend[i][0] + ';color:' + legend[i][1] + ';">' + keys[i] + (showd? ' (' + i + ')' : '') + '</span>';
+        element += '<span style="display:block;width=100%;text-align:center;background-color:lightgrey;">Supervised Box Lunch Distribution</span>';
+    }
         
-    element += '<br/><button style="font-size:25px;"onclick="phase5(' + !showd + ',' + showl + ')">' + (showd? 'Hide' : 'Show') + ' Details</button>';    
-    element += '<button style="font-size:25px;" onclick="phase5(' + showd + ',' + showl + ',true)">' + 'Re-Colour' + '</button>';
-    /*element += '<button style="font-size:25px;" onclick="phase4(\'' + yourSubjects + '\')">Back</button>';
-    element += '<button style="font-size:25px;"onclick="phase1()">Reset</button>';*/
+    element += '<br/><button class="btn btn-primary" onclick="phase5(' + !showd + ',' + showl + ')">' + (showd? 'Hide' : 'Show') + ' Details</button> ';    
+    element += '<button class="btn btn-primary" onclick="phase5(' + showd + ',' + showl + ',true)">' + 'Re-Colour' + '</button>';
+    /*element += '<button style="" onclick="phase4(\'' + yourSubjects + '\')">Back</button>';
+    element += '<button style=""onclick="phase1()">Reset</button>';*/
     
-    mainD.innerHTML = '<div style="text-align:center;">' + element + '</div>';
+    mainD.innerHTML = '<div style="text-align:center;font-size:0.8rem;">' + element + '</div>';
 }
 const updateTableList = function(tt, day) {
     tD = {};
@@ -577,7 +602,7 @@ const Wed = day(formT(choice6, Merge(choice5, PD5), Merge(Assembly), Merge(choic
 const Thu = day(formT(choice7, Merge(choice6, PD3), choice6, choice5, Merge(choice8, PD1), Merge(PD4, CoCurr)), formT(choice2, Merge(choice3, PD3), choice3, choice4, Merge(choice1, PD1), Merge(PD4, CoCurr)));
 const Fri = day(formT(choice5, choice8, choice7, choice6, Merge(BMED, PD6, CoCurr), Merge(CoCurr)), formT(choice4, choice1, choice2, choice3, Merge(PD6, CoCurr), Merge(CoCurr)));
 const Choices = day(formT(choice8, choice7, choice6, choice5), formT(choice1, choice2, choice3, choice4));
-const times = [[["7:30AM", "9:00AM"], ["9:00AM", "10:15AM"], ["10:15AM", "11:30AM"], ["11:30AM", "12:45PM"], ["12:45PM", "2:00PM"], ["2:00PM", "3:00PM"]]];
+const times = [[["7:30AM", "8:45AM"], ["8:45AM", "10:AM"], ["10:15AM", "11:30AM"], ["11:30AM", "12:45PM"], ["12:45PM", "2:00PM"], ["2:00PM", "3:00PM"]]];
 var colours = [["darkblue", "white"], ["green", "white"], ["blue", "white"], ["yellow", "black"], ["red", "black"], ["purple", "white"], ["cyan", "black"], ["orange", "black"], ["lightgreen", "black"]];
 window.onload = function() {
     var body = document.getElementById("ttbody");    

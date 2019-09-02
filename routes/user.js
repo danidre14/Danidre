@@ -50,12 +50,29 @@ router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async
 //Update Profile
 router.put('/:name', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
     try {
-        let user = await User.findOne({username:req.params.name});
-        user.firstName = req.body.firstName.trim() || user.firstName;
-        user.lastName = req.body.lastName.trim() || user.lastName;
-        user.bio = req.body.bio.trim() || user.bio;
-        user.updatedAt = Date.now() || user.updatedAt;
-        await user.save();
+        const updates = {
+            firstName: req.body.firstName.trim(),
+            lastName: req.body.lastName.trim(),
+            bio: req.body.bio.trim()
+        }
+        let hasChanged = false;
+        let user = await User.findOne({username: req.params.name});
+        if(user.firstName !== updates.firstName) {
+            user.firstName = updates.firstName;
+            hasChanged = true;
+        }
+        if(user.lastName !== updates.lastName) {
+            user.lastName = updates.lastName;
+            hasChanged = true;
+        }
+        if(user.bio !== updates.bio) {
+            user.bio = updates.bio;
+            hasChanged = true;
+        }
+        if(hasChanged) {
+            user.updatedAt = Date.now() || user.updatedAt;
+            await user.save();
+        }
         res.redirect(`/u/${user.username}`);
     } catch {
         console.log(err);
@@ -74,7 +91,7 @@ router.use('/*', (req, res) => {
 
 function checkAuthenticatedAccess(req, res, next) {
     if(!req.isAuthenticated()) { //unauthenticated user
-        req.flash('outsert', {message: 'Access denied.', note: true});
+        req.flash('outsert', {message: 'Access denied. Sign in to edit your account.', note: true});
         return res.redirect('back');
     }
     next();
@@ -82,7 +99,7 @@ function checkAuthenticatedAccess(req, res, next) {
 
 function checkAuthorizedAccess(req, res, next) {
     if(req.user.username !== req.params.name) { //unauthorized user    
-        req.flash('outsert', {message: 'Missing permissions. Access denied.', note: true});
+        req.flash('outsert', {message: `Access denied. Cannot edit someone else's account.`, note: true});
         return res.redirect(`/u/${req.params.name}`);
     }
     next();

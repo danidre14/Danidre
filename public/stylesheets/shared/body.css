@@ -1,32 +1,31 @@
 .container {
-  max-width: var(--container-width);
+    max-width: var(--container-width);
     margin: auto;
     min-height: 100%;
     position: relative;
   
     background: var(--color-section);
-  }
+}
   
-  .content {
+.content {
     color: var(--color-text-dark);
     padding: var(--default-spacing-x);
-    /* padding-bottom: var(--footer-size); */
     padding-bottom:calc(var(--default-spacing-y) + var(--footer-size));	/* Height of the footer */
     padding-top: 0px;
-  }
+}
   
-  .content a {
+.content a {
     font-weight: 500;
     color: var(--color-link-dark);
     text-decoration: underline;
-  }
+}
   
-  section article {
+section article {
     border-top: solid 2px var(--color-line);
     padding: var(--default-spacing-y) 0;
     margin-bottom: 0;
-  }
+}
   
-  p {
+p {
     margin-bottom: var(--paragraph-spacing);
-  }
+}

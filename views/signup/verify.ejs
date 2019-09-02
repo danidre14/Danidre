@@ -1,5 +1,5 @@
 <h2>Verify Account</h2>
-<section>
+<section class="signup-verify">
     <article>
         <form class="signings" action="/signup/verify" method="POST">
             <div>
@@ -7,7 +7,7 @@
                 <input type="email" id="email" name="email" autocomplete="off" required>
             </div>
             <div>
-                <input type="text" id="token" name="token" autocomplete="off" value="<%= searchOptions.token %>" hidden>
+                <input class="token-box" type="text" id="token" name="token" autocomplete="off" value="<%= searchOptions.token %>" hidden>
             </div>
             <button class="btn btn-primary" type="submit">Verify</button>
         </form>

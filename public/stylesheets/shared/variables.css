@@ -25,7 +25,10 @@
 
     --color-line: var(--color-button-default);
     --color-footer: var(--color-button-default);
-    --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 83%);
+    --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 80%);
+    --color-input: hsl(var(--color-base-hue), var(--color-base-saturation), 85%);
+    --color-input-border: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
+    --color-input-border-focus: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
 
     --footer-size:2rem;
     --header-bar-size:1.6rem;
