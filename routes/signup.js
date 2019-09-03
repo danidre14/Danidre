@@ -6,6 +6,8 @@ const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
 const Token = require('../models/token');
 
+const testEmail = false;
+
 router.get('/', checkNotAuthenticated, (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.uMessage = req.flash('uMessage');
@@ -139,7 +141,7 @@ async function createUser(req, res) {
             password: hashedPassword
         });
 
-        if(process.env.NODE_ENV !== 'production') {
+        if(process.env.NODE_ENV !== 'production' && !testEmail) {
             user.isVerified = true; //verified by default if not in production
             await user.save();
             req.flash('outsert', {message: `Development account ${user.email} created. Sign in with username ${user.username}.`, note: true});
@@ -235,15 +237,46 @@ function checkNotAuthenticated(req, res, next) {
 
 
 function getMailOptions(username='User', email, host, token) {
-    const tokenLink = `http:\/\/${host}\/signup\/verify?token=${token}`;
+    const protocol = `https`;
+    const siteLink = `${protocol}:\/\/${host}`;
+    const tokenLink = `${siteLink}\/signup\/verify?token=${token}`;
     const options = {
         from: 'Danidre <no-reply@danidre.com>',
         to: `${username} <${email}>`,
         subject: 'Account Verification Token',
         text: `Hello ${username},\n\n
         Please verify your account by clicking the following link: \n${tokenLink}.\n`,
-        html: `Hello ${username},<br/><br/>
-        Please verify your account by clicking the following link: <br/><a href="${tokenLink}">${tokenLink}</a>.`
+        html: `<body style="margin:0;padding:0;">
+	    <div style="padding:0;margin:0;text-align:center;font-size:1.4rem;color:#E3DBD8;padding:0;font-family:Helvetica;">
+            <h1 style="background-color:#989586;color:#E3DBD8;margin:0;padding:2rem 0;font-size:5rem;background-image:url('https://danidre.herokuapp.com/images/Danidrebackground.jpg');background-repeat: no-repeat;background-size: 100%;background-position: center;font-weight:bold;"><a style="text-decoration:none;color:#E3DBD8;" href="${siteLink}">Danidre</a></h1>
+            <div style="background-color:#968176;margin:0;padding:.4rem;font-size:1.6rem;">EMAIL</div>
+            <div style='background-color:#D2CBC5;color:#615755;margin:0;padding:0px 1rem;'>
+                <h2 style="font-size:2.5rem;color:#3C2E2D;margin:0;padding:1rem;">Hello ${username},</h2>
+                <section style="border-top:2px solid #968176;">
+                    <div style="text-align:left;">
+                    <p style="font-size:1.8rem;color:#3C2E2D;padding:1.4rem;margin:0;">Welcome to Danidre.com. Before you sign in, however, you are required to verify your account.</p>
+                    <p style="color:#3C2E2D;padding:1.4rem;margin:0;">Please verify your account by clicking the button below:</p>
+                    <a style='background-color:#968176;color:#E3DBD8;text-decoration:none;padding:.7rem 1rem;font-size: 1rem;display:inline-block;border-radius: .5rem;margin-left:1.4rem;' href="${tokenLink}">Verify Account</a>
+                    </div>
+                    <div style="text-align:left;">
+                    <p style="color:#3C2E2D;padding:1.4rem;margin:0;">If the button does not work, copy/paste the link below into a new tab:</p>
+                    <a style='color:#968176;padding:1.4rem;margin:0;' href="${tokenLink}">${tokenLink}</a>
+                    </div>
+                </section>
+                <section style="border-top:2px solid #968176;margin-top:1.6rem;">
+                    <p style="padding-bottom:1rem;margin-bottom:0;font-size:1.1rem;padding-top:.8rem;">Don't recognize this activity? You can ignore this e-mail. No further action is needed.</p>
+                </section>
+            </div>
+            <div style="background-color:#968176;margin:0;padding:.4rem;font-size:1.6rem;"><a style="text-decoration:none;" href="${siteLink}"><span style="color:#3C2E2D;font-weight:bold;">Danidre</span> <span style="color:#E3DBD8;">2014-19</span></a></div>
+        </div>
+	</body>`
+        /*html: `<div style='text-align:center;background-color:#989586;color:#E3DBD8;'>
+                    <h1>Danidre</h1>
+                </div>
+                <div style='text-align:center;background-color:#D2CBC5;color:#615755;'>
+                    Hello ${username},<br/><br/>
+                    Please verify your account by clicking the following link: <br/><a style='color:#90827F;' href="${tokenLink}">${tokenLink}</a>.
+                </div>`*/
 
     };
     return options;
@@ -252,7 +285,7 @@ function getMailOptions(username='User', email, host, token) {
 
 
 function sendMail(mailOptions, email) {
-    if(process.env.NODE_ENV !== 'production') {
+    if(process.env.NODE_ENV !== 'production' && !testEmail) {
         //development environment
         return console.log('Mail sent, make sure to actually send here');
     }
