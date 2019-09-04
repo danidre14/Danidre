@@ -203,8 +203,11 @@ const removeObj = function(obj, index) {
 }
 const chooseForm = function(f) {
     var form = ["Lower 6", "Upper 6"];
-    window.form = form[f];
-    phase2(); //choose subjects
+    if(window.form == undefined && f == undefined) window.form = form[0];
+    else if(f !== undefined) window.form = form[f];
+    if(document.getElementById('theFormClassName') !== undefined && document.getElementById('theFormClassName') !== null)
+        document.getElementById('theFormClassName').innerHTML = window.form;
+    // phase2(); //choose subjects
 }
 const updateSubjectList = function(allS, yourS, shuffle) {
     var allSubjects = [], yourSubjects = [];
@@ -258,14 +261,17 @@ const carrySubject = function(aS, yS, index, order, max) {
     
 }
 const phase1 = function() { //choose form
-    var element = '<div class="hptt">Choose Your Form</div><table style="width:100%;text-align:center;"><tr><th class="btn btn-primary" onclick="chooseForm(0)">Lower 6</th><th class="btn btn-primary" onclick="chooseForm(1)">Upper 6</th></tr></table>';
-    
+    chooseForm();
+    var element = '<div class="hptt">Choose Your Form</div><div style="text-align:center;font-size:2.1rem;font-weight:500;" id="theFormClassName">' + form + '</div><table style="width:100%;text-align:center;"><tr><th class="btn btn-primary" onclick="chooseForm(0)">Lower 6</th><th class="btn btn-primary" onclick="chooseForm(1)">Upper 6</th></tr></table><br/>';
+
     mainD.innerHTML = element;
+    
+    phase2();
 }
 const phase2 = function() { //choose subjects
-    var element = '<div style="text-align:center;"><span onclick="phase1()">' + form + '</span><div class="hptt">Choose Your Subjects</div><table style="width:100%;text-align:center;"><tr><th>All Subjects</th><th>Your Subjects</th></tr><tr><td id="all_subjects" style="word-wrap:break-word;vertical-align:top;width:50%;"></td><td id="your_subjects" style="word-wrap:break-word;vertical-align:top;width:50%;"></td></tr></table></div>';
+    var element = '<div style="text-align:center;"><span onclick="phase1()">' + "" + '</span><div class="hptt">Choose Your Subjects</div><table style="width:100%;text-align:center;"><tr><th>All Subjects</th><th>Your Subjects</th></tr><tr><td id="all_subjects" style="word-wrap:break-word;vertical-align:top;width:50%;"></td><td id="your_subjects" style="word-wrap:break-word;vertical-align:top;width:50%;"></td></tr></table></div>';
     
-    mainD.innerHTML = element;
+    mainD.innerHTML += element;
     
     updateSubjectList(window.aS || sublist, window.yS || []);
 }

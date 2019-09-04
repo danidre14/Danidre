@@ -94,8 +94,10 @@ try {
     //if user already exists
     /* 
         if user is verified -> redirect 'username unavailable'
-        else if user not verified, but token exists for that user -> redirect 'check your email for verification token'
+        else if user not verified, but token exists for that user -> 
+        if email exists: redirect 'check your email for verification token'
         else if user not verified, but token does not exist -> redirect 'an email has been sent to verify account'
+        or if email does not exist
     */
 
     //if user verified
@@ -122,9 +124,31 @@ try {
         return res.redirect('/signup/v');
     }
 
+
     //if token exists
-    req.flash('outsert', {message: 'Account already registered. Check your email for the verification token.'});
-    res.redirect('/signin');
+    
+    //look for user email
+    if(user.email === req.body.email) {//email exists
+        //check email for verification token
+        req.flash('outsert', {message: 'Account already registered. Check your email for the verification token.'});
+        return res.redirect('/signin');
+    } else {//emal does not exist
+        //save new email
+        user.email = req.body.email;
+        await user.save();
+
+        // Create a verification token
+        const newToken = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+        await newToken.save();
+
+        // Send the email for resend token
+        const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
+
+        sendMail(mailOptions, user.email);
+
+        req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`});
+        return res.redirect('/signup/v');
+    }
 } catch (err) {
     console.log(err)
 }
@@ -243,7 +267,7 @@ function getMailOptions(username='User', email, host, token) {
     const options = {
         from: 'Danidre <no-reply@danidre.com>',
         to: `${username} <${email}>`,
-        subject: 'Account Verification Token',
+        subject: 'Danidre: Account Verification Token',
         text: `Hello ${username},\n\n
         Please verify your account by clicking the following link: \n${tokenLink}.\n`,
         html: `<body style="margin:0;padding:0;">
@@ -270,14 +294,6 @@ function getMailOptions(username='User', email, host, token) {
             <div style="background-color:#968176;margin:0;padding:.4rem;font-size:1.6rem;"><a style="text-decoration:none;" href="${siteLink}"><span style="color:#3C2E2D;font-weight:bold;">Danidre</span> <span style="color:#E3DBD8;">2014-19</span></a></div>
         </div>
 	</body>`
-        /*html: `<div style='text-align:center;background-color:#989586;color:#E3DBD8;'>
-                    <h1>Danidre</h1>
-                </div>
-                <div style='text-align:center;background-color:#D2CBC5;color:#615755;'>
-                    Hello ${username},<br/><br/>
-                    Please verify your account by clicking the following link: <br/><a style='color:#90827F;' href="${tokenLink}">${tokenLink}</a>.
-                </div>`*/
-
     };
     return options;
 }
