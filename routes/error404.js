@@ -20,11 +20,11 @@ router.use((req, res, next) => {
     // respond with json
     if (req.accepts('json')) {
         //res.send('json not found');
-        res.send({ error: 'Not found' });
+        res.send({ error: 'Not-found' });
         return;
     }
     // default to plain-text. send()
-    res.type('txt').send('Not found');
+    res.type('txt').send('Not=found');
 })
 
 module.exports = router;

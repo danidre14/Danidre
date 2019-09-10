@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/*', (req, res) => {
-    res.redirect('/');
+    res.redirect(req.header('Referer') || '/');
 });
 
 router.delete('/', checkAuthenticated, (req, res) => {
     req.logOut();
-    res.redirect('/');
+    res.redirect(req.header('Referer') || '/');
 });
 
 function checkAuthenticated(req, res, next) {
@@ -15,7 +15,7 @@ function checkAuthenticated(req, res, next) {
         return next();
     }
 
-    res.redirect('/');
+    res.redirect(req.header('Referer') || '/');
 }
 
 module.exports = router;

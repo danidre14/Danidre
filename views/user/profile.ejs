@@ -1,6 +1,6 @@
 <% var username; %>
 <% let fullName = (profile.firstName || "") + " " + (profile.lastName || ""); %>
-<h2><%=profile.username %></h2>
+<h2><%=profile.username %>'s Profile</h2>
 <section class="profile">
     <article>
         <desc>Name:</desc>
@@ -14,7 +14,12 @@
         <desc>Updated At:</desc>
         <p><%= profile.updatedAt.toLocaleString() || profile.createdAt.toLocaleString() %></p>
         <% if(username !== undefined && username == profile.username) { %>
-            <a href="/u/<%= username %>/edit">Edit Profile</a>
+            <div class="div-space-between">
+                <a href="/u/">Other Users</a>
+                <a href="/u/<%= username %>/edit">Edit Profile</a>
+            </div>
+        <% } else if(username !== undefined) { %>
+            <a href="/u/">Other Users</a>
         <% } %>
     </article>
 </section>

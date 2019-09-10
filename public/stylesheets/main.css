@@ -103,6 +103,10 @@ section.profile-edit textarea {
     width: 100% !important;
     height: 5rem;
 }
+section div.div-space-between {
+    display: flex;
+    justify-content: space-between;
+}
 
 /* Secrets */
 div.hptt {
@@ -130,6 +134,14 @@ table td#all_subjects, table td#your_subjects {
 @media screen and (max-width: 500px) {
     :root {
         font-size: 1rem;
+        --default-spacing-x:1rem;
+        --default-spacing-y:1.2rem;
+    }
+    h2 {
+        font-size: 1.7rem;
+        font-weight: 500;
+        text-align: center;
+        padding: var(--heading-spacing);
     }
 }
 
@@ -140,17 +152,21 @@ table td#all_subjects, table td#your_subjects {
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 700px) {
     :root {
         font-size: 1.1rem;
     }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 800px) {
     :root {
         font-size: 1.6rem;
-        --default-spacing-x:1.5rem;
-        --default-spacing-y:1.8rem;
+        --default-spacing-x:1.8rem;
+        --default-spacing-y:2rem;
+    }
+}
+@media screen and (min-width: 1024px) {
+    :root {
         --container-width: 1024px;
     }
 }

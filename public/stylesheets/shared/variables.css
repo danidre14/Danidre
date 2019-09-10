@@ -34,7 +34,8 @@
     --footer-size:2rem;
     --header-bar-size:1.6rem;
     
-    --default-spacing-x:1rem;
+    --default-spacing:1rem;
+    --default-spacing-x:1.2rem;
     --default-spacing-y:1.5rem;
     --heading-spacing:1rem;
     --message-spacing:calc(var(--default-spacing-y)/2);

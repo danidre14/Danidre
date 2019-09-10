@@ -20,6 +20,15 @@ router.get('/polyTT', (req, res) => {
     res.render('misc/polyTimeTableMaker', vars);
 });
 
+router.get('/surveyMaker', (req, res) => {
+    let vars = {cPage: "secret", searchOptions: req.query};
+    vars.title = "Survey Maker";
+    if(req.isAuthenticated()) {
+        vars.username = req.user.username;
+    }
+    res.render('misc/surveyMaker', vars);
+});
+
 router.use('/*', (req, res) => {
     res.redirect('/');
 })

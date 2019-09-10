@@ -20,6 +20,7 @@ const signinRouter = require('./routes/signin');
 const signoutRouter = require('./routes/signout');
 const secretRouter = require('./routes/secret');
 const userRouter = require('./routes/user');
+const apiRouter = require('./routes/api');
 const error404Router = require('./routes/error404');
 
 app.set('view engine', 'ejs');
@@ -27,9 +28,10 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 app.set("layout extractMetas", true);
 app.set("layout extractScripts", true);
-// app.set("layout extractStyles", true);
+app.set("layout extractStyles", true);
 app.use(expressLayouts);
 app.use(methodOverride('_method'));
+app.use(express.json());
 app.use(express.static('public')); //where most server files will be
 app.use(express.urlencoded({limit: '10mb', extended: false}));
 app.use(flash());
@@ -78,6 +80,7 @@ app.use('/signin', signinRouter);
 app.use('/signout', signoutRouter);
 app.use('/secret', secretRouter);
 app.use('/u', userRouter);
+app.use('/api', apiRouter);
 
 app.use(error404Router); //make sure to put this after all routes
 

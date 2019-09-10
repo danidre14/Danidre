@@ -80,9 +80,56 @@ router.put('/:name', checkAuthenticatedAccess, checkAuthorizedAccess, async (req
     }
 });
 
+router.post('/:name/update', 
+(req, res, next) => {
+    if(!req.isAuthenticated()) { //unauthenticated user
+        req.flash('outsert', {message: 'Access denied. Sign in to edit your account.', note: true});
+        return res.send('Unauthenticated user');
+    }
+    next();
+}, (req, res, next) => {
+    if(req.user.username !== req.params.name) { //unauthorized user    
+        req.flash('outsert', {message: `Access denied. Cannot edit someone else's account.`, note: true});            return res.send('Unauthorized user');
+    }
+    next();
+},
+async (req, res) => {
+    if(req.body.target === 'surveyMaker') {
+        let user = await User.findOne({username: req.params.name}, 'username secret');
+        user.secret.surveyMaker[req.body.key] = req.body.value;
+        user.markModified('secret');
+        await user.save();
+        res.send('Successful');
+    }
+});
+
+
+router.delete('/:name/update', 
+(req, res, next) => {
+    if(!req.isAuthenticated()) { //unauthenticated user
+        req.flash('outsert', {message: 'Access denied. Sign in to edit your account.', note: true});
+        return res.send('Unauthenticated user');
+    }
+    next();
+}, (req, res, next) => {
+    if(req.user.username !== req.params.name) { //unauthorized user    
+        req.flash('outsert', {message: `Access denied. Cannot edit someone else's account.`, note: true});            return res.send('Unauthorized user');
+    }
+    next();
+},
+async (req, res) => {
+    if(req.body.target === 'surveyMaker') {
+        let user = await User.findOne({username: req.params.name}, 'username secret');
+        user.secret.surveyMaker[req.body.key] = undefined;
+        user.markModified('secret');
+        await user.save();
+        res.send('Successfully deleted mf');
+    }
+});
+
 router.use('/*', (req, res) => {
     if(!req.isAuthenticated()) {
-        return res.redirect('back');
+        return res.redirect('/');
     }
     res.redirect('/u');
 });
@@ -92,7 +139,7 @@ router.use('/*', (req, res) => {
 function checkAuthenticatedAccess(req, res, next) {
     if(!req.isAuthenticated()) { //unauthenticated user
         req.flash('outsert', {message: 'Access denied. Sign in to edit your account.', note: true});
-        return res.redirect('back');
+        return res.redirect('/');
     }
     next();
 }
@@ -110,7 +157,7 @@ function checkIfLoggedIn(req, res, next) {
         return next();
     }
     req.flash('outsert', {message: 'Sign In to view the Users Page', note: true});
-    res.redirect('back');
+    res.redirect('/');
 }
 
 module.exports = router;

@@ -11,6 +11,8 @@ initializePassport(
 );
 
 router.get('/', checkNotAuthenticated, (req, res) => {
+    req.session.redirectTo = req.header('Referer') || '/';
+    console.log(req.query)
     let vars = {cPage: "signin", searchOptions: req.query};
     vars.title = "Sign In";
     if(req.isAuthenticated()) {
@@ -23,7 +25,12 @@ router.post('/', checkNotAuthenticated, passport.authenticate('local', {
     //successRedirect: '../', //redirect to homepage
     failureRedirect: '../signin',
     failureFlash: true //so a message can be displayed to the user */
-}), (req, res) => res.redirect(`/u/${req.user.username}`)); //redirect to user's account page
+}), (req, res) => {
+    const redirectTo = req.session.redirectTo || '/';
+    delete req.session.redirectTo;
+    res.redirect(redirectTo);
+}); //redirect to previous page
+
 
 function checkNotAuthenticated(req, res, next) {
     if(req.isAuthenticated()) {

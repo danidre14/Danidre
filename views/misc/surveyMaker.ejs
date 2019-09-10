@@ -1,0 +1,43 @@
+<% var username; %>
+<h2>Survey Maker (v0.1)</h2>
+<section>
+    <% if(username !== undefined) {%>
+    <article>
+        <p>Best used on browser/desktop. On mobile, view in landscape mode for best results.</p>
+    </article>
+    <article>
+        <div class="ttcont">
+            <div class="middle">
+                <span class="big">Your Surveys</span>
+            </div>  
+            <div id="ttlist"></div>
+        </div>
+    </article>
+    <article>
+        <div class="ttcont">
+            <div class="middle">
+                <div id='CF' class="big"></div>
+                <button id="devM" class="big button" onclick="toggleMode('dev')">Editor Mode: On</button>
+            </div>
+            <div>            
+                <div id="ttbody"></div>
+                <div class="sticky">
+                    <button class="normal accept button" onclick="saveProgress()">Save</button>
+                    <button class="normal inquire button" onclick="scrollToTop()">Top</button>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article>
+        <p>Found a bug? <a href="/contact">Report it here</a>.</p>
+    </article>
+<link rel="stylesheet" href="/stylesheets/secret/surveyMaker.css">
+<script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="/javascripts/secret/surveyMaker.js"></script>
+    <% } else { %>
+    <article>
+        <p><a href="/signin">Sign in</a> to create your survey.</p>
+    </article>
+    <% } %>
+</section>
+<meta name="robots" content="none"/>

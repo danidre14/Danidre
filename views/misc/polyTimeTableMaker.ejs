@@ -1,3 +1,4 @@
+<% var username; %>
 <h2>Poly Time Table Maker (v0.8)</h2>
 <section>
     <article>
@@ -7,9 +8,11 @@
         <div id="ttbody"></div>
     </article>
     <article>
-        <p>Like what you see? <a href="/signup">Sign up today</a>.</p>
+        <% if(username === undefined) {%>
+            <p>Like what you see? <a href="/signup">Sign up today</a>.</p>
+        <% } %>
         <p>Found a bug? <a href="/contact">Report it here</a>.</p>
     </article>
 </section>
-<script defer src="/javascripts/polyTimeTableMaker.js"></script>
+<script defer src="/javascripts/secret/polyTimeTableMaker.js"></script>
 <meta name="robots" content="none"/>

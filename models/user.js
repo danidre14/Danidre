@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     roles: {
-        type: Array,
+        type: [String],
         required: true,
         default: ['user']
     },
@@ -42,6 +42,13 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String,
         default: "New user"
+    },
+    secret: {
+        polyTT: [String],
+        surveyMaker: {
+            type: Object,
+            default: {"Survey Template": "1&scn&Enter your age:&scn&16-17&cln&0&cma&18-19&cln&0&cma&20+&cln&0&fsp&1&scn&Enter gender:&scn&Male&cln&0&cma&Female&cln&0&cma&Other&cln&0&fsp&1&scn&Do you like fruits?&scn&Yes&cln&0&cma&No&cln&0&fsp&1&scn&Which fruit do you prefer the most?&scn&Apple&cln&0&cma&Banana&cln&0&cma&Orange&cln&0&cma&Grape&cln&0&cma&Other&cln&0&fsp&0&scn&Give a reason for your answer:&fsp&0&scn&Give one suggestion of what would make you eat more fruits:"}
+        }
     }
     /*
     ,

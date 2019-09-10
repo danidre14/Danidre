@@ -236,7 +236,7 @@ function validateInfomation(req, res, next) {
     let p2Name = req.body.password2;
     let p2Message = "";
     if(pName !== p2Name) {
-        p2Message += "-Password do not match";
+        p2Message += "-Passwords do not match";
         error = true;
     }
 

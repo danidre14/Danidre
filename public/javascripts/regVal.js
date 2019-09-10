@@ -88,7 +88,7 @@ valP2 = function() {
     let message = "";
     if(value2.length !== 0) {
         if(value1 !== value2) {
-            message += "-Password do not match";
+            message += "-Passwords do not match";
             p2Error = true;
         }
     } else {
