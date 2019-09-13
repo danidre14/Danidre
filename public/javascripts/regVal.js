@@ -12,14 +12,20 @@ let p2Word = document.getElementById("password2");
 let pw2Message = document.getElementById("pw2Message");
 let p2Error = false;
 
+let email = document.getElementById("email");
+let email2 = document.getElementById("email2");
+let e2Message = document.getElementById("e2Message");
+let e2Error = false;
+
 let sBtn = document.getElementById("sBtn");
 
 regForm.addEventListener('input', function (evt) {
     valU();
     valP();
     valP2();
+    valE2();
 
-    if(!uError && !pError && !p2Error) 
+    if(!uError && !pError && !p2Error && !e2Error) 
         // sBtn.style.display = "block";
         sBtn.disabled = false;
     else
@@ -99,4 +105,24 @@ valP2 = function() {
         pw2Message.style.display = "block";
     else
         pw2Message.style.display = "none";
+}
+
+valE2 = function() {
+    e2Error = false;
+    let value1 = email.value;
+    let value2 = email2.value;
+    let message = "";
+    if(value2.length !== 0) {
+        if(value1 !== value2) {
+            message += "-Emails do not match";
+            e2Error = true;
+        }
+    } else {
+        e2Error = true;
+    }
+    e2Message.innerHTML = message;
+    if(message !== "") 
+        e2Message.style.display = "block";
+    else
+        e2Message.style.display = "none";
 }

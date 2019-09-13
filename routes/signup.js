@@ -13,6 +13,7 @@ router.get('/', checkNotAuthenticated, (req, res) => {
     vars.uMessage = req.flash('uMessage');
     vars.pMessage = req.flash('pMessage');
     vars.p2Message = req.flash('p2Message');
+    vars.e2Message = req.flash('e2Message');
     vars.title = "Sign Up";
     if(req.isAuthenticated()) {
         vars.username = req.user.username;
@@ -240,11 +241,21 @@ function validateInfomation(req, res, next) {
         error = true;
     }
 
+    //re-entered email
+    let email = req.body.email;
+    let email2 = req.body.email2;
+    let e2Message = "";
+    if(email !== email2) {
+        e2Message += "-Emails do not match";
+        error = true;
+    }
+
     //redirect if needed
     if(error) {
         req.flash('uMessage', uMessage);
         req.flash('pMessage', pMessage);
         req.flash('p2Message', p2Message);
+        req.flash('e2Message', e2Message);
         return res.redirect('signup');
     }
 

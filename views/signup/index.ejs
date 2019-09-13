@@ -1,6 +1,7 @@
 <% var uMessage; %>
 <% var pMessage; %>
 <% var p2Message; %>
+<% var e2Message; %>
 <h2>Sign Up</h2>
 <section class="signup">
     <article>
@@ -19,6 +20,17 @@
             <div>
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" autocomplete="off" required>
+            </div>
+            <div>
+                <label for="email2">Re-Enter Email</label>
+                <input type="email" id="email2" name="email2" autocomplete="off" required>
+                <div>
+                    <% if (e2Message) { %>
+                        <pre id="e2Message" style="display:block;"><%= e2Message %></pre>
+                    <% } else { %>
+                        <pre id="e2Message" style="display:none;"></pre>
+                    <% } %>
+                </div>
             </div>
             <div>
                 <label for="password">Password</label>
