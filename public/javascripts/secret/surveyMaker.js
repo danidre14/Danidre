@@ -1,6 +1,6 @@
 const postList = async function(config) {
     try {
-        request = await axios('/api/user_data');
+        let request = await axios('/api/user_data');
         let requestOK = request && request.status === 200 && request.statusText === 'OK';
         if(!requestOK) {
             console.log('Must be logged in')
@@ -51,7 +51,7 @@ window.onload = function() {
     getList();
 }
 const getList = async function() {
-    request = await axios('/api/user_data');
+    let request = await axios('/api/user_data');
     let requestOK = request && request.status === 200 && request.statusText === 'OK';
     if(!requestOK) {
         console.log('Must be logged in')
@@ -299,7 +299,6 @@ const saveProgress = function(str) {
     
 }
 const loadProgress = function(str) {
-    //var s = "1&scn&Can birds fly?&scn&Maybe&cln&3&cma&Never&cln&2&fsp&0&scn&Give a reason for your answer:&scn&They have wings.&cma&They're black. Life's racist.&cma&Magic&cma&Flappy bird! Duuhhh!&cma&It's impossible.";
     
     var s = str? str : myData;
     

@@ -1,12 +1,23 @@
 .btn {
     border: none;
-    border-radius: .5rem;
+    border-radius: var(--btn-border-radius);
+    display: inline-block;
     padding: .2rem .5rem;
     font-size: 1rem;
-    text-decoration: none;
+    line-height: 1rem;
+    text-decoration: none !important;
     font-family: var(--global-fonts);
+    font-weight: 500 !important;
+    /* display: inline-block; */
+    margin: auto 0;
+     /* var(--small-spacing) 0; */
     color: var(--color-text-light);
     cursor: pointer;
+}
+
+.btn-inherit {
+    margin: 0;
+    padding: auto;
 }
 
 .btn-chosen {
@@ -17,7 +28,7 @@
 .btn-primary {
     cursor: pointer;
     background-color: var(--color-button-default);
-    color: var(--color-text-light);
+    color: var(--color-text-light) !important;
 }
 
 .btn-primary:hover {
@@ -29,6 +40,11 @@
 }
 
 .btn-primary:disabled {
+    cursor: default;
+    background-color: var(--color-button-disabled);
+}
+
+.btn-disabled {
     cursor: default;
     background-color: var(--color-button-disabled);
 }

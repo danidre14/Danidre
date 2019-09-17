@@ -12,9 +12,10 @@ header {
 .usernavauth {
     position: sticky;
     top: 0;
+    z-index: 10;
     width: 100%;
     height: var(--header-bar-size);			/* Height of the bar */
-    background: var(--color-footer);
+    background: var(--color-usernavauth);
 
     display: flex;
     flex-wrap: wrap;
@@ -41,16 +42,17 @@ header {
 }
 
 .usernavauth nav a.userIcon {
-    background-image: url("../../images/UsersIcon.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: var(--header-bar-image-size);
-    height: var(--header-bar-image-size);
     display: inline-block;
     position: relative;
+    width: var(--header-bar-image-size);
+    height: var(--header-bar-image-size);
     margin-right: var(--header-bar-spacing);
-    /* top: var(--footer-image-top); */
+}
 
+.usernavauth nav a img.userIcon {
+    border-radius: var(--default-border-radius);
+    width: var(--header-bar-image-size);
+    height: var(--header-bar-image-size);
 }
 
 .btn-so {

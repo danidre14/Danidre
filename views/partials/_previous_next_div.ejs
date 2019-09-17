@@ -1,0 +1,17 @@
+<!-- <div style="height:100%;display:flex;justify-content:space-between;flex-wrap: wrap;align-content:space-around;margin:var(--mini-spacing);"> -->
+<div style="margin:var(--small-spacing) 0;" class="div-space-between">
+    <% if(currPage === 1) { %>
+        <span class="btn btn-disabled">◀ Previous</span>
+    <% } else { %>
+        <a class="btn btn-primary" href="?<%= stringify(prevLink) %>">◀ Previous</a>
+    <% } %>
+    <div style="display:flex;justify-content:space-between;flex-wrap: wrap;align-content:space-around;"> Page <%= currPage %> of <%= pages %> </div>
+    
+    <% if(currPage === pages) { %>
+        <span class="btn btn-disabled">Next ▶</span>
+    <% } else { %>
+        <a class="btn btn-primary" href="?<%= stringify(nextLink) %>">Next ▶</a>
+    <% } %>
+</div>
+
+

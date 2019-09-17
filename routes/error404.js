@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/user');
 
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
     res.status(404);
     // respond with html page
     if (req.accepts('html')) {
@@ -10,7 +11,8 @@ router.use((req, res, next) => {
         vars.url = req.url;
         vars.title = "Page Not Found";
         if(req.isAuthenticated()) {
-            vars.username = req.user.username;
+            const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+            vars.user = user;
         }
         vars.bounceLink = req.header('Referer') || '/';
         // req.flash('bounce', {message: req.header('Referer') || '/'});

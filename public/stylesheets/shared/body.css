@@ -8,6 +8,7 @@
 }
   
 .content {
+    line-height: var(--default-spacing-y);
     color: var(--color-text-dark);
     padding: var(--default-spacing-x);
     padding-bottom:calc(var(--default-spacing-y) + var(--footer-size));	/* Height of the footer */
@@ -24,6 +25,17 @@ section article {
     border-top: solid 2px var(--color-line);
     padding: var(--default-spacing-y) 0;
     margin-bottom: 0;
+}
+
+.div-space-around {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+section div.div-space-between {
+    display: flex;
+    justify-content: space-between;
 }
   
 p {

@@ -1,13 +1,50 @@
+<% let distanceToNow; %>
 <h2>Users</h2>
 <section class="users">
     <article>
+        <% const pageParams = { url: `/u`, currPage: currPage, pages: pages, prevLink: {p: parseInt(currPage - 1), s: searchParams}, nextLink: {p: parseInt(currPage + 1), s: searchParams}}; %>
+
+        <form action="/u" method="GET">
+            <div style="display:flex;justify-content: space-between;flex:1;">
+                <input style="border-top-right-radius:0;border-bottom-right-radius:0;" class="input-inline" type="text" name="s" autocomplete="off" placeholder="Search names or bios" value="<%= searchParams %>">
+                <button style="border-top-left-radius:0;border-bottom-left-radius:0;" class="btn btn-primary btn-inherit" type="submit">Search</button>
+            </div>
+        </form>
+
+        <%- include('../partials/_previous_next_div', pageParams) %>
+
         <div>
+            <% let hasUsers = false; %>
             <% users.forEach(user => {%>
-                <div><a href="/u/<%= user.username %>">
-                    <p><%= user.username %><%= user.createdAt%> <%= user.email %></p>
-                </a></div>
+                <% if(!hasUsers) hasUsers = true; %>
+                <div class="userList">
+                    <div>
+                        <a href="/u/<%= user.username %>/#navManu">
+                            <img src="<%= user.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                            <span><%= user.username %><%= user.email %></span>
+                        </a>
+                    </div>
+                    <div>
+                        <div>
+                            <% distanceToNow = formatDistanceToNow(user.lastSeen); %>
+                            <% if(distanceToNow === 'Online') { %>
+                                <span style="color:#4cdb4c;font-weight:500;"><%= distanceToNow %> </span>
+                            <% } else if(distanceToNow === 'never') { %>
+                                <% distanceToNow = formatDistanceToNow(user.updatedAt); %>
+                                <span style="color:#c43d3d;font-weight:500;"><%= distanceToNow %> </span>
+                            <% } else { %>
+                                <span style="color:#e29c33;font-weight:500;"><%= distanceToNow %> </span>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
             <% }); %>
+
+            <% if(!hasUsers) { %>
+                <div style="text-align:center;font-size:.6rem;"><i>No results for your search.</i></div>
+            <% } %>
         </div>
+        <%- include('../partials/_previous_next_div', pageParams) %>
     </article>
 </section>
 <meta name="description" content="Search for users on Danidre's site.">

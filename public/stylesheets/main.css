@@ -39,24 +39,47 @@ h2 {
     padding: var(--heading-spacing);
 }
 
-input, textarea {
+.input, .textarea {
     display: block;
     font-family: var(--global-fonts);
     font-weight: normal;
     background: var(--color-input);
     border: solid 2px var(--color-input-border);
+    border-radius: var(--default-border-radius);
     color: var(--color-text-dark);
+    padding: var(--mini-spacing);
     width: 80%;
     resize: none;
     -webkit-transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
     transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
 }
+::placeholder {
+    font-style: italic;
+}
 
-input:focus, textarea:focus {
+.input:focus, textarea:focus {
     outline: none;
     border: solid 2px var(--color-input-border-focus);
     width: 100%;
 }
+.input-inline {
+    /* display: inline; */
+    font-family: var(--global-fonts);
+    font-weight: normal;
+    background: var(--color-input);
+    border: solid 2px var(--color-input-border);
+    border-radius: var(--default-border-radius);
+    color: var(--color-text-dark);
+    padding: var(--mini-spacing);
+    width: 100%;
+    resize: none;
+}
+
+/* #twitter-widget-0 {
+    background-color: brown !important;
+    color: blue !important;
+    border-radius: 50% !important;
+} */
 
 /* Home Page Specifics */
 section.home {
@@ -92,20 +115,112 @@ section.signup-verify input.token-box {
     display: none !important;
 }
 
+/* User Page Specifics */
+section.users div.userList {
+    display: flex;
+    justify-content: flex-start;
+    padding: var(--mini-spacing);
+}
+section.users div.userList > div {
+    flex: 1;
+}
+section.users div.userList > div div {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+section.users div.userList > div a {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    text-decoration: none;
+    font-weight: normal;
+
+    color: inherit;
+}
+
+section.users div.userList a span {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+section.users div.userList a img {
+    border-radius: var(--default-border-radius);
+    width: var(--users-image-size);
+    height: var(--users-image-size);
+    margin-right: var(--small-spacing);
+}
+
+section.users div.userList:nth-child(odd) {
+    background-color: var(--color-footer);
+    color: var(--color-text-light);
+    border-radius: var(--default-border-radius);
+}
+
 /* Profile Page Specifics */
+section.profile div.profile-main {
+    position:relative;
+    display:flex;
+}
+section.profile .profile-name {
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+section.profile .profile-bio-box {
+    position: relative;
+    background-color: var(--color-footer);
+    color: var(--color-text-light);
+    border-radius: var(--default-border-radius);
+    padding: var(--small-spacing);
+}
+section.profile pre {
+    font-family: var(--global-fonts);
+}
+section.profile div.profile-main-det {
+    padding-left: var(--default-spacing-x);
+}
 section.profile desc {
     font-weight: 500;
 }
+section .profile-img-big {
+    width:256px;
+    height:256px;
+}
+section.profile img {
+    border-radius: var(--default-border-radius);
+}
 section.profile p {
     margin-bottom: calc(var(--paragraph-spacing)*2);
+}
+section.profile-edit img {
+    border-radius: var(--default-border-radius);
+}
+section.profile-edit .profile-img {
+    display:inline-block;
 }
 section.profile-edit textarea {
     width: 100% !important;
     height: 5rem;
 }
-section div.div-space-between {
-    display: flex;
-    justify-content: space-between;
+section.profile-edit .filepond--root {
+    font-family: var(--global-fonts);
+    margin-bottom:0;
+    color: var(--color-text-dark);
+    font-size: inherit;
+}
+section.profile-edit .filepond--panel-root {
+    background-color: var(--color-input);
+    border: solid 2px var(--color-input-border);
+}
+section.profile-edit .filepond--drop-label {
+    color: var(--color-text-dark);
+    font-size: inherit;
 }
 
 /* Secrets */
@@ -119,15 +234,21 @@ table td#all_subjects, table td#your_subjects {
 }
 
 /* Responsivity */
-@media screen and (max-width: 400px) {
-    :root {
-        font-size: .9rem;
-    }
+
+@media screen and (max-height: 500px) {
     table td.pttd {
         font-size:0.7rem;
-        word-wrap: break-word;
         height: 0.8rem !important;
-        text-indent:-9999px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    :root {
+        font-size: 1.1rem;
+    }
+    section .profile-img-big {   
+        width:180px;
+        height:180px;
     }
 }
 
@@ -143,18 +264,21 @@ table td#all_subjects, table td#your_subjects {
         text-align: center;
         padding: var(--heading-spacing);
     }
-}
-
-@media screen and (max-height: 500px) {
-    table td.pttd {
-        font-size:0.7rem;
-        height: 0.8rem !important;
+    section .profile-img-big {    
+        width:120px;
+        height:120px;
     }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 400px) {
     :root {
-        font-size: 1.1rem;
+        font-size: .9rem;
+    }
+    table td.pttd {
+        font-size:0.7rem;
+        word-wrap: break-word;
+        height: 0.8rem !important;
+        text-indent:-9999px;
     }
 }
 

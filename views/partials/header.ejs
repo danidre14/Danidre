@@ -1,8 +1,8 @@
 <%var cPage;%>
-<% var username; %>
+<% var user; %>
 <header>
     <nav class="signinupnav">
-        <% if(username === undefined) {%>
+        <% if(user === undefined) {%>
             <ul class="signinupnav-ul">
                 <li class="<%=cPage==='signin'? 'current-page':''%>"><a href="/signin">Sign In</a></li>
                 <li class="<%=cPage==='signup'? 'current-page':''%>"><a href="/signup">Sign Up</a></li>
@@ -13,7 +13,7 @@
     <nav class="header-title">
         <h1> <a href="/">Danidre</a></h1>
     </nav>
-    <nav>
+    <nav id="navManu">
         <ul class="header-ul">
             <li class="home-btn <%=cPage=='home'? 'current-page':''%>"><a href="/">Home</a></li>
             <li class="games-btn"><a href="https://danidre14.newgrounds.com/games" target="_blank" rel="noreferrer">Games</a></li>

@@ -2,7 +2,14 @@
 <section class="news">
     <article>
         <a class="twitter-timeline" data-width="800" data-height="600" data-theme="dark" data-link-color="#998177" href="https://twitter.com/danidre?ref_src=twsrc%5Etfw">Tweets by Danidre</a>
-        <a href="https://twitter.com/intent/tweet?screen_name=danidre&ref_src=twsrc%5Etfw" class="twitter-mention-button" data-size="large" data-text="hey man," data-related="zanzlanz" data-show-count="false">Tweet to @Danidre</a>
+        <% //<a href="https://twitter.com/intent/tweet?screen_name=danidre&ref_src=twsrc%5Etfw" class="btn btn-primary twitter-mention-button" data-size="large" data-text="hey man," data-related="zanzlanz" data-show-count="false">Tweet to @Danidre</a> %>
+        
+        <a class="btn btn-primary" href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A3000%2Fnews&ref_src=twsrc%5Etfw&related=zanzlanz&screen_name=danidre&text=hey%20man%2C&tw_p=tweetbutton">
+            <div class="div-space-around">
+                <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Tweet to @danidre</span>
+            </div>
+        </a>
+        
     </article>
 </section>
 <script async src="https://platform.twitter.com/widgets.js"></script>

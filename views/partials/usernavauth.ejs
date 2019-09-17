@@ -1,9 +1,11 @@
 <%var cPage;%>
-<% var username; %>
-<% if(username !== undefined) {%>
+<% var user; %>
+<% if(user !== undefined) {%>
     <nav class="usernavauth">
             <nav>
-                <a class="userIcon" href="/u/<%= username %>"></a>
+                <a class="userIcon" href="/u/<%= user.username %>/#navManu">
+                    <img id="userIcon" class="userIcon" src="<%= user.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                </a>
                 <%//<span><a class="header-username" href="/u/%}{%= username %}">{%= username %}</a></span> %>
             </nav>
             <nav>

@@ -8,7 +8,7 @@ const Token = require('../models/token');
 
 const testEmail = false;
 
-router.get('/', checkNotAuthenticated, (req, res) => {
+router.get('/', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.uMessage = req.flash('uMessage');
     vars.pMessage = req.flash('pMessage');
@@ -16,7 +16,8 @@ router.get('/', checkNotAuthenticated, (req, res) => {
     vars.e2Message = req.flash('e2Message');
     vars.title = "Sign Up";
     if(req.isAuthenticated()) {
-        vars.username = req.user.username;
+        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        vars.user = user;
     }
     res.render('signup/index', vars);
 });
@@ -24,22 +25,24 @@ router.get('/', checkNotAuthenticated, (req, res) => {
 router.post('/', checkNotAuthenticated, validateInfomation, checkUserExists, createUser);
 
 //Verify Prompt Route
-router.get('/v', checkNotAuthenticated, (req, res) => {
+router.get('/v', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        vars.username = req.user.username;
+        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        vars.user = user;
     }
     vars.description = "Check your email for a link to verify your account. Check your spam folders if you can't find any email.";
     res.render('misc/blank', vars);
 });
 
 //Normal Confimation Page Route
-router.get('/verify', checkNotAuthenticated, (req, res) => {
+router.get('/verify', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        vars.username = req.user.username;
+        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        vars.user = user;
     }
     res.render('signup/verify', vars);
 });

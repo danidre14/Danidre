@@ -8,7 +8,7 @@
         <form id="regForm" class="signings" action="/signup" method="POST">
             <div>
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" autocomplete="off" required>
+                <input class="input" type="text" id="username" name="username" autocomplete="off" placeholder="Enter username" required>
                 <div>
                 <% if (uMessage) { %>
                     <pre id="usMessage" style="display:block;"><%= uMessage %></pre>
@@ -19,11 +19,11 @@
             </div>
             <div>
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" autocomplete="off" required>
+                <input class="input" type="email" id="email" name="email" autocomplete="off" placeholder="Enter email" required>
             </div>
             <div>
                 <label for="email2">Re-Enter Email</label>
-                <input type="email" id="email2" name="email2" autocomplete="off" required>
+                <input class="input" type="email" id="email2" name="email2" autocomplete="off" placeholder="Re-Enter email" required>
                 <div>
                     <% if (e2Message) { %>
                         <pre id="e2Message" style="display:block;"><%= e2Message %></pre>
@@ -34,7 +34,7 @@
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input class="input" type="password" id="password" name="password" placeholder="Enter password" required>
                 <div>
                     <% if (pMessage) { %>
                         <pre id="pwMessage" style="display:block;"><%= pMessage %></pre>
@@ -45,7 +45,7 @@
             </div>
             <div>
                 <label for="password2">Re-Enter Password</label>
-                <input type="password" id="password2" name="password2" required>
+                <input class="input" type="password" id="password2" name="password2" placeholder="Re-Enter password" required>
                 <div>
                     <% if (p2Message) { %>
                         <pre id="pw2Message" style="display:block;"><%= p2Message %></pre>
@@ -57,19 +57,19 @@
             <%/*<!--
             <div>
                 <label for="fName">First Name</label>
-                <input type="text" id="fName" name="fName" required>
+                <input class="input" type="text" id="fName" name="fName" required>
             </div>
             <div>
                 <label for="lName">Last Name</label>
-                <input type="text" id="lName" name="lName" required>
+                <input class="input" type="text" id="lName" name="lName" required>
             </div>
             <div>
                 <label for="dob">Date of Birth</label>
-                <input type="date" id="dob" name="dob" required>
+                <input class="input" type="date" id="dob" name="dob" required>
             </div>
             <div>
                 <label for="userCover">Profile Picture</label>
-                <input type="file" id="userCover" name="userCover" class="filepond" required>
+                <input class="input" type="file" id="userCover" name="userCover" class="filepond" required>
             </div>
             <div>
                 <label for="description">About Me</label>

@@ -3,28 +3,46 @@
 <section class="profile-edit">
     <article>
         <form class="signings" action="/u/<%= profile.username %>?_method=PUT" method="POST">
-
+            <div>
+                <label>Profile Picture:</label> 
+                <br/>
+                <img class="profile-img-big" src="<%= profile.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                <input type="file" name="profileImage" class="profile-img-big profile-img filepond">
+            </div>
             <div>
                 <label for="firstName">First Name:</label>
-                <input type="text" name="firstName" id="firstName" value="<%= profile.firstName %>" >
+                <input class="input" type="text" name="firstName" id="firstName" autocomplete="off" placeholder="Enter first name" value="<%= profile.firstName %>" >
             </div>
             <div>
                 <label for="lastName">Last Name:</label>
-                <input type="text" name="lastName" id="lastName" value="<%= profile.lastName %>" >
+                <input class="input" type="text" name="lastName" id="lastName" autocomplete="off" placeholder="Enter last name" value="<%= profile.lastName %>" >
             </div>
             <div>Username: <%= profile.username %></div>
             <div>
                 <label for="bio">Bio:</label>
                 <br/>
-                <textarea name="bio" id="bio"><%= profile.bio %></textarea>
+                <textarea class="textarea" name="bio" placeholder="Enter profile bio" id="bio"><%= profile.bio %></textarea>
             </div>
-            <div>Roles: <%= profile.roles %></div>
+            <div>Roles: <%= profile.roles.join(', ') %></div>
             <div>Created At: <%= profile.createdAt.toDateString() %></div>
             <div>Updated At: <%= profile.updatedAt.toDateString() || profile.createdAt.toDateString() %></div>
             
-            <a href="/u/<%= profile.username %>">Cancel</a>
-            <button class="btn btn-primary" type="submit">Update</button>
+            <div class="div-space-between">
+                <a class="btn btn-primary" href="/u/<%= profile.username %>">Cancel</a>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
         </form>
     </article>
 </section>
+
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+<script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+
+<script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+<script defer src="/javascripts/fileUpload.js"></script>
 <meta name="description" content="Edit your Danidre profile.">

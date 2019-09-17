@@ -26,24 +26,31 @@
 
     --color-line: var(--color-button-default);
     --color-footer: var(--color-button-default);
+    --color-usernavauth: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
     --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 80%);
     --color-input: hsl(var(--color-base-hue), var(--color-base-saturation), 85%);
     --color-input-border: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
     --color-input-border-focus: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
 
     --footer-size:2rem;
-    --header-bar-size:1.6rem;
+    --header-bar-size:1.8rem;
     
     --default-spacing:1rem;
     --default-spacing-x:1.2rem;
     --default-spacing-y:1.5rem;
     --heading-spacing:1rem;
     --message-spacing:calc(var(--default-spacing-y)/2);
-    --paragraph-spacing:0.8rem;
-    --header-bar-spacing:0.6rem;
+    --paragraph-spacing:.8rem;
+    --header-bar-spacing:.6rem;
+    --mini-spacing:.3rem;
+    --small-spacing:.6rem;
+
+    --default-border-radius:.2rem;
+    --btn-border-radius:.4rem;
 
     --footer-image-size:calc(var(--footer-size)/(10/8));
     --header-bar-image-size:calc(var(--header-bar-size)/(10/8)); 
+    --users-image-size:2rem; 
 
     --container-width: 100vw;
     --wildf: calc(100vw - var(--container-width)  - (100vw - 100%));

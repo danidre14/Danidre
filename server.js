@@ -11,6 +11,9 @@ const session = require('express-session');
 const flash = require('express-flash');
 const methodOverride = require('method-override');
 
+const formatDistanceToNow = require('date-fns/formatDistanceToNow')
+
+const globalChecks = require('./routes/globalChecks')
 const indexRouter = require('./routes/index');
 const aboutRouter = require('./routes/about');
 const newsRouter = require('./routes/news');
@@ -50,27 +53,7 @@ const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
-if(process.env.NODE_ENV === 'production') {
-app.use(function forceLiveDomainAndHttps(req, res, next) {
-    const preferredSite = "Heroku"; //or Danidre
-    const hosts = {"Heroku":"danidre.com","Danidre":"danidre.herokuapp.com"};
-    const redirects = {"Heroku":"https://danidre.herokuapp.com","Danidre":"http://danidre.com"}
-    // Don't allow user to hit Heroku now that we have a domain
-    const host = req.get('Host');
-    if (host === hosts[preferredSite]) {
-        return res.redirect(301, redirects[preferredSite] + req.originalUrl);
-    }
-    // if(preferredSite === "Heroku")
-    //     if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
-    //             // request was via http, so redirect to https
-    //             return res.redirect('https://' + hosts[preferredSite] + req.originalUrl);
-    //     } else {
-    //             // request was via https, so do no special handling
-    //             return next();
-    //     }
-    return next();
-});
-}
+app.use(globalChecks);
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/news', newsRouter);
@@ -83,5 +66,26 @@ app.use('/u', userRouter);
 app.use('/api', apiRouter);
 
 app.use(error404Router); //make sure to put this after all routes
+
+
+
+app.locals.formatDistanceToNow = function(date) {
+    const considerOnline = ["less than a minute ago", "1 minute ago", "2 minutes ago"];
+    if(!date) {
+        return 'never';
+    }
+    let lastSeen = `${formatDistanceToNow(date)} ago`;
+    if(considerOnline.includes(lastSeen)) lastSeen = "Online";
+    return lastSeen;
+}
+app.locals.stringify = function(obj) {
+    var str = [];
+    for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+            if(obj[p] != '')
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+    return str.join("&");
+}
 
 app.listen(process.env.PORT || 3000);

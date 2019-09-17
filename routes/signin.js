@@ -10,13 +10,13 @@ initializePassport(
     async id => await User.findById(id)
 );
 
-router.get('/', checkNotAuthenticated, (req, res) => {
+router.get('/', checkNotAuthenticated, async (req, res) => {
     req.session.redirectTo = req.header('Referer') || '/';
-    console.log(req.query)
     let vars = {cPage: "signin", searchOptions: req.query};
     vars.title = "Sign In";
     if(req.isAuthenticated()) {
-        vars.username = req.user.username;
+        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        vars.user = user;
     }
     res.render('signin/index', vars);
 });
