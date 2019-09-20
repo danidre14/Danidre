@@ -37,7 +37,7 @@ router.get('/:name', async (req, res) => { //add authentication check
 
 router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
     try {
-        const profile = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username firstName lastName bio roles createdAt updatedAt profileImage profileImageType');
+        const profile = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username firstName lastName bio roles createdAt updatedAt profileImage profileImageType').populate('roles', 'name');
         if(!profile) {
             return res.redirect('/u');
         }
