@@ -1,0 +1,32 @@
+<h2>Settings</h2>
+<section id="settingsPanel" class="settingsPanel">
+    <article>
+        <div>Admin: <%= adminName %></div>
+        <div>
+            Roles:
+            <div id="rolesList">
+            
+            </div>
+        </div>
+    </article>
+    <article>
+        <div>
+            Admin Panel:
+            <div id="adminPanel">
+                <button class="bounded button" onclick="updateLastSeen()">Update Last Seen</button>
+                <button class="bounded button" onclick="resetUserRoles()">Reset User Roles</button>
+            </div>
+            Output:
+            <div id="adminPanelMessage">
+
+            </div>
+        </div>
+    </article>
+</section>
+<script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="/settings/settings.js"></script>
+
+<link rel="stylesheet" href="/settings/settings.css">
+
+<meta name="description" content="Website's Admin Settings">
+<meta name="robots" content="none"/>

@@ -1,4 +1,5 @@
 .message {
+    z-index: 50;
     position: fixed;
     top: 0;
     left: calc(var(--wildf)/2);

@@ -495,3 +495,11 @@ window.onload = function() {
     
     pickFormAndSubs(); //ask user form
 }
+window.addEventListener('beforeunload', function (e) {
+    // the absence of a returnValue property on the event will guarantee the browser unload happens
+    // delete e['returnValue'];
+    // Cancel the event
+    e.preventDefault();
+    // Chrome requires returnValue to be set
+    e.returnValue = '';
+});

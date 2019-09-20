@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
     let vars = {cPage: "news", searchOptions: req.query};
     vars.title = "News";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('news/index', vars);

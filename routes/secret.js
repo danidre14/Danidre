@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Secret Page";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     vars.description = "Super secrety secret page. I wonder what it holds!";
@@ -17,7 +17,7 @@ router.get('/polyTT', async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Poly Time Table";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('misc/polyTimeTableMaker', vars);
@@ -27,7 +27,7 @@ router.get('/surveyMaker', async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Survey Maker";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('misc/surveyMaker', vars);

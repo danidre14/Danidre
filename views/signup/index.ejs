@@ -8,7 +8,7 @@
         <form id="regForm" class="signings" action="/signup" method="POST">
             <div>
                 <label for="username">Username</label>
-                <input class="input" type="text" id="username" name="username" autocomplete="off" placeholder="Enter username" required>
+                <input class="input" type="text" id="username" name="username" autocomplete="off" placeholder="Enter username" autofocus required>
                 <div>
                 <% if (uMessage) { %>
                     <pre id="usMessage" style="display:block;"><%= uMessage %></pre>
@@ -86,7 +86,7 @@
         </form>
     </article>
     <article>
-        <p> Already have an account? <a href="/signin">Sign In</a> </p>
+        <p> Already have an account? <a class="btn btn-primary" href="/signin">Sign In</a> </p>
     </article>
 </section>
 <script defer src="/javascripts/regVal.js"></script>

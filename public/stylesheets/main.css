@@ -39,6 +39,10 @@ h2 {
     padding: var(--heading-spacing);
 }
 
+pre {
+    font-family: var(--global-fonts);
+}
+
 .input, .textarea {
     display: block;
     font-family: var(--global-fonts);
@@ -75,11 +79,13 @@ h2 {
     resize: none;
 }
 
-/* #twitter-widget-0 {
-    background-color: brown !important;
-    color: blue !important;
-    border-radius: 50% !important;
-} */
+.icon {
+    filter: hue-rotate(calc(var(--color-base-hue)*1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-dark));
+}
+
+.icon:hover {
+    filter: hue-rotate(calc(var(--color-base-hue)*1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-light));
+}
 
 /* Home Page Specifics */
 section.home {
@@ -245,6 +251,7 @@ table td#all_subjects, table td#your_subjects {
 @media screen and (max-width: 700px) {
     :root {
         font-size: 1.1rem;
+
     }
     section .profile-img-big {   
         width:180px;

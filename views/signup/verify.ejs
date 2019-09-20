@@ -4,7 +4,7 @@
         <form class="signings" action="/signup/verify" method="POST">
             <div>
                 <label for="email">Email</label>
-                <input class="input" type="email" id="email" name="email" autocomplete="off" placeholder="Enter email" required>
+                <input class="input" type="email" id="email" name="email" autocomplete="off" placeholder="Enter email" autofocus required>
             </div>
             <div>
                 <input class="token-box" type="text" id="token" name="token" autocomplete="off" value="<%= searchOptions.token %>" hidden>
@@ -13,7 +13,7 @@
         </form>
     </article>
     <article>
-        <p> Don't have an account? <a href="/signup">Sign Up</a></p>
+        <p> Don't have an account? <a class="btn btn-primary" href="/signup">Sign Up</a></p>
     </article>
 </section>
 <meta name="description" content="Verify your Danidre account.">

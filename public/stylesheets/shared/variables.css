@@ -1,6 +1,11 @@
 :root {
     --color-base-hue: 19;
+    /* 19; */
     --color-base-saturation: 14%;
+    /* 14 */
+
+    --color-base-brightness-light: 130%;
+    --color-base-brightness-dark: 70%;
 
     --color-background: hsl(var(--color-base-hue), var(--color-base-saturation), 70%);
 

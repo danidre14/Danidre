@@ -6,7 +6,7 @@ const User = require('../models/user');
 const initializePassport = require('../passport-config');
 initializePassport(
     passport,
-    async username => await User.findOne({ username: username}).exec(),
+    async username => await User.findOne({username: new RegExp(username, "i")}, 'isVerified password').exec(),
     async id => await User.findById(id)
 );
 
@@ -15,7 +15,7 @@ router.get('/', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "signin", searchOptions: req.query};
     vars.title = "Sign In";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('signin/index', vars);

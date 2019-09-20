@@ -25,7 +25,7 @@ const postList = async function(config) {
             getList();
         }
     } catch (e) {
-        console.log(e, 'h')
+        console.log(e.message, 'h')
     }
 }
 
@@ -50,6 +50,14 @@ window.onload = function() {
     toggleMode("auto", false);
     getList();
 }
+window.addEventListener('beforeunload', function (e) {
+    // the absence of a returnValue property on the event will guarantee the browser unload happens
+    // delete e['returnValue'];
+    // Cancel the event
+    e.preventDefault();
+    // Chrome requires returnValue to be set
+    e.returnValue = '';
+});
 const getList = async function() {
     let request = await axios('/api/user_data');
     let requestOK = request && request.status === 200 && request.statusText === 'OK';
@@ -108,7 +116,7 @@ const removeFile = async function(fileName) {
             getList();
         }
     } catch (e) {
-        console.log(e, 'h')
+        console.log(e.message, 'h')
     }
 
 }
@@ -144,7 +152,7 @@ const changeVal = function(target, id, jd) {
         } else if(target == "answerO") {
             questions[id].answer[jd] = (prompt("Change question: ", questions[id].answer[jd]) || questions[id].answer[jd]).trim();
         }
-    } catch(e) {console.log(e)}
+    } catch(e) {console.log(e.message)}
     updateQuestions();
 }
 const swapVal = function(dir, target, id, jd) {

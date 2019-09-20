@@ -1,3 +1,5 @@
+//#delete
+
 window.onload = function() {
     getList();
 }

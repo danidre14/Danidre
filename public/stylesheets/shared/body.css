@@ -28,14 +28,18 @@ section article {
 }
 
 .div-space-around {
-    display: flex;
+    height: 100%;
+    display: flex !important;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
 }
 section div.div-space-between {
+    height: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-content: space-around;
 }
   
 p {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Role = require('./role');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -13,11 +14,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    roles: {
-        type: [String],
+    roles: [{
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
-        default: ['user']
-    },
+        ref: 'Role'
+    }],
+    // roles: {
+    //     type: [String],
+    //     required: true,
+    //     default: ['user']
+    // },
     isVerified: {
         type: Boolean,
         required: true,

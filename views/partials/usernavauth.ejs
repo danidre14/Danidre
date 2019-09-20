@@ -2,19 +2,24 @@
 <% var user; %>
 <% if(user !== undefined) {%>
     <nav class="usernavauth">
-            <nav>
-                <a class="userIcon" href="/u/<%= user.username %>/#navManu">
+        <nav class="div-space-around">
+            <% if(isAdmin(user.username)) { %>
+                <a class="div-space-around" href="/settings" title="Settings"><div class="settings icon"></div></a>
+            <% } %>
+            <a class="userIcon" href="/u/<%= user.username %>/#navMenu">
+                <div class="div-space-around">
                     <img id="userIcon" class="userIcon" src="<%= user.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
-                </a>
-                <%//<span><a class="header-username" href="/u/%}{%= username %}">{%= username %}</a></span> %>
-            </nav>
-            <nav>
-                <span><a class="btn-so" href="/secret/surveyMaker">Survey Maker</a></span>
-            </nav>
-            <nav>
-            <form action="/signout?_method=DELETE" method="POST">
-                <button class="btn-so" type="submit">Sign Out</button>
-            </form>
-            </nav>
+                </div>
+            </a>
+            <%//<span><a class="header-username" href="/u/%}{%= username %}">{%= username %}</a></span> %>
+        </nav>
+        <nav>
+            <span><a class="btn-so" href="/secret/surveyMaker">Survey Maker</a></span>
+        </nav>
+        <nav>
+        <form class="div-space-around" action="/signout?_method=DELETE" method="POST">
+            <button class="signout btn-none icon" type="submit" title="Sign Out"></button>
+        </form>
+        </nav>
     </nav>
 <% } %>

@@ -1,0 +1,136 @@
+section.settingsPanel .bounded {
+    border: none;
+    border-radius: var(--btn-border-radius);
+    display: inline-block;
+    padding: var(--mini-spacing);
+    font-size: 1rem;
+    line-height: 1rem;
+    text-decoration: none !important;
+    font-family: var(--global-fonts);
+    font-weight: 500 !important;
+    margin: var(--mini-spacing);
+    background-color:#a0a0a0;
+    color:rgba(255, 255, 255, 0.7);
+}
+
+section.settingsPanel .roleName {
+    line-height: 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+section.settingsPanel .roleBox {
+    display: block;
+    margin: var(--small-spacing) 0;
+    padding: 0;
+}
+
+section.settingsPanel .roleContent {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #707070;
+    margin: 0;
+    padding: 0 var(--mini-spacing) var(--mini-spacing) 0;
+}
+
+section.settingsPanel .div {
+    padding: var(--mini-spacing);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+section.settingsPanel div.userTab {
+    display: flex;
+    flex-basis: auto;
+    justify-content: flex-start;
+    padding: var(--mini-spacing);
+    margin: var(--mini-spacing) 0 0 var(--mini-spacing);
+    width: auto;
+}
+section.settingsPanel div.userTab > div {
+    flex: 1;
+}
+section.settingsPanel div.userTab > div:last-child {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 0;
+}
+section.settingsPanel div.userTab > div div {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+section.settingsPanel div.userTab > div a {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    text-decoration: none;
+    font-weight: normal;
+
+    color: inherit;
+}
+
+section.settingsPanel div.userTab a span {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+section.settingsPanel div.userTab a img {
+    border-radius: var(--default-border-radius);
+    width: var(--users-image-size);
+    height: var(--users-image-size);
+    margin-right: var(--small-spacing);
+}
+
+section.settingsPanel .button {
+    color: var(--color-text-light);
+    background-color: var(--color-button-default);
+    padding: var(--mini-spacing) var(--small-spacing);
+    margin: 0;
+    outline: none;
+}
+
+section.settingsPanel .button:hover {
+    background-color: var(--color-button-hover);
+}
+
+section.settingsPanel .button:active {
+    background-color: var(--color-button-active);
+}
+
+section.settingsPanel .button:disabled {
+    cursor: default;
+    background-color: var(--color-button-disabled);
+}
+
+section.settingsPanel a {
+    color: inherit;
+    text-decoration: none;
+}
+
+section.settingsPanel .button2 {
+    color: var(--color-text-light);
+    background-color: var(--color-button-default);
+    margin: 0;
+    outline: none;
+}
+
+section.settingsPanel .button2:hover {
+    background-color: var(--color-button-hover);
+}
+
+section.settingsPanel .button2:active {
+    background-color: var(--color-button-active);
+}
+
+section.settingsPanel .promptBody {
+    background-color: var(--color-section) !important;
+}

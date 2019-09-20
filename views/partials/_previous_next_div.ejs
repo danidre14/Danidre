@@ -1,16 +1,16 @@
 <!-- <div style="height:100%;display:flex;justify-content:space-between;flex-wrap: wrap;align-content:space-around;margin:var(--mini-spacing);"> -->
 <div style="margin:var(--small-spacing) 0;" class="div-space-between">
-    <% if(currPage === 1) { %>
+    <% if(!paginatedResults.previous) { %>
         <span class="btn btn-disabled">◀ Previous</span>
     <% } else { %>
-        <a class="btn btn-primary" href="?<%= stringify(prevLink) %>">◀ Previous</a>
+        <a class="btn btn-primary" href="?<%= stringify(paginatedResults.previous) %>">◀ Previous</a>
     <% } %>
-    <div style="display:flex;justify-content:space-between;flex-wrap: wrap;align-content:space-around;"> Page <%= currPage %> of <%= pages %> </div>
+    <div style="display:flex;justify-content:space-between;flex-wrap: wrap;align-content:space-around;"> Page <%= paginatedResults.currentPage %> of <%= paginatedResults.maxPages %> </div>
     
-    <% if(currPage === pages) { %>
+    <% if(!paginatedResults.next) { %>
         <span class="btn btn-disabled">Next ▶</span>
     <% } else { %>
-        <a class="btn btn-primary" href="?<%= stringify(nextLink) %>">Next ▶</a>
+        <a class="btn btn-primary" href="?<%= stringify(paginatedResults.next) %>">Next ▶</a>
     <% } %>
 </div>
 

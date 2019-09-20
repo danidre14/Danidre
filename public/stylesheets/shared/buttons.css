@@ -8,9 +8,7 @@
     text-decoration: none !important;
     font-family: var(--global-fonts);
     font-weight: 500 !important;
-    /* display: inline-block; */
-    margin: auto 0;
-     /* var(--small-spacing) 0; */
+    margin: var(--mini-spacing) 0;
     color: var(--color-text-light);
     cursor: pointer;
 }
@@ -29,6 +27,16 @@
     cursor: pointer;
     background-color: var(--color-button-default);
     color: var(--color-text-light) !important;
+}
+
+.btn-none {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .btn-primary:hover {

@@ -16,15 +16,23 @@
                     <span><%= fullName.trim() === ""? '' : 'Name: ' + fullName %></span>
                 </div>
                 <div style="position:absolute;bottom:0;">
-                    <div style="line-height:.8rem;">Roles: <i><%= profile.roles.join(', ') %></i></div>
+                    <div style="line-height:.8rem;">
+                        <% if(profile.roles.length > 0) { %>
+                            Roles: <i> <%= extractAttribute(profile.roles, 'name').join(', ') %></i>
+                        <% } %>
+                    </div>
                     <% distanceToNow = formatDistanceToNow(profile.lastSeen); %>
                     <% if(distanceToNow === 'Online') { %>
                         <div style="color:#4cdb4c;font-weight:500;font-size:.7rem;"><%= distanceToNow %> </div>
                     <% } else if(distanceToNow === 'never') { %>
-                        <% distanceToNow = formatDistanceToNow(profile.updatedAt); %>
-                        <div style="color:#c43d3d;font-weight:500;font-size:.7rem;">Last seen <%= distanceToNow %> </div>
+                        <% distanceToNow = formatDistanceToNow(profile.updatedAt, true); %>
+                        <% if(distanceToNow === 'never') { %>
+                            <div style="color:#c43d3d;font-weight:500;">Last seen: <%= distanceToNow %> </div>
+                        <% } else { %>
+                            <div style="color:#a7a09d;font-weight:500;">Last seen: <%= distanceToNow %> </div>
+                        <% } %>
                     <% } else { %>
-                        <div style="color:#e29c33;font-weight:500;font-size:.7rem;">Last seen <%= distanceToNow %> </div>
+                        <div style="color:#e29c33;font-weight:500;font-size:.7rem;">Last seen: <%= distanceToNow %> </div>
                     <% } %>
                 </div>
             </div>
@@ -48,7 +56,7 @@
         <% } else if(user !== undefined) { %>
             <div class="div-space-between">
                 <a class="btn btn-primary" href="/u/">Other Users</a>
-                <a class="btn btn-primary" href="/u/<%= user.username %>/#navManu">Your Profile</a>
+                <a class="btn btn-primary" href="/u/<%= user.username %>/#navMenu">Your Profile</a>
             </div>
         <% } %>
     </article>

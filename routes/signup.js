@@ -16,7 +16,7 @@ router.get('/', checkNotAuthenticated, async (req, res) => {
     vars.e2Message = req.flash('e2Message');
     vars.title = "Sign Up";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('signup/index', vars);
@@ -29,7 +29,7 @@ router.get('/v', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     vars.description = "Check your email for a link to verify your account. Check your spam folders if you can't find any email.";
@@ -41,14 +41,14 @@ router.get('/verify', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('signup/verify', vars);
 });
 
 //Create Confimation Page Route
-router.post('/verify', async (req, res) => {
+router.post('/verify', checkNotAuthenticated, async (req, res) => {
     try {
         const token = await Token.findOne({token:req.body.token});
         //Check if token exists
@@ -65,7 +65,7 @@ router.post('/verify', async (req, res) => {
         }
 
         //Check if user is verified
-        token.deleteOne({token:req.body.token}, function (err) {});
+        await token.remove();
         if(user.isVerified) {
             req.flash('outsert', {message: 'Account already verified. You can sign in.', note: true});
             return res.redirect('../signin'); //user already verified
@@ -79,7 +79,7 @@ router.post('/verify', async (req, res) => {
         res.redirect('../signin'); //Please log in
         
     } catch (err) {
-        console.log(err);
+        console.log("Message:", err.message);
         req.flash('outsert', {message: 'An error has occured. Please try again, or contact support.'});
         res.redirect('../signup');
     }
@@ -88,7 +88,7 @@ router.post('/verify', async (req, res) => {
 async function checkUserExists(req, res, next) {
 try {
     //look for user
-    const user = await User.findOne({username:req.body.username});
+    const user = await User.findOne({username: new RegExp(req.body.username, "i")});
 
     //if user does not exist
     if(!user) {
@@ -154,7 +154,7 @@ try {
         return res.redirect('/signup/v');
     }
 } catch (err) {
-    console.log(err)
+    console.log("Message:", err.message);
 }
 }
 
@@ -190,7 +190,7 @@ async function createUser(req, res) {
         res.redirect('/signup/v');
         //res.redirect(`users/${newUser.username}`);
     } catch (err) {
-        console.log(err)
+        console.log("Message:", err.message);
         req.flash('outsert', {message: 'An error has occured. Please try again, or contact support.'});
         res.redirect('/signup');
     }
@@ -201,7 +201,7 @@ function validateInfomation(req, res, next) {
     let error = false;
 
     //username validation
-    let username = req.body.username;
+    const username = req.body.username;
     let uMessage = "";
     if(username.length < 4 || username.length > 15) {
         uMessage += "-Must be 4-15 characters long";
@@ -217,7 +217,7 @@ function validateInfomation(req, res, next) {
     }
     
     //password validation
-    let pName = req.body.password;
+    const pName = req.body.password;
     let pMessage = "";
     if(pName.length < 8) {
         pMessage += "-Password must be 8 or more characters\n";
@@ -237,7 +237,7 @@ function validateInfomation(req, res, next) {
     }
 
     //re-entered password
-    let p2Name = req.body.password2;
+    const p2Name = req.body.password2;
     let p2Message = "";
     if(pName !== p2Name) {
         p2Message += "-Passwords do not match";
@@ -245,8 +245,8 @@ function validateInfomation(req, res, next) {
     }
 
     //re-entered email
-    let email = req.body.email;
-    let email2 = req.body.email2;
+    const email = req.body.email;
+    const email2 = req.body.email2;
     let e2Message = "";
     if(email !== email2) {
         e2Message += "-Emails do not match";
@@ -324,7 +324,7 @@ function sendMail(mailOptions, email) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     sgMail.send(mailOptions, function (err) {
         if (err) {
-            return console.log(err);
+            return console.log("Message:", err.message);
         }
         console.log('A verification email has been sent to ' + email + '.');
     });

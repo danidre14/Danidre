@@ -1,40 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const paginatedResults = require('../utils/paginatedResults');
 
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
-router.get('/', checkIfLoggedIn, async (req, res) => {
+router.get('/', checkIfLoggedIn, paginatedResults(User, ['bio', 'username'], 'username lastSeen createdAt updatedAt profileImage profileImageType', {lastSeen: -1, updatedAt: -1, createdAt: -1}), async (req, res) => {
     let vars = {cPage: "u", searchOptions: req.query};
     vars.title = "Users";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username lastSeen profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username lastSeen profileImage profileImageType');
         vars.user = user;
     }
 
-    const searchParams = new RegExp(req.query.s || "", "i");
-    const sQuery = {$or:[{bio: searchParams},{username: searchParams}]};
-    
-    const limit = 6; //parseInt(req.query.limit) || 5;
-    const count = await User.countDocuments(sQuery);
-    let pages = Math.ceil(count / limit);
-    if(pages < 1) pages = 1;
-
-    let currPage = parseInt(req.query.p) || 1;
-    if(currPage > pages) currPage = pages;
-
-    const users = await User.find(sQuery, 'username lastSeen createdAt updatedAt profileImage profileImageType', {sort: {lastSeen: -1, updatedAt: -1, createdAt: -1}, skip: ((currPage - 1) * limit), limit: limit});
-
-
-    vars.users = users;
-    vars.currPage = currPage;
-    vars.pages = pages;
-    vars.searchParams = req.query.s || "";
+    vars.paginatedResults = res.paginatedResults;
     res.render('user/index', vars);
 });
 
 router.get('/:name', async (req, res) => { //add authentication check
-    const profile = await User.findOne({username:req.params.name}, 'username lastSeen firstName lastName bio roles updatedAt profileImage profileImageType');
+    const profile = await User.findOne({username:new RegExp(req.params.name, "i")}, 'username lastSeen firstName lastName bio roles updatedAt profileImage profileImageType').populate('roles', 'name');
     if(!profile) {
         if(!req.isAuthenticated()) {
             return res.redirect('/');
@@ -45,7 +29,7 @@ router.get('/:name', async (req, res) => { //add authentication check
     let vars = {cPage: "u", searchOptions: req.query, profile: profile};
     vars.title = `${profile.username}'s Profile`;
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+        const user = await User.findOne({username:new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('user/profile', vars);
@@ -53,14 +37,14 @@ router.get('/:name', async (req, res) => { //add authentication check
 
 router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
     try {
-        const profile = await User.findOne({username:req.params.name}, 'username firstName lastName bio roles createdAt updatedAt profileImage profileImageType');
+        const profile = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username firstName lastName bio roles createdAt updatedAt profileImage profileImageType');
         if(!profile) {
             return res.redirect('/u');
         }
         let vars = {cPage: "u", searchOptions: req.query, profile: profile};
         vars.title = "Edit Profile";
         if(req.isAuthenticated()) {
-            const user = await User.findOne({username: req.user.username}, 'username profileImage profileImageType');
+            const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
             vars.user = user;//because from here its authenticated
         }
         
@@ -81,7 +65,7 @@ router.put('/:name', checkAuthenticatedAccess, checkAuthorizedAccess, async (req
             profileImage: req.body.profileImage
         }
         let hasChanged = false;
-        let user = await User.findOne({username: req.params.name});
+        let user = await User.findOne({username: new RegExp(req.params.name, "i")});
         if(user.firstName !== updates.firstName) {
             if(updates.firstName != null && updates.firstName !== '') {
                 user.firstName = updates.firstName;
@@ -112,7 +96,7 @@ router.put('/:name', checkAuthenticatedAccess, checkAuthorizedAccess, async (req
         }
         res.redirect(`/u/${user.username}`);
     } catch (err) {
-        console.log(err);
+        console.log("Message:", err.message);
         res.redirect(`/u/${user.username}`);
     }
 });
@@ -133,7 +117,7 @@ router.post('/:name/update',
 },
 async (req, res) => {
     if(req.body.target === 'surveyMaker') {
-        let user = await User.findOne({username: req.params.name}, 'username secret');
+        let user = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username secret');
         user.secret.surveyMaker[req.body.key] = req.body.value;
         user.markModified('secret');
         await user.save();
@@ -157,7 +141,7 @@ router.delete('/:name/update',
 },
 async (req, res) => {
     if(req.body.target === 'surveyMaker') {
-        let user = await User.findOne({username: req.params.name}, 'username secret');
+        let user = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username secret');
         user.secret.surveyMaker[req.body.key] = undefined;
         user.markModified('secret');
         await user.save();

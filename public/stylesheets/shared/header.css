@@ -45,14 +45,35 @@ header {
     display: inline-block;
     position: relative;
     width: var(--header-bar-image-size);
-    height: var(--header-bar-image-size);
+    height: 100%;
     margin-right: var(--header-bar-spacing);
 }
 
 .usernavauth nav a img.userIcon {
+    margin:auto !important;
     border-radius: var(--default-border-radius);
     width: var(--header-bar-image-size);
     height: var(--header-bar-image-size);
+}
+
+.usernavauth nav button.signout {
+    background-image: url("../../images/SignOutIcon.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+}
+
+.usernavauth nav .settings {
+    background-image: url("../../images/SettingsIcon.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
 }
 
 .btn-so {
