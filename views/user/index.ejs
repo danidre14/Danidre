@@ -6,7 +6,7 @@
 
         <form action="/u" method="GET">
             <div style="display:flex;justify-content: space-between;flex:1;">
-                <input style="border-top-right-radius:0;border-bottom-right-radius:0;" class="input-inline" type="text" name="s" autocomplete="off" placeholder="Search names or bios" value="<%= paginatedResults.search %>">
+                <input style="border-top-left-radius:1rem;border-bottom-left-radius:1rem;border-top-right-radius:0;border-bottom-right-radius:0;" class="input-inline" type="text" name="s" autocomplete="off" placeholder="Search names or bios" value="<%= paginatedResults.search %>">
                 <button style="border-top-left-radius:0;border-bottom-left-radius:0;" class="btn btn-primary btn-inherit" type="submit">Search</button>
             </div>
         </form>
@@ -28,16 +28,16 @@
                         <div>
                             <% distanceToNow = formatDistanceToNow(user.lastSeen); %>
                             <% if(distanceToNow === 'Online') { %>
-                                <span style="color:#4cdb4c;font-weight:500;"><%= distanceToNow %> </span>
+                                <span class="bounded" style="color:var(--user-status-color-now);font-weight:500;"><%= distanceToNow %> </span>
                             <% } else if(distanceToNow === 'never') { %>
                                 <% distanceToNow = formatDistanceToNow(user.updatedAt, true); %>
                                 <% if(distanceToNow === 'never') { %>
-                                    <span style="color:#c43d3d;font-weight:500;"><%= distanceToNow %> </span>
+                                    <span class="bounded" style="color:var(--user-status-color-error);font-weight:500;"><%= distanceToNow %> </span>
                                 <% } else { %>
-                                    <span style="color:#a7a09d;font-weight:500;"><%= distanceToNow %> </span>
+                                    <span class="bounded" style="color:var(--user-status-color-never);font-weight:500;"><%= distanceToNow %> </span>
                                 <% } %>
                             <% } else { %>
-                                <span style="color:#e29c33;font-weight:500;"><%= distanceToNow %> </span>
+                                <span class="bounded" style="color:var(--user-status-color-then);font-weight:500;"><%= distanceToNow %> </span>
                             <% } %>
                         </div>
                     </div>

@@ -1,3 +1,19 @@
+.bounded {
+    border: none;
+    border-radius: var(--btn-border-radius);
+    display: inline-block;
+    padding: .2rem .5rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    text-decoration: none !important;
+    font-family: var(--global-fonts);
+    font-weight: 500 !important;
+    margin: var(--mini-spacing) 0;
+    background-color: var(--color-button-default);
+    color: var(--color-text-light);
+    cursor: pointer;
+}
+
 .btn {
     border: none;
     border-radius: var(--btn-border-radius);
@@ -11,6 +27,10 @@
     margin: var(--mini-spacing) 0;
     color: var(--color-text-light);
     cursor: pointer;
+}
+
+.btn-large {
+    padding: .5rem .8rem;
 }
 
 .btn-inherit {

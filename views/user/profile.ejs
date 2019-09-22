@@ -23,16 +23,16 @@
                     </div>
                     <% distanceToNow = formatDistanceToNow(profile.lastSeen); %>
                     <% if(distanceToNow === 'Online') { %>
-                        <div style="color:#4cdb4c;font-weight:500;font-size:.7rem;"><%= distanceToNow %> </div>
+                        <div class="bounded" style="color:var(--user-status-color-now);font-weight:500;font-size:.7rem;">⬤ <%= distanceToNow %> </div>
                     <% } else if(distanceToNow === 'never') { %>
                         <% distanceToNow = formatDistanceToNow(profile.updatedAt, true); %>
                         <% if(distanceToNow === 'never') { %>
-                            <div style="color:#c43d3d;font-weight:500;">Last seen: <%= distanceToNow %> </div>
+                            <div class="bounded" style="color:var(--user-status-color-error);font-weight:500;">⬤ Last seen: <%= distanceToNow %> </div>
                         <% } else { %>
-                            <div style="color:#a7a09d;font-weight:500;">Last seen: <%= distanceToNow %> </div>
+                            <div class="bounded" style="color:var(--user-status-color-never);font-weight:500;">⬤ Last seen: <%= distanceToNow %> </div>
                         <% } %>
                     <% } else { %>
-                        <div style="color:#e29c33;font-weight:500;font-size:.7rem;">Last seen: <%= distanceToNow %> </div>
+                        <div class="bounded" style="color:var(--user-status-color-then);font-weight:500;font-size:.7rem;">⬤ Last seen: <%= distanceToNow %> </div>
                     <% } %>
                 </div>
             </div>

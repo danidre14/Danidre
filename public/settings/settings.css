@@ -9,8 +9,8 @@ section.settingsPanel .bounded {
     font-family: var(--global-fonts);
     font-weight: 500 !important;
     margin: var(--mini-spacing);
-    background-color:#a0a0a0;
-    color:rgba(255, 255, 255, 0.7);
+    background-color:#a0a0a0 !important;
+    color:rgba(255, 255, 255, 0.7) !important;
 }
 
 section.settingsPanel .roleName {

@@ -50,8 +50,9 @@
     --mini-spacing:.3rem;
     --small-spacing:.6rem;
 
-    --default-border-radius:.2rem;
-    --btn-border-radius:.4rem;
+    --default-border-radius:.3rem;
+    --btn-border-radius:1rem;
+    --btn-border-radius-large:1rem;
 
     --footer-image-size:calc(var(--footer-size)/(10/8));
     --header-bar-image-size:calc(var(--header-bar-size)/(10/8)); 
@@ -59,6 +60,11 @@
 
     --container-width: 100vw;
     --wildf: calc(100vw - var(--container-width)  - (100vw - 100%));
+
+    --user-status-color-now: #3bdd3b;
+    --user-status-color-then: #f8a62a;
+    --user-status-color-never: #d8d6d5;
+    --user-status-color-error: #d32929;
 
     --signinupnav-width: 50%;
 
