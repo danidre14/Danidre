@@ -14,7 +14,7 @@ header {
     top: 0;
     z-index: 10;
     width: 100%;
-    height: var(--header-bar-size);			/* Height of the bar */
+    height: var(--usernav-bar-size);			/* Height of the bar */
     background: var(--color-usernavauth);
 
     display: flex;
@@ -31,7 +31,7 @@ header {
     justify-content: space-between;
     align-content: space-around;
 
-    height: var(--header-bar-size);
+    height: var(--usernav-bar-size);
 }
 
 .usernavauth nav .header-username {
@@ -44,7 +44,7 @@ header {
 .usernavauth nav a.userIcon {
     display: inline-block;
     position: relative;
-    width: var(--header-bar-image-size);
+    width: var(--usernav-bar-image-size);
     height: 100%;
     margin-right: var(--header-bar-spacing);
 }
@@ -52,8 +52,8 @@ header {
 .usernavauth nav a img.userIcon {
     margin:auto !important;
     border-radius: var(--default-border-radius);
-    width: var(--header-bar-image-size);
-    height: var(--header-bar-image-size);
+    width: var(--usernav-bar-image-size);
+    height: var(--usernav-bar-image-size);
 }
 
 .usernavauth nav button.signout {
@@ -78,7 +78,7 @@ header {
 
 .btn-so {
     border: none;
-    height: var(--header-bar-size);
+    height: var(--usernav-bar-size);
     padding: 0 .4rem;
     font-size: 1rem;
     font-family: var(--global-fonts);

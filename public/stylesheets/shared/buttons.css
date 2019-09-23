@@ -16,6 +16,7 @@
 
 .btn {
     border: none;
+    outline: none;
     border-radius: var(--btn-border-radius);
     display: inline-block;
     padding: .2rem .5rem;

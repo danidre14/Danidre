@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 
+//api routes
+const highscoreRouter = require('./highscore');
+router.use('/games/highscores', highscoreRouter);
+
 router.get('/user_data', async function(req, res) {
     try {
         if (req.isAuthenticated()) {
-            const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username secret');
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username secret');
             res.send({
                 username: user.username,
                 secret: user.secret
@@ -43,7 +47,7 @@ router.get('/user_data', async function(req, res) {
 //avatars for profile pictures
 router.get('/uploads/avatars/:name', async (req, res) => {
     try {
-        const user = await User.findOne({username:  new RegExp(req.params.name, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username profileImage profileImageType');
         if(!user) 
             res.send({
                 path: '../images/UsersIcon.png'

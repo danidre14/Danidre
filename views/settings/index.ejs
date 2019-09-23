@@ -1,25 +1,43 @@
 <h2>Settings</h2>
 <section id="settingsPanel" class="settingsPanel">
     <article>
-        <div>Admin: <%= adminName %></div>
-        <div>
-            Roles:
-            <div id="rolesList">
+        <div>Admin: <input class="input" readonly type="text" value="<%= adminName %>"></div>
+    </article>
+    <article>
+        Roles:
+        <button class="btn btn-primary" onclick="resizeDiv('rolesDiv')">Show/Hide Roles</button>
+        <div id="rolesDiv" style="display:none;">
+            <div class="divShade" id="rolesList">
             
             </div>
+            <button class="btn btn-primary" onclick="resizeDiv('rolesDiv')">Show/Hide Roles</button>
         </div>
     </article>
     <article>
-        <div>
-            Admin Panel:
-            <div id="adminPanel">
-                <button class="bounded button" onclick="updateLastSeen()">Update Last Seen</button>
-                <button class="bounded button" onclick="resetUserRoles()">Reset User Roles</button>
+        Highscores:
+        <button class="btn btn-primary" onclick="resizeDiv('highscoresDiv')">Show/Hide Highscores</button>
+        <div id="highscoresDiv" style="display:none;">
+            <div class="divShade" id="highscoresList">
+            
             </div>
-            Output:
-            <div id="adminPanelMessage">
+            <button class="btn btn-primary" onclick="resizeDiv('highscoresDiv')">Show/Hide Highscores</button>
+        </div>
+    </article>
+    <article>
+        Admin Panel:
+        <button class="btn btn-primary" onclick="resizeDiv('adminPanelDiv')">Show/Hide Admin Panel</button>
+        <div id="adminPanelDiv" style="display:none;">
+            <div class="divShade">
+                <div id="adminPanel">
+                    <button class="bounded button" onclick="updateLastSeen()">Update Last Seen</button>
+                    <button class="bounded button" onclick="resetUserRoles()">Reset User Roles</button>
+                </div>
+                Output:
+                <div id="adminPanelMessage">
 
+                </div>
             </div>
+            <button class="btn btn-primary" onclick="resizeDiv('adminPanelDiv')">Show/Hide Admin Panel</button>
         </div>
     </article>
 </section>

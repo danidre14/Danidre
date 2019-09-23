@@ -37,8 +37,9 @@
     --color-input-border: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
     --color-input-border-focus: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
 
-    --footer-size:2rem;
+    --footer-size:2.3rem;
     --header-bar-size:1.8rem;
+    --usernav-bar-size:2.3rem;
     
     --default-spacing:1rem;
     --default-spacing-x:1.2rem;
@@ -55,7 +56,7 @@
     --btn-border-radius-large:1rem;
 
     --footer-image-size:calc(var(--footer-size)/(10/8));
-    --header-bar-image-size:calc(var(--header-bar-size)/(10/8)); 
+    --usernav-bar-image-size:calc(var(--usernav-bar-size)/(10/8)); 
     --users-image-size:2rem; 
 
     --container-width: 100vw;

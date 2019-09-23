@@ -1,23 +1,170 @@
 let rolesList;
-let adminPanel;
+let highscoresList;
 let adminPanelMessage;
 let settingsPanel;
 window.onload = function() {
     rolesList = document.getElementById('rolesList');
-    adminPanel = document.getElementById('adminPanel');
+    highscoresList = document.getElementById('highscoresList');
     adminPanelMessage = document.getElementById('adminPanelMessage');
     settingsPanel = document.getElementById('settingsPanel');
 
-    loadUserList();
-    // loadAdminPanel();
+    loadRoleList();
+    loadHighScoreList();
+}
+const resizeDiv = function(divId) {
+    const div = document.getElementById(divId);
+    if(div.style.display === "block") div.style.display = "none";
+    else  div.style.display = "block";
 }
 
-// const loadAdminPanel = function() {
-//     let listH = ``;
-//     listH += `<button class="bounded button" onclick="updateLastSeen()">Update Last Seen</button>`;
-//     listH += `<button class="bounded button" onclick="resetUserRoles()">Reset User Roles</button>`;
-//     adminPanel.innerHTML = listH; 
-// }
+const loadHighScoreList = async function() {
+    try {
+        let request = await axios('/api/games/highscores/highscores_list');
+        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        if(!requestOK) {
+            return console.log("Can't get list"); //error occurred
+        }
+        const data = await request.data;
+        if(data === null || data === undefined) return console.log("Can't get list"); //error occurred
+        const highscores = data.highscores;
+
+        let listH = '';
+        let notFound = true;
+        for(const i in highscores) { const highscore = highscores[i];
+        if(notFound) notFound = false;
+
+            listH += `<div class="bounded">
+                <div class="div-space-between div">
+                    <div>
+                        <span>${highscore.name}</span>
+                        <button class="bounded button" onclick="toggleHighscoreSort('${highscore.name}', '${highscore.sort}')">Sort: ${highscore.sort}</button>
+                        <button class="bounded button" onclick="getHighscoreKey('${highscore.key}')">Key</button>
+                        <button class="bounded button" onclick="editHighscore('${highscore.name}')">Edit</button>
+                        <button class="bounded button" onclick="removeHighscore('${highscore.name}')">Del</button>
+                    </div>
+                </div>
+            </div>`;
+        }
+        if(!notFound) listH += `<button class="bounded button" onclick="addHighscore()">Add Highscore</button>`
+        else listH += "Can't connect to API."
+        highscoresList.innerHTML = listH;
+    } catch (e) {
+        console.log("Can't access anything:", e.message);
+    }
+}
+
+async function addHighscore() {
+    try {
+        const highscoreName = prompt("Enter highscore name:", '') || "";
+        if(highscoreName.trim() !== '') {
+            let request = await axios({
+                method: 'post',
+                url: `/api/games/highscores/highscores_list`,
+                data: {highscoreName: highscoreName}
+            });
+
+            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            if (requestOK) {
+                let data = await request.data;
+                // do something with data
+                if(data.res === "Error")
+                    alert(data.msg);
+                else if(data.res === "Success")
+                    console.log(data.msg);
+                loadHighScoreList();
+            }
+        }
+    } catch (e) {
+        console.log("Can't add highscore:", e.message);
+    }
+}
+
+async function editHighscore(oldHighscoreName) {
+    try {
+        if(!confirm(`Change highscore name for "${oldHighscoreName}"?`)) return;
+
+        const newHighscoreName = prompt("Enter highscore name:", oldHighscoreName) || oldHighscoreName;
+        
+        if(newHighscoreName.trim() !== '' && newHighscoreName !== oldHighscoreName) {        
+            let request = await axios({
+                method: 'put',
+                url: `/api/games/highscores/highscores_list`,
+                data: {oldHighscoreName: oldHighscoreName, highscoreName: newHighscoreName}
+            });
+
+            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            if (requestOK) {
+                let data = await request.data;
+                // do something with data
+                if(data.res === "Error")
+                    alert(data.msg);
+                else if(data.res === "Success")
+                    console.log(data.msg);
+                loadHighScoreList();
+            }
+        }
+    } catch (e) {
+        console.log("Can't edit highscore:", e.message);
+    }
+}
+
+async function removeHighscore(highscoreName) {
+    try {
+        if(confirm(`Are you sure you want to delete the highscore "${highscoreName}"?`)) {
+            let request = await axios({
+                method: 'delete',
+                url: `/api/games/highscores/highscores_list`,
+                data: {highscoreName: highscoreName}
+            });
+
+            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            if (requestOK) {
+                let data = await request.data;
+                // do something with data
+                if(data.res === "Error")
+                    alert(data.msg);
+                else if(data.res === "Success")
+                    console.log(data.msg);
+                loadHighScoreList();
+            }
+        }
+    } catch (e) {
+        console.log("Can't delete highscore:", e.message);
+    }
+}
+
+async function toggleHighscoreSort(highscoreName) {
+    try {
+        if(!confirm(`Change sort of "${highscoreName}"?`)) return;
+               
+        let request = await axios({
+            method: 'put',
+            url: `/api/games/highscores/highscores_list_sort`,
+            data: {highscoreName: highscoreName}
+        });
+
+        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        if (requestOK) {
+            let data = await request.data;
+            // do something with data
+            if(data.res === "Error")
+                alert(data.msg);
+            else if(data.res === "Success")
+                console.log(data.msg);
+            loadHighScoreList();
+        }
+    } catch (e) {
+        console.log("Can't change sort method:", e.message);
+    }
+}
+
+const getHighscoreKey = function(highscoreKey) {
+    alert(`API Key: "${highscoreKey}"`);
+}
+
+
+
+
 const getImagePath = async function(username) {
     try {
         let request = await axios(`/api/uploads/avatars/${username}`);
@@ -33,7 +180,14 @@ const getImagePath = async function(username) {
     }
 }
 
-const loadUserList = async function() {
+
+
+
+
+
+
+
+const loadRoleList = async function() {
     try {
         let request = await axios('/settings/roles_List');
         let requestOK = request && request.status === 200 && request.statusText === 'OK';
@@ -45,7 +199,9 @@ const loadUserList = async function() {
         const roles = data.roles;
 
         let listH = '';
+        let notFound = true;
         for(const i in roles) { const role = roles[i];
+            if(notFound) notFound = false;
             let directUsersH = ``;
 
             for(const j in role.users) { const user = role.users[j];
@@ -82,7 +238,9 @@ const loadUserList = async function() {
                 </div>
             </div>`;
         }
-        listH += `<button class="bounded button" onclick="addRole()">Add Role</button>`
+        if(!notFound) listH += `<button class="bounded button" onclick="addRole()">Add Role</button>`
+
+        else listH += "Can't connect to API."
         rolesList.innerHTML = listH;
     } catch (e) {
         console.log("Can't access anything:", e.message);
@@ -108,7 +266,7 @@ async function addRole() {
                     alert(data.msg);
                 else if(data.res === "Success")
                     console.log(data.msg);
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {
@@ -137,7 +295,7 @@ async function editRole(oldRoleName) {
                     alert(data.msg);
                 else if(data.res === "Success")
                     console.log(data.msg);
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {
@@ -162,7 +320,7 @@ async function removeRole(roleName) {
                     alert(data.msg);
                 else if(data.res === "Success")
                     console.log(data.msg);
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {
@@ -189,7 +347,7 @@ async function updateLastSeen() {
                     alert(data.msg);
                 else if(data.res === "Success")
                     adminPanelMessage.innerHTML = `<pre>${data.msg}</pre>`;
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {
@@ -216,7 +374,7 @@ async function resetUserRoles() {
                     alert(data.msg);
                 else if(data.res === "Success")
                     adminPanelMessage.innerHTML = data.msg;
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {
@@ -242,7 +400,7 @@ async function addRoleToUser(roleName) {
                 alert(data.msg);
             else if(data.res === "Success")
                 console.log(data.msg);
-            loadUserList();
+            loadRoleList();
         }
     } catch (e) {
         console.log("Can't add role to user:", e.message);
@@ -267,7 +425,7 @@ async function removeRoleFromUser(roleName, userName) {
                 alert(data.msg);
             else if(data.res === "Success")
                 console.log(data.msg);
-            loadUserList();
+            loadRoleList();
         }
     } catch (e) {
         console.log("Can't remove role from user:", e.message);
@@ -293,7 +451,7 @@ async function addRoleToAllUsers(roleName) {
                     alert(data.msg);
                 else if(data.res === "Success")
                     console.log(data.msg);
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {
@@ -320,7 +478,7 @@ async function removeRoleFromAllUsers(roleName) {
                     alert(data.msg);
                 else if(data.res === "Success")
                     console.log(data.msg);
-                loadUserList();
+                loadRoleList();
             }
         }
     } catch (e) {

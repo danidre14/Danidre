@@ -9,7 +9,7 @@ router.get('/', checkIfLoggedIn, paginatedResults(User, ['bio', 'username'], 'us
     let vars = {cPage: "u", searchOptions: req.query};
     vars.title = "Users";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username lastSeen profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username lastSeen profileImage profileImageType');
         vars.user = user;
     }
 
@@ -18,7 +18,7 @@ router.get('/', checkIfLoggedIn, paginatedResults(User, ['bio', 'username'], 'us
 });
 
 router.get('/:name', async (req, res) => { //add authentication check
-    const profile = await User.findOne({username:new RegExp(req.params.name, "i")}, 'username lastSeen firstName lastName bio roles updatedAt profileImage profileImageType').populate('roles', 'name');
+    const profile = await User.findOne({username:new RegExp("^" + req.params.name + "$", "i")}, 'username lastSeen firstName lastName bio roles updatedAt profileImage profileImageType').populate('roles', 'name');
     if(!profile) {
         if(!req.isAuthenticated()) {
             return res.redirect('/');
@@ -29,7 +29,7 @@ router.get('/:name', async (req, res) => { //add authentication check
     let vars = {cPage: "u", searchOptions: req.query, profile: profile};
     vars.title = `${profile.username}'s Profile`;
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username:new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username:new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('user/profile', vars);
@@ -37,14 +37,14 @@ router.get('/:name', async (req, res) => { //add authentication check
 
 router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
     try {
-        const profile = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username firstName lastName bio roles createdAt updatedAt profileImage profileImageType').populate('roles', 'name');
+        const profile = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username firstName lastName bio roles createdAt updatedAt profileImage profileImageType').populate('roles', 'name');
         if(!profile) {
             return res.redirect('/u');
         }
         let vars = {cPage: "u", searchOptions: req.query, profile: profile};
         vars.title = "Edit Profile";
         if(req.isAuthenticated()) {
-            const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
             vars.user = user;//because from here its authenticated
         }
         
@@ -65,7 +65,7 @@ router.put('/:name', checkAuthenticatedAccess, checkAuthorizedAccess, async (req
             profileImage: req.body.profileImage
         }
         let hasChanged = false;
-        let user = await User.findOne({username: new RegExp(req.params.name, "i")});
+        let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")});
         if(user.firstName !== updates.firstName) {
             if(updates.firstName != null && updates.firstName !== '') {
                 user.firstName = updates.firstName;
@@ -117,7 +117,7 @@ router.post('/:name/update',
 },
 async (req, res) => {
     if(req.body.target === 'surveyMaker') {
-        let user = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username secret');
+        let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
         user.secret.surveyMaker[req.body.key] = req.body.value;
         user.markModified('secret');
         await user.save();
@@ -141,7 +141,7 @@ router.delete('/:name/update',
 },
 async (req, res) => {
     if(req.body.target === 'surveyMaker') {
-        let user = await User.findOne({username: new RegExp(req.params.name, "i")}, 'username secret');
+        let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
         user.secret.surveyMaker[req.body.key] = undefined;
         user.markModified('secret');
         await user.save();

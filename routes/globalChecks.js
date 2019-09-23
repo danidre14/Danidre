@@ -27,7 +27,7 @@ router.use((req, res, next) => {    //redirecting
     next();
 }, async (req, res, next) => {   //last seen updates
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
         user.lastSeen = Date.now();
         await user.save();
     }

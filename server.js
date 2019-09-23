@@ -79,7 +79,7 @@ app.locals.formatDistanceToNow = function(date, old) {
     }
     let lastSeen = `${formatDistanceToNow(date)} ago`;
     if(considerOnline.includes(lastSeen) && !old) lastSeen = "Online";
-    return lastSeen;
+    return lastSeen.replace("about", "");
 }
 app.locals.stringify = function(obj) {
     var str = [];

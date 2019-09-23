@@ -16,7 +16,7 @@ router.get('/', checkNotAuthenticated, async (req, res) => {
     vars.e2Message = req.flash('e2Message');
     vars.title = "Sign Up";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('signup/index', vars);
@@ -29,7 +29,7 @@ router.get('/v', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     vars.description = "Check your email for a link to verify your account. Check your spam folders if you can't find any email.";
@@ -41,7 +41,7 @@ router.get('/verify', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username:  new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
     res.render('signup/verify', vars);
@@ -88,7 +88,7 @@ router.post('/verify', checkNotAuthenticated, async (req, res) => {
 async function checkUserExists(req, res, next) {
 try {
     //look for user
-    const user = await User.findOne({username: new RegExp(req.body.username, "i")});
+    const user = await User.findOne({username: new RegExp("^" + req.body.username + "$", "i")});
 
     //if user does not exist
     if(!user) {

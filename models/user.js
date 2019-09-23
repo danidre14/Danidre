@@ -19,11 +19,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         ref: 'Role'
     }],
-    // roles: {
-    //     type: [String],
-    //     required: true,
-    //     default: ['user']
-    // },
     isVerified: {
         type: Boolean,
         required: true,

@@ -10,7 +10,7 @@ router.get('/', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
     vars.title = "Settings";
     
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp(req.user.username, "i")}, 'username profileImage profileImageType');
+        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
         vars.user = user;
     }
 
@@ -38,7 +38,7 @@ router.get('/roles_List', checkAuthenticatedAccess, checkIsAdmin, async (req, re
 //add role
 router.post('/roles_List', checkAuthenticatedAccess, checkIsAdmin, validateRoleName, async (req, res) => {
     //check if role exists
-    let role = await Role.findOne({name: new RegExp(req.body.roleName, "i")});
+    let role = await Role.findOne({name: new RegExp("^" + req.body.roleName + "$", "i")});
     if(role) return res.send({res: 'Error', msg: 'Role already exists'});
 
     //if not, create role
@@ -51,22 +51,38 @@ router.post('/roles_List', checkAuthenticatedAccess, checkIsAdmin, validateRoleN
 
 //edit role
 router.put('/roles_List', checkAuthenticatedAccess, checkIsAdmin, validateRoleName, async (req, res) => {
-    //check if role exists
-    let role = await Role.findOne({name: new RegExp(req.body.oldRoleName, "i")});
-    if(!role) return res.send({res: 'Error', msg: 'Role does not exists'});
+    //check if old role exists
+    let oldRole = await Role.findOne({name: new RegExp("^" + req.body.oldRoleName + "$", "i")});
+    if(!oldRole) return res.send({res: 'Error', msg: 'Role does not exist'});
 
-    //if it does, edit it (only if roleName isn't equal to new roleName)
-    if(role.name !== req.body.roleName) {
-        role.name = req.body.roleName;
-        await role.save();
+
+    //if it does, edit it (only if roleName isn't equal to new roleName but they may have same name but diff spelling)
+
+    if(oldRole.name.toLowerCase() === req.body.roleName.toLowerCase() && oldRole.name !== req.body.roleName) {
+        oldRole.name = req.body.roleName;
+        await oldRole.save();
+
+        return res.send({res: 'Success', msg: 'Role edited'});
     }
-    res.send({res: 'Success', msg: 'Role edited'});
+
+    //check if role exists
+    let role = await Role.findOne({name: new RegExp("^" + req.body.roleName + "$", "i")});
+    if(role) return res.send({res: 'Error', msg: 'Role already exists'});
+
+    //if it doesn't, edit it (only if roleName isn't equal to new roleName)
+    if(oldRole.name !== req.body.roleName) {
+        oldRole.name = req.body.roleName;
+        await oldRole.save();
+
+        return res.send({res: 'Success', msg: 'Role edited'});
+    }
+    res.send({res: 'Error', msg: 'Role not edited'});
 });
 
 //delete role
 router.delete('/roles_List', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
     //check if role exists
-    const role = await Role.findOne({name: new RegExp(req.body.roleName, "i")});
+    const role = await Role.findOne({name: new RegExp("^" + req.body.roleName + "$", "i")});
     if(!role) return res.send({res: 'Error', msg: 'Role does not exist'});
 
     //if it does, remove it
@@ -120,9 +136,9 @@ router.post('/api/add_role_to_user', checkAuthenticatedAccess, checkIsAdmin, asy
     const roleName = req.body.roleName;
     const userName = req.body.userName;
     try {
-        const role = await Role.findOne({name: new RegExp(roleName, "i")}, 'name');
+        const role = await Role.findOne({name: new RegExp("^" + roleName + "$", "i")}, 'name');
         if(!role) return res.send({res: 'Error', msg: `Role not found: ${roleName}`});
-        const user = await User.findOne({username: new RegExp(userName, "i")}, 'roles');
+        const user = await User.findOne({username: new RegExp("^" + userName + "$", "i")}, 'roles');
         if(!user) return res.send({res: 'Error', msg: `User not found: ${userName}`});
 
         const roleExists = user.roles.some(obj => obj.equals(role._id));
@@ -152,9 +168,9 @@ router.delete('/api/remove_role_from_user', checkAuthenticatedAccess, checkIsAdm
     const roleName = req.body.roleName;
     const userName = req.body.userName;
     try {
-        const role = await Role.findOne({name: new RegExp(roleName, "i")}, 'name');
+        const role = await Role.findOne({name: new RegExp("^" + roleName + "$", "i")}, 'name');
         if(!role) return res.send({res: 'Error', msg: `Role not found: ${roleName}`});
-        const user = await User.findOne({username: new RegExp(userName, "i")}, 'roles');
+        const user = await User.findOne({username: new RegExp("^" + userName + "$", "i")}, 'roles');
         if(!user) return res.send({res: 'Error', msg: `User not found: ${userName}`});
 
         const roleExists = user.roles.some(obj => obj.equals(role._id));
@@ -177,7 +193,7 @@ router.post('/api/add_role_to_all_users', checkAuthenticatedAccess, checkIsAdmin
     if(await bcrypt.compare(req.body.passkey, process.env.ADMIN_KEY)) {
         const roleName = req.body.roleName;
         try {
-            const role = await Role.findOne({name: new RegExp(roleName, "i")}, 'name');
+            const role = await Role.findOne({name: new RegExp("^" + roleName + "$", "i")}, 'name');
             if(!role) return res.send({res: 'Error', msg: `Role not found: ${roleName}`});
 
             
@@ -207,7 +223,7 @@ router.delete('/api/remove_role_from_all_users', checkAuthenticatedAccess, check
     if(await bcrypt.compare(req.body.passkey, process.env.ADMIN_KEY)) {
         const roleName = req.body.roleName;
         try {
-            const role = await Role.findOne({name: new RegExp(roleName, "i")}, 'name');
+            const role = await Role.findOne({name: new RegExp("^" + roleName + "$", "i")}, 'name');
             if(!role) return res.send({res: 'Error', msg: `Role not found: ${roleName}`});
 
             
