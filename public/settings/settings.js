@@ -45,8 +45,9 @@ const loadHighScoreList = async function() {
                 </div>
             </div>`;
         }
-        if(!notFound) listH += `<button class="bounded button" onclick="addHighscore()">Add Highscore</button>`
-        else listH += "Can't connect to API."
+        if(notFound) listH += "Nothing from API."
+        listH += `<button class="bounded button" onclick="addHighscore()">Add Highscore</button>`
+
         highscoresList.innerHTML = listH;
     } catch (e) {
         console.log("Can't access anything:", e.message);
@@ -238,9 +239,9 @@ const loadRoleList = async function() {
                 </div>
             </div>`;
         }
-        if(!notFound) listH += `<button class="bounded button" onclick="addRole()">Add Role</button>`
-
-        else listH += "Can't connect to API."
+        if(notFound) listH += "Nothing from API."
+        listH += `<button class="bounded button" onclick="addRole()">Add Role</button>`
+        
         rolesList.innerHTML = listH;
     } catch (e) {
         console.log("Can't access anything:", e.message);
