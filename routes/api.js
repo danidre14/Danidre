@@ -6,7 +6,7 @@ const User = require('../models/user');
 const highscoreRouter = require('./highscore');
 router.use('/games/highscores', highscoreRouter);
 
-router.get('/user_data', async function(req, res) {
+router.get('/users/data_secret', async function(req, res) {
     try {
         if (req.isAuthenticated()) {
             const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username secret');
@@ -19,7 +19,42 @@ router.get('/user_data', async function(req, res) {
             res.status(204).send('na');
         }
     } catch {
-        
+        res.status(204).send('na');
+    }
+});
+
+router.get('/users/data_username', async function(req, res) {
+    try {
+        if (req.isAuthenticated()) {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username');
+            res.send({
+                username: user.username
+            });
+        } else {
+            // The user is not logged in
+            res.status(204).send('na');
+        }
+    } catch {
+        res.status(204).send('na');
+    }
+});
+
+router.get('/users/data_loggedIn', async function(req, res) {
+    try {
+        if (req.isAuthenticated()) {
+            return res.send({
+                loggedId: true
+            });
+        } else {
+            // The user is not logged in
+            return res.send({
+                loggedId: false
+            });
+        }
+    } catch {
+        return res.send({
+            loggedId: false
+        });
     }
 });
 

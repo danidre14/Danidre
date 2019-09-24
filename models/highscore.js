@@ -5,7 +5,7 @@ const highscoreSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    sort: {
+    order: {
         type: Number,
         required: true,
         default: 1

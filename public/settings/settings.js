@@ -19,8 +19,8 @@ const resizeDiv = function(divId) {
 
 const loadHighScoreList = async function() {
     try {
-        let request = await axios('/api/games/highscores/highscores_list');
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const request = await axios('/api/games/highscores/highscores_list');
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if(!requestOK) {
             return console.log("Can't get list"); //error occurred
         }
@@ -37,7 +37,7 @@ const loadHighScoreList = async function() {
                 <div class="div-space-between div">
                     <div>
                         <span>${highscore.name}</span>
-                        <button class="bounded button" onclick="toggleHighscoreSort('${highscore.name}', '${highscore.sort}')">Sort: ${highscore.sort}</button>
+                        <button class="bounded button" onclick="toggleHighscoreOrder('${highscore.name}', '${highscore.order}')">Order: ${highscore.order}</button>
                         <button class="bounded button" onclick="getHighscoreKey('${highscore.key}')">Key</button>
                         <button class="bounded button" onclick="editHighscore('${highscore.name}')">Edit</button>
                         <button class="bounded button" onclick="removeHighscore('${highscore.name}')">Del</button>
@@ -58,15 +58,15 @@ async function addHighscore() {
     try {
         const highscoreName = prompt("Enter highscore name:", '') || "";
         if(highscoreName.trim() !== '') {
-            let request = await axios({
+            const request = await axios({
                 method: 'post',
                 url: `/api/games/highscores/highscores_list`,
                 data: {highscoreName: highscoreName}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -87,15 +87,15 @@ async function editHighscore(oldHighscoreName) {
         const newHighscoreName = prompt("Enter highscore name:", oldHighscoreName) || oldHighscoreName;
         
         if(newHighscoreName.trim() !== '' && newHighscoreName !== oldHighscoreName) {        
-            let request = await axios({
+            const request = await axios({
                 method: 'put',
                 url: `/api/games/highscores/highscores_list`,
                 data: {oldHighscoreName: oldHighscoreName, highscoreName: newHighscoreName}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -112,15 +112,15 @@ async function editHighscore(oldHighscoreName) {
 async function removeHighscore(highscoreName) {
     try {
         if(confirm(`Are you sure you want to delete the highscore "${highscoreName}"?`)) {
-            let request = await axios({
+            const request = await axios({
                 method: 'delete',
                 url: `/api/games/highscores/highscores_list`,
                 data: {highscoreName: highscoreName}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -134,19 +134,19 @@ async function removeHighscore(highscoreName) {
     }
 }
 
-async function toggleHighscoreSort(highscoreName) {
+async function toggleHighscoreOrder(highscoreName) {
     try {
-        if(!confirm(`Change sort of "${highscoreName}"?`)) return;
+        if(!confirm(`Change order of "${highscoreName}"?`)) return;
                
-        let request = await axios({
+        const request = await axios({
             method: 'put',
-            url: `/api/games/highscores/highscores_list_sort`,
+            url: `/api/games/highscores/highscores_list_order`,
             data: {highscoreName: highscoreName}
         });
 
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if (requestOK) {
-            let data = await request.data;
+            const data = await request.data;
             // do something with data
             if(data.res === "Error")
                 alert(data.msg);
@@ -155,7 +155,7 @@ async function toggleHighscoreSort(highscoreName) {
             loadHighScoreList();
         }
     } catch (e) {
-        console.log("Can't change sort method:", e.message);
+        console.log("Can't change order method:", e.message);
     }
 }
 
@@ -168,10 +168,10 @@ const getHighscoreKey = function(highscoreKey) {
 
 const getImagePath = async function(username) {
     try {
-        let request = await axios(`/api/uploads/avatars/${username}`);
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const request = await axios(`/api/uploads/avatars/${username}`);
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if (requestOK) {
-            let data = await request.data;
+            const data = await request.data;
             // do something with data
             return data.path;
         }
@@ -190,8 +190,8 @@ const getImagePath = async function(username) {
 
 const loadRoleList = async function() {
     try {
-        let request = await axios('/settings/roles_List');
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const request = await axios('/settings/roles_List');
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if(!requestOK) {
             return console.log("Can't get list"); //error occurred
         }
@@ -253,15 +253,15 @@ async function addRole() {
     try {
         const roleName = prompt("Enter role name:", '') || "";
         if(roleName.trim() !== '') {
-            let request = await axios({
+            const request = await axios({
                 method: 'post',
                 url: `/settings/roles_List`,
                 data: {roleName: roleName}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -282,15 +282,15 @@ async function editRole(oldRoleName) {
         const newRoleName = prompt("Enter role name:", oldRoleName) || oldRoleName;
         
         if(newRoleName.trim() !== '' && newRoleName !== oldRoleName) {        
-            let request = await axios({
+            const request = await axios({
                 method: 'put',
                 url: `/settings/roles_List`,
                 data: {oldRoleName: oldRoleName, roleName: newRoleName}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -307,15 +307,15 @@ async function editRole(oldRoleName) {
 async function removeRole(roleName) {
     try {
         if(confirm(`Are you sure you want to delete the role "${roleName}"?`)) {
-            let request = await axios({
+            const request = await axios({
                 method: 'delete',
                 url: `/settings/roles_List`,
                 data: {roleName: roleName}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -334,15 +334,15 @@ async function updateLastSeen() {
         if(confirm(`Are you sure you want to update last seen?`)) {
             const passkey = await promptValue("password", "Enter key", "") || "";
             if(passkey.trim() === "") return;
-            let request = await axios({
+            const request = await axios({
                 method: 'put',
                 url: `/settings/api/update_last_seen`,
                 data: {passkey: passkey}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -361,15 +361,15 @@ async function resetUserRoles() {
         if(confirm(`Are you sure you want to reset all user roles?`)) {
             const passkey = await promptValue("password", "Enter key", "") || "";
             if(passkey.trim() === "") return;
-            let request = await axios({
+            const request = await axios({
                 method: 'delete',
                 url: `/settings/api/reset_user_roles`,
                 data: {passkey: passkey}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -387,15 +387,15 @@ async function addRoleToUser(roleName) {
     try {
         const userName = prompt("Enter username:", '') || "";
         if(userName.trim() === '') return;
-        let request = await axios({
+        const request = await axios({
             method: 'post',
             url: `/settings/api/add_role_to_user`,
             data: {roleName: roleName, userName: userName}
         });
 
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if (requestOK) {
-            let data = await request.data;
+            const data = await request.data;
             // do something with data
             if(data.res === "Error")
                 alert(data.msg);
@@ -412,15 +412,15 @@ async function removeRoleFromUser(roleName, userName) {
     try {
         if(!confirm(`Remove role "${roleName}" from "${userName}"?`)) return;
 
-        let request = await axios({
+        const request = await axios({
             method: 'delete',
             url: `/settings/api/remove_role_from_user`,
             data: {roleName: roleName, userName: userName}
         });
 
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if (requestOK) {
-            let data = await request.data;
+            const data = await request.data;
             // do something with data
             if(data.res === "Error")
                 alert(data.msg);
@@ -438,15 +438,15 @@ async function addRoleToAllUsers(roleName) {
         if(confirm(`Are you sure you want to add role to all users?`)) {
             const passkey = await promptValue("password", "Enter key", "") || "";
             if(passkey.trim() === "") return;
-            let request = await axios({
+            const request = await axios({
                 method: 'post',
                 url: `/settings/api/add_role_to_all_users`,
                 data: {roleName: roleName, passkey: passkey}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
@@ -465,15 +465,15 @@ async function removeRoleFromAllUsers(roleName) {
         if(confirm(`Are you sure you want to remove role from all users?`)) {
             const passkey = await promptValue("password", "Enter key", "") || "";
             if(passkey.trim() === "") return;
-            let request = await axios({
+            const request = await axios({
                 method: 'delete',
                 url: `/settings/api/remove_role_from_all_users`,
                 data: {roleName: roleName, passkey: passkey}
             });
 
-            let requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200 && request.statusText === 'OK';
             if (requestOK) {
-                let data = await request.data;
+                const data = await request.data;
                 // do something with data
                 if(data.res === "Error")
                     alert(data.msg);
