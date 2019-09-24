@@ -6,7 +6,7 @@ const hash = require("blueimp-md5");
 
 //get highscore
 router.get('/highscores_list', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
-    const highscores = await Highscore.find({}, 'name key sort');
+    const highscores = await Highscore.find({}, 'name key order');
 
     res.send({highscores: highscores});
 });
@@ -16,12 +16,12 @@ router.post('/highscores_list', checkAuthenticatedAccess, checkIsAdmin, validate
     let highscore = await Highscore.findOne({name: new RegExp("^" + req.body.highscoreName + "$", "i")});
     if(highscore) return res.send({res: 'Error', msg: 'Highscore already exists'});
 
-    const sortOrder = req.body.highscoreSort ? req.body.highscoreSort : 1;
+    const order = req.body.highscoreOrder ? req.body.highscoreOrder : 1;
 
     //if not, create highscore
     highscore = new Highscore({
         name: req.body.highscoreName,
-        sort: sortOrder
+        order: order
     });
     highscore.key = hash(highscore._id);
     await highscore.save();
@@ -36,7 +36,6 @@ router.put('/highscores_list', checkAuthenticatedAccess, checkIsAdmin, validateH
 
 
     //if it does, edit it (only if highscoreName isn't equal to new highscoreName but they may have same name but diff spelling)
-
     if(oldHighscore.name.toLowerCase() === req.body.highscoreName.toLowerCase() && oldHighscore.name !== req.body.highscoreName) {
         oldHighscore.name = req.body.highscoreName;
         await oldHighscore.save();
@@ -69,19 +68,19 @@ router.delete('/highscores_list', checkAuthenticatedAccess, checkIsAdmin, async 
     res.send({res: 'Success', msg: 'Highscore deleted'});
 });
 
-//update sort method
-router.put('/highscores_list_sort', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
+//update order method
+router.put('/highscores_list_order', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
     //check if highscore exists
     let highscore = await Highscore.findOne({name: new RegExp("^" + req.body.highscoreName + "$", "i")});
     if(!highscore) return res.send({res: 'Error', msg: 'Highscore does not exists'});
 
-    //if it does, edit it (only if highscoreName isn't equal to new highscoreName)
-    highscore.sort *= -1;
-    if(highscore.sort > 1 || highscore.sort == 0) highscore.sort = 1;
-    else if(highscore.sort < -1) highscore.sort = -1;
+    
+    highscore.order *= -1;
+    if(highscore.order > 1 || highscore.order == 0) highscore.order = 1;
+    else if(highscore.order < -1) highscore.order = -1;
 
     await highscore.save();
-    res.send({res: 'Success', msg: 'Sort method changed'});
+    res.send({res: 'Success', msg: 'Order method changed'});
 });
 
 router.use('/*', (req, res) => {

@@ -1,7 +1,7 @@
 const postList = async function(config) {
     try {
-        let request = await axios('/api/user_data');
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const request = await axios('/api/users/data_username');
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if(!requestOK) {
             console.log('Must be logged in')
 
@@ -10,7 +10,7 @@ const postList = async function(config) {
         let user = await request.data;
         if(user === null || user === undefined) return
 
-        let response = await axios({
+        const response = await axios({
             method: 'post',
             url: `/u/${user.username}/update`,
             data: config
@@ -18,7 +18,7 @@ const postList = async function(config) {
 
         let responseOK = response && response.status === 200 && response.statusText === 'OK';
         if (responseOK) {
-            let data = await response.data;
+            const data = await response.data;
             // do something with data
 
             console.log(data);
@@ -59,8 +59,8 @@ window.addEventListener('beforeunload', function (e) {
     e.returnValue = '';
 });
 const getList = async function() {
-    let request = await axios('/api/user_data');
-    let requestOK = request && request.status === 200 && request.statusText === 'OK';
+    const request = await axios('/api/users/data_secret');
+    const requestOK = request && request.status === 200 && request.statusText === 'OK';
     if(!requestOK) {
         console.log('Must be logged in')
 
@@ -89,8 +89,8 @@ const removeFile = async function(fileName) {
     if(!confirm(`Are you sure you want to delete "${fileName}"? This action cannot be undone!`)) return; //self explanatory
 
     try {
-        request = await axios('/api/user_data'); //fix this
-        let requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const request = await axios('/api/users/data_username'); //fix this
+        const requestOK = request && request.status === 200 && request.statusText === 'OK';
         if(!requestOK) {
             console.log('Must be logged in')
 
@@ -99,7 +99,7 @@ const removeFile = async function(fileName) {
         let user = await request.data;
         if(user === null || user === undefined) return
 
-        let response = await axios({
+        const response = await axios({
             method: 'delete',
             url: `/u/${user.username}/update`,
             data: {
@@ -110,7 +110,7 @@ const removeFile = async function(fileName) {
 
         let responseOK = response && response.status === 200 && response.statusText === 'OK';
         if (responseOK) {
-            let data = await response.data;
+            const data = await response.data;
             // do something with data
             console.log(data);
             getList();
