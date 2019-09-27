@@ -6,8 +6,10 @@ router.get('/', async (req, res) => {
     let vars = {cPage: "contact", searchOptions: req.query};
     vars.title = "Contact";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
+        try {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
     res.render('contact/index', vars);
 });

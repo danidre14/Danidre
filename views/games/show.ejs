@@ -1,0 +1,39 @@
+<h2><%= game.title || "Game" %></h2>
+<section class="games">
+    <article>
+        <div id="gameArea">
+        </div>
+        <div id="highscoreArea">
+        </div>
+    </article>
+    <article>
+        <div class="description encapsulated-box">
+            <img class="game-img-big" src="<%= game.image %>" onerror="if (this.src != '../../images/GamesIcon.png') this.src = '../../images/GamesIcon.png';">
+            <div style="padding-left:1.2rem;width:100%;">
+                <p><%= game.title %></p>
+                <% if(game.description) { %>
+                    <pre><%= game.description %></pre>
+                <% } else { %>
+                    <p>This game does not have any description.</p>
+                <% } %>
+            </div>
+        </div>
+    </article>
+</section>
+
+<meta name="description" content="Play <%= game.title %>! <%= game.minidesc || '' %>">
+
+<link rel="stylesheet" href="/games/engine/DialogBoxes.css">
+<link rel="stylesheet" href="/games/engine/GamePanel.css">
+<link rel="stylesheet" href="/games/engine/HighscoreAPI.css">
+
+<script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script defer src="/games/engine/DialogBoxes.js"></script>
+<script defer src="/games/engine/GamePanel.js"></script>
+<script defer src="/games/engine/GameAudio.js"></script>
+<script defer src="/games/engine/HighscoreAPI.js"></script>
+
+<% game.scripts.forEach(script => { %>
+    <script defer src="/games/<%= script %>"></script>
+<% }); %>

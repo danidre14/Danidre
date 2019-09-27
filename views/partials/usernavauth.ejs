@@ -6,12 +6,13 @@
             <% if(isAdmin(user.username)) { %>
                 <a class="div-space-around" href="/settings" title="Settings"><div class="settings icon"></div></a>
             <% } %>
-            <a class="userIcon" href="/u/<%= user.username %>/#navMenu">
+            <a class="userIcon" href="/u/<%= user.username %>/">
                 <div class="div-space-around">
                     <img id="userIcon" class="userIcon" src="<%= user.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
                 </div>
+                
             </a>
-            <%//<span><a class="header-username" href="/u/%}{%= username %}">{%= username %}</a></span> %>
+            <a href="/u/<%= user.username %>/" class="div-space-around"><%= user.username %></a>
         </nav>
         <nav>
             <span><a class="btn-so" href="/secret/surveyMaker">Survey Maker</a></span>

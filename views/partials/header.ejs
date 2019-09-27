@@ -6,7 +6,7 @@
             <ul class="signinupnav-ul">
                 <li class="<%=cPage==='signin'? 'current-page':''%>"><a href="/signin">Sign In</a></li>
                 <li class="<%=cPage==='signup'? 'current-page':''%>"><a href="/signup">Sign Up</a></li>
-                <!-- <% // <li class=" %><%=cPage==='u'? 'current-page':''%><%//"><a href="/u">Users</a></li> %> -->
+                <!-- <% // <li class=" %><%=//cPage==='u'? 'current-page':''%><%//"><a href="/u">Users</a></li> %> -->
             </ul>
         <% } %>
     </nav>
@@ -16,7 +16,7 @@
     <nav id="navMenu">
         <ul class="header-ul">
             <li class="home-btn <%=cPage=='home'? 'current-page':''%>"><a href="/">Home</a></li>
-            <li class="games-btn"><a href="https://danidre14.newgrounds.com/games" target="_blank" rel="noreferrer">Games</a></li>
+            <li class="<%=cPage==='games'? 'current-page':''%> games-btn"><a href="/games">Games</a></li>
             <li class="<%=cPage==='about'? 'current-page':''%>"><a href="/about">About</a></li>
             <li class="<%=cPage==='news'? 'current-page':''%>"><a href="/news">News</a></li>
             <li class="<%=cPage==='contact'? 'current-page':''%>"><a href="/contact">Contact</a></li>

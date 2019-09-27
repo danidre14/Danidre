@@ -17,7 +17,10 @@
                 <label for="lastName">Last Name:</label>
                 <input class="input" type="text" name="lastName" id="lastName" autocomplete="off" placeholder="Enter last name" value="<%= profile.lastName %>" >
             </div>
-            <div>Username: <%= profile.username %></div>
+            <div>
+                <span>Username:</span>
+                <input class="input" readonly disabled type="text" value="<%= profile.username %>" >
+            </div>
             <div>
                 <label for="bio">Bio:</label>
                 <br/>

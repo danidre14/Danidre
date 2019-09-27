@@ -4,19 +4,37 @@ const passport = require('passport');
 const User = require('../models/user');
 
 const initializePassport = require('../passport-config');
-initializePassport(
-    passport,
-    async username => await User.findOne({username: new RegExp("^" + username + "$", "i")}, 'isVerified password').exec(),
-    async id => await User.findById(id)
-);
+try {
+    initializePassport(
+        passport,
+        async username => {
+            try {
+                return await User.findOne({username: new RegExp("^" + username + "$", "i")}, 'isVerified password').exec();
+            } catch {
+                return null;
+            }
+        },
+        async id => {
+            try {
+                return await User.findById(id);
+            } catch {
+                return null;
+            }
+        }
+    );
+} catch (e) {
+    console.log(e.message);
+}
 
 router.get('/', checkNotAuthenticated, async (req, res) => {
     req.session.redirectTo = req.header('Referer') || '/';
     let vars = {cPage: "signin", searchOptions: req.query};
     vars.title = "Sign In";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
+        try {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
     res.render('signin/index', vars);
 });

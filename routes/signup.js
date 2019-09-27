@@ -16,8 +16,10 @@ router.get('/', checkNotAuthenticated, async (req, res) => {
     vars.e2Message = req.flash('e2Message');
     vars.title = "Sign Up";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
+        try {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
     res.render('signup/index', vars);
 });
@@ -29,8 +31,10 @@ router.get('/v', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "secret", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
+        try {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
     vars.description = "Check your email for a link to verify your account. Check your spam folders if you can't find any email.";
     res.render('misc/blank', vars);
@@ -41,8 +45,10 @@ router.get('/verify', checkNotAuthenticated, async (req, res) => {
     let vars = {cPage: "signup", searchOptions: req.query};
     vars.title = "Verify Account";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
+        try {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
     res.render('signup/verify', vars);
 });
@@ -86,76 +92,78 @@ router.post('/verify', checkNotAuthenticated, async (req, res) => {
 });
 
 async function checkUserExists(req, res, next) {
-try {
-    //look for user
-    const user = await User.findOne({username: new RegExp("^" + req.body.username + "$", "i")});
+    try {
+        //look for user
+        const user = await User.findOne({username: new RegExp("^" + req.body.username + "$", "i")});
 
-    //if user does not exist
-    if(!user) {
-        return next(); //proceed to create user
-    }
+        //if user does not exist
+        if(!user) {
+            return next(); //proceed to create user
+        }
 
-    //if user already exists
-    /* 
-        if user is verified -> redirect 'username unavailable'
-        else if user not verified, but token exists for that user -> 
-        if email exists: redirect 'check your email for verification token'
-        else if user not verified, but token does not exist -> redirect 'an email has been sent to verify account'
-        or if email does not exist
-    */
+        //if user already exists
+        /* 
+            if user is verified -> redirect 'username unavailable'
+            else if user not verified, but token exists for that user -> 
+            if email exists: redirect 'check your email for verification token'
+            else if user not verified, but token does not exist -> redirect 'an email has been sent to verify account'
+            or if email does not exist
+        */
 
-    //if user verified
-    if(user.isVerified) {
-        req.flash('outsert', {message: 'Username unavailable.'});
+        //if user verified
+        if(user.isVerified) {
+            req.flash('outsert', {message: 'Username unavailable.'});
+            return res.redirect('/signup');
+        }
+        
+        //if user not verified, look for token
+        const token = await Token.findOne({_userId:user._id});
+
+        //if token does not exist
+        if(!token) {
+            // Create a verification token
+            const newToken = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+            await newToken.save();
+
+            // Send the email for resend token
+            const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
+            
+            sendMail(mailOptions, user.email);
+
+            req.flash('outsert', {message: `A token has been resent to ${user.email}. Check your email to verify your account.`});
+            return res.redirect('/signup/v');
+        }
+
+
+        //if token exists
+        
+        //look for user email
+        if(user.email === req.body.email) {//email exists
+            //check email for verification token
+            req.flash('outsert', {message: 'Account already registered. Check your email for the verification token.'});
+            return res.redirect('/signin');
+        } else {//emal does not exist
+            //save new email
+            user.email = req.body.email;
+            await user.save();
+
+            // Create a verification token
+            const newToken = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+            await newToken.save();
+
+            // Send the email for resend token
+            const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
+
+            sendMail(mailOptions, user.email);
+
+            req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`});
+            return res.redirect('/signup/v');
+        }
+    } catch (e) {
+        console.log("Message:", e.message);
+        req.flash('outsert', {message: 'Error Occurred.'});
         return res.redirect('/signup');
     }
-    
-    //if user not verified, look for token
-    const token = await Token.findOne({_userId:user._id});
-
-    //if token does not exist
-    if(!token) {
-        // Create a verification token
-        const newToken = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex') });
-        await newToken.save();
-
-        // Send the email for resend token
-        const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
-        
-        sendMail(mailOptions, user.email);
-
-        req.flash('outsert', {message: `A token has been resent to ${user.email}. Check your email to verify your account.`});
-        return res.redirect('/signup/v');
-    }
-
-
-    //if token exists
-    
-    //look for user email
-    if(user.email === req.body.email) {//email exists
-        //check email for verification token
-        req.flash('outsert', {message: 'Account already registered. Check your email for the verification token.'});
-        return res.redirect('/signin');
-    } else {//emal does not exist
-        //save new email
-        user.email = req.body.email;
-        await user.save();
-
-        // Create a verification token
-        const newToken = new Token({_userId: user._id, token: crypto.randomBytes(16).toString('hex') });
-        await newToken.save();
-
-        // Send the email for resend token
-        const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
-
-        sendMail(mailOptions, user.email);
-
-        req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`});
-        return res.redirect('/signup/v');
-    }
-} catch (err) {
-    console.log("Message:", err.message);
-}
 }
 
 async function createUser(req, res) {
@@ -189,9 +197,9 @@ async function createUser(req, res) {
         req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`});
         res.redirect('/signup/v');
         //res.redirect(`users/${newUser.username}`);
-    } catch (err) {
-        console.log("Message:", err.message);
-        req.flash('outsert', {message: 'An error has occured. Please try again, or contact support.'});
+    } catch (e) {
+        console.log("Message:", e.message);
+        req.flash('outsert', {message: 'An error has occured. Please report this issue or try again.'});
         res.redirect('/signup');
     }
 }

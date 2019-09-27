@@ -17,16 +17,20 @@ const formatDistanceToNow = require('date-fns/formatDistanceToNow')
 //routes
 const globalChecks = require('./routes/globalChecks')
 const indexRouter = require('./routes/index');
-const settingsRouter = require('./routes/settings');
+const gamesRouter = require('./routes/games');
 const aboutRouter = require('./routes/about');
 const newsRouter = require('./routes/news');
 const contactRouter = require('./routes/contact');
+
 const signupRouter = require('./routes/signup');
 const signinRouter = require('./routes/signin');
 const signoutRouter = require('./routes/signout');
-const secretRouter = require('./routes/secret');
 const userRouter = require('./routes/user');
+const secretRouter = require('./routes/secret');
+
 const apiRouter = require('./routes/api');
+const settingsRouter = require('./routes/settings');
+
 const error404Router = require('./routes/error404');
 
 app.set('view engine', 'ejs');
@@ -58,16 +62,19 @@ db.once('open', () => console.log('Connected to Mongoose'));
 
 app.use(globalChecks);
 app.use('/', indexRouter);
-app.use('/settings', settingsRouter);
+app.use('/games', gamesRouter);
 app.use('/about', aboutRouter);
 app.use('/news', newsRouter);
 app.use('/contact', contactRouter);
+
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/signout', signoutRouter);
-app.use('/secret', secretRouter);
 app.use('/u', userRouter);
+app.use('/secret', secretRouter);
+
 app.use('/api', apiRouter);
+app.use('/settings', settingsRouter);
 
 app.use(error404Router); //make sure to put this after all routes
 

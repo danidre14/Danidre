@@ -92,6 +92,32 @@ section.home {
     text-align: center;
 }
 
+/* Game Page Specifics */
+section.games {
+    text-align: center;
+}
+section.games .description {
+    display: flex;
+    
+    text-align: left;
+
+    font-size: .8rem;
+    line-height: 1rem;
+
+    word-break: break-word;
+    word-wrap: break-word;
+}
+section .game-img {
+    width:100px;
+    height:100px;
+    max-width: fit-content;
+}
+section .game-img-big {
+    width:150px;
+    height:150px;
+    max-width: fit-content;
+}
+
 /* About Page Specifics */
 section.about desc {
     font-weight: 500;
@@ -178,13 +204,6 @@ section.profile .profile-name {
     font-size: 1.7rem;
     font-weight: 500;
 }
-section.profile .profile-bio-box {
-    position: relative;
-    background-color: var(--color-footer);
-    color: var(--color-text-light);
-    border-radius: var(--default-border-radius);
-    padding: var(--small-spacing);
-}
 section.profile pre {
     font-family: var(--global-fonts);
 }
@@ -197,6 +216,7 @@ section.profile desc {
 section .profile-img-big {
     width:256px;
     height:256px;
+    max-width: initial;
 }
 section.profile img {
     border-radius: var(--default-border-radius);
@@ -251,11 +271,13 @@ table td#all_subjects, table td#your_subjects {
 @media screen and (max-width: 700px) {
     :root {
         font-size: 1.1rem;
-
     }
     section .profile-img-big {   
-        width:180px;
-        height:180px;
+        width: 180px;
+        height: 180px;
+    }
+    section.profile .profile-name {
+        font-size: 1.5rem;
     }
 }
 
@@ -266,14 +288,17 @@ table td#all_subjects, table td#your_subjects {
         --default-spacing-y:1.2rem;
     }
     h2 {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
         font-weight: 500;
         text-align: center;
         padding: var(--heading-spacing);
     }
     section .profile-img-big {    
-        width:120px;
-        height:120px;
+        width: 120px;
+        height: 120px;
+    }
+    section.profile .profile-name {
+        font-size: 1.2rem;
     }
 }
 
@@ -286,6 +311,19 @@ table td#all_subjects, table td#your_subjects {
         word-wrap: break-word;
         height: 0.8rem !important;
         text-indent:-9999px;
+    }
+    h2 {
+        font-size: 1.3rem;
+        font-weight: 500;
+        text-align: center;
+        padding: var(--heading-spacing);
+    }
+    section .profile-img-big {    
+        width: 100px;
+        height: 100px;
+    }
+    section.profile .profile-name {
+        font-size: 1rem;
     }
 }
 

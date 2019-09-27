@@ -1,0 +1,5 @@
+.promptBody {
+    background-color: var(--color-section) !important;
+    border: 3px solid var(--color-text-dark);
+    font-size: .7rem;
+}

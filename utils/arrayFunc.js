@@ -1,27 +1,16 @@
 function limitArr(arr, c) {
-    return arr.filter((x, i) => {
-        if(i <= (c - 1)) {
-            return true;
-        }
-    })
+    return arr.slice(0, c);
 }
 function skipArr(arr, c) {
-    return arr.filter((x, i) => {
-        if(i > (c-i)) {
-            return true;
-        }
-    })
+    return arr.slice(c);
 }
 function skipLimitArr(arr, skip, limit) {
-    const a = skipArr(arr, skip);
-    const b = limitArr(a, limit);
-    return b;
+    return arr.slice(skip, limit + skip);
 }
 function limitSkipArr(arr, limit, skip) {
-    const a = limitArr(arr, limit);
-    const b = skipArr(a, skip);
-    return b;
+    return arr.slice(skip, limit);
 }
+
 
 module.exports = {
     limitArr: limitArr,

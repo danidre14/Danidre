@@ -34,12 +34,26 @@ section article {
     justify-content: space-around;
     align-content: space-around;
 }
+
+.div-align-around {
+    height: 100%;
+    display: inline-flex !important;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
 section div.div-space-between {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-around;
+}
+section .encapsulated-box {
+    position: relative;
+    background-color: var(--color-footer);
+    color: var(--color-text-light);
+    border-radius: var(--default-border-radius);
+    padding: var(--small-spacing);
 }
   
 p {

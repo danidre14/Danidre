@@ -9,8 +9,10 @@ router.get('/', checkIfLoggedIn, paginatedResults(User, ['bio', 'username'], 'us
     let vars = {cPage: "u", searchOptions: req.query};
     vars.title = "Users";
     if(req.isAuthenticated()) {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username lastSeen profileImage profileImageType');
-        vars.user = user;
+        try {
+            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username lastSeen profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
 
     vars.paginatedResults = res.paginatedResults;
@@ -18,21 +20,35 @@ router.get('/', checkIfLoggedIn, paginatedResults(User, ['bio', 'username'], 'us
 });
 
 router.get('/:name', async (req, res) => { //add authentication check
-    const profile = await User.findOne({username:new RegExp("^" + req.params.name + "$", "i")}, 'username lastSeen firstName lastName bio roles updatedAt profileImage profileImageType').populate('roles', 'name');
-    if(!profile) {
-        if(!req.isAuthenticated()) {
-            return res.redirect('/');
-        }
-        return res.redirect('/u');
+    let vars = {cPage: "u", searchOptions: req.query};
+    if(req.isAuthenticated()) {
+        try {
+            const user = await User.findOne({username:new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch {}
     }
 
-    let vars = {cPage: "u", searchOptions: req.query, profile: profile};
-    vars.title = `${profile.username}'s Profile`;
-    if(req.isAuthenticated()) {
-        const user = await User.findOne({username:new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
+    try {
+        const profile = await User.findOne({username:new RegExp("^" + req.params.name + "$", "i")}, 'username lastSeen firstName lastName bio roles updatedAt profileImage profileImageType').populate('roles', 'name');
+
+        if(!profile) {
+            vars.title = "Users";
+
+            vars.description = "Profile does not exist.";
+            vars.blCode = "user_not_found";
+            res.render('misc/blank', vars);
+        } else {
+            vars.profile = profile;
+            vars.title = `${profile.username}'s Profile`;
+            res.render('user/show', vars);
+        }
+    } catch {
+        vars.title = "Users";
+
+        vars.description = "Profile does not exist.";
+        vars.blCode = "user_not_found";
+        res.render('misc/blank', vars);
     }
-    res.render('user/profile', vars);
 });
 
 router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async (req, res) => {
@@ -44,8 +60,10 @@ router.get('/:name/edit', checkAuthenticatedAccess, checkAuthorizedAccess, async
         let vars = {cPage: "u", searchOptions: req.query, profile: profile};
         vars.title = "Edit Profile";
         if(req.isAuthenticated()) {
-            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-            vars.user = user;//because from here its authenticated
+            try {
+                const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+                vars.user = user;
+            } catch {}
         }
         
         res.render('user/edit', vars);
@@ -117,11 +135,15 @@ router.post('/:name/update',
 },
 async (req, res) => {
     if(req.body.target === 'surveyMaker') {
-        let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
-        user.secret.surveyMaker[req.body.key] = req.body.value;
-        user.markModified('secret');
-        await user.save();
-        res.send('Successful');
+        try {
+            let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
+            user.secret.surveyMaker[req.body.key] = req.body.value;
+            user.markModified('secret');
+            await user.save();
+            res.send('Successful');
+        } catch {
+            res.send('Error Occurred.');
+        }
     }
 });
 
@@ -141,11 +163,15 @@ router.delete('/:name/update',
 },
 async (req, res) => {
     if(req.body.target === 'surveyMaker') {
-        let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
-        user.secret.surveyMaker[req.body.key] = undefined;
-        user.markModified('secret');
-        await user.save();
-        res.send('Successfully deleted mf');
+        try {
+            let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
+            user.secret.surveyMaker[req.body.key] = undefined;
+            user.markModified('secret');
+            await user.save();
+            res.send('Successfully deleted.');
+        } catch {
+            res.send('Error Occurred.');
+        }
     }
 });
 
@@ -176,9 +202,14 @@ function checkAuthorizedAccess(req, res, next) {
 function checkIfLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
         return next();
+    } else {
+        let vars = {cPage: "u", searchOptions: req.query};
+        vars.title = "Users";
+
+        vars.description = "...to keep things a bit more private...";
+        vars.blCode = "user_list_privacy";
+        res.render('misc/blank', vars);
     }
-    req.flash('outsert', {message: 'Sign In to view the Users Page', note: true});
-    res.redirect('/');
 }
 
 function saveProfileImage(user, profileImageEncoded) {

@@ -1,12 +1,21 @@
+<%var cPage;%>
+<% var blCode; %>
 <% var description; %>
 <% var title; %>
 <h2><%= title || "Blank Page" %></h2>
-<section>
+<section style="text-align:center;">
     <article>
         <% if(description) { %>
-        <p><%= description %></p>
+            <p><%= description %></p>
         <% } else { %>
-        <p>This page does not have any content. If you think this is an error, <a href="/contact">report it here.</a></p>
+            <p>This page does not have any content. If you think this is a mistake, <a href="/contact">let me know.</a></p>
+        <% } %>
+        <% if(blCode === "game_not_found") { %>
+            <p style='font-size:.7rem'><i><a href="/games">Browse all my games here.</a> If you think this is a mistake, <a href="/contact">let me know.</a></i></p>
+        <% } else if(blCode === "user_not_found") { %>
+            <p style='font-size:.7rem'><i>Sorry, this user does not exist.</i></p>
+        <% } else if(blCode === "user_list_privacy") { %>
+            <p style='font-size:.7rem'><i>...you must be <a href="/signin">signed in</a> to see this page. Sorry!</i></p>
         <% } %>
     </article>
 </section>

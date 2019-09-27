@@ -11,8 +11,10 @@ router.use(async (req, res, next) => {
         vars.url = req.url;
         vars.title = "Page Not Found";
         if(req.isAuthenticated()) {
-            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-            vars.user = user;
+            try {
+                const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+                vars.user = user;
+            } catch {}
         }
         vars.bounceLink = req.header('Referer') || '/';
         // req.flash('bounce', {message: req.header('Referer') || '/'});

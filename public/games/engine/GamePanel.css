@@ -1,0 +1,54 @@
+:root {
+    --game-panel-spacing-x: .9rem;
+    --game-panel-spacing-y: .7rem;
+    --game-panel-spacing-s: .4rem;
+    --game-panel-border-top: .9rem;
+    --game-panel-border-bottom: .8rem;
+    --game-panel-color: hsl(var(--color-base-hue), var(--color-base-saturation), 60%);
+    --game-panel-heading-color: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
+}
+
+.gamePanel {
+    margin-bottom: var(--game-panel-spacing-y);
+    display: inline-block;
+    background-color: var(--game-panel-color);
+    border-radius: 10px;
+    /* border-radius: var(--game-panel-border-top) var(--game-panel-border-top) var(--game-panel-border-bottom) var(--game-panel-border-bottom); */
+    line-height: .9rem;
+    overflow: hidden;
+}
+
+.gameName {
+    font: inherit;
+    line-height: 1rem;
+    display: grid;
+    grid-template-columns: auto;
+    background-color: var(--game-panel-heading-color);
+    padding: var(--game-panel-spacing-y);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-text-light);
+}
+
+.gameCanvasDiv {
+    box-sizing: content-box;
+    display: block;
+    border: 5px solid black;
+    margin: var(--game-panel-spacing-y) var(--game-panel-spacing-x) var(--game-panel-spacing-s) var(--game-panel-spacing-x);
+}
+
+.gameCanvasDiv:fullscreen {
+    border: none;
+}
+
+.gamePanelButtonsDiv {
+    display: flex;
+    
+    height: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+
+    margin: var(--game-panel-spacing-s) var(--game-panel-spacing-x);
+    margin-top: 0;
+}

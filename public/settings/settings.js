@@ -76,6 +76,7 @@ async function addHighscore() {
             }
         }
     } catch (e) {
+        loadHighScoreList();
         console.log("Can't add highscore:", e.message);
     }
 }
@@ -105,6 +106,7 @@ async function editHighscore(oldHighscoreName) {
             }
         }
     } catch (e) {
+        loadHighScoreList();
         console.log("Can't edit highscore:", e.message);
     }
 }
@@ -112,10 +114,12 @@ async function editHighscore(oldHighscoreName) {
 async function removeHighscore(highscoreName) {
     try {
         if(confirm(`Are you sure you want to delete the highscore "${highscoreName}"?`)) {
+            const passkey = await promptValue("password", "Enter key", "") || "";
+            if(passkey.trim() === "") return;
             const request = await axios({
                 method: 'delete',
                 url: `/api/games/highscores/highscores_list`,
-                data: {highscoreName: highscoreName}
+                data: {highscoreName: highscoreName, passkey: passkey}
             });
 
             const requestOK = request && request.status === 200 && request.statusText === 'OK';
@@ -130,6 +134,7 @@ async function removeHighscore(highscoreName) {
             }
         }
     } catch (e) {
+        loadHighScoreList();
         console.log("Can't delete highscore:", e.message);
     }
 }
@@ -155,6 +160,7 @@ async function toggleHighscoreOrder(highscoreName) {
             loadHighScoreList();
         }
     } catch (e) {
+        loadHighScoreList();
         console.log("Can't change order method:", e.message);
     }
 }
@@ -162,9 +168,6 @@ async function toggleHighscoreOrder(highscoreName) {
 const getHighscoreKey = function(highscoreKey) {
     alert(`API Key: "${highscoreKey}"`);
 }
-
-
-
 
 const getImagePath = async function(username) {
     try {
@@ -180,12 +183,6 @@ const getImagePath = async function(username) {
         return '../images/UsersIcon.png';
     }
 }
-
-
-
-
-
-
 
 
 const loadRoleList = async function() {
@@ -213,30 +210,38 @@ const loadRoleList = async function() {
                             <span>${user.username}</span>
                         </a>
                     </div>
+                    ${ i == 0 ? '' : `
                     <div style="padding-left:var(--mini-spacing)">
                         <button class="bounded button" onclick="removeRoleFromUser('${role.name}', '${user.username}')">-</button>
                     </div>
+                    `}
                 </div>`
             };
             listH += `<div class="bounded roleBox">
                 <div class="div-space-between div">
                     <div>
-                        <span class="roleName">${role.name}</span>
+                        <span class="roleName">${role.name}: ${role.users.length}</span>
                     </div>
+                    ${ i == 0 ? '' : `
                     <div> 
                         <button class="bounded button" onclick="editRole('${role.name}')">Change</button>
                         <button class="bounded button" onclick="removeRole('${role.name}')">Delete</button>
                     </div>
+                    `}
                 </div>
                 <div class="bounded roleContent">${directUsersH}
+                    ${ i == 0 ? '' : `
                     <div style="display:flex;flex-wrap:wrap;align-content:flex-end;height:60px;padding-left:var(--mini-spacing)">
                         <button style="white-space:pre;" class="bounded button" onclick="addRoleToUser('${role.name}')">Add User</button>
                     </div>
+                    `}
                 </div>
+                ${ i == 0 ? '' : `
                 <div class="div-space-between div">
                     <button class="bounded button" onclick="addRoleToAllUsers('${role.name}')">Add To All</button>
                     <button class="bounded button" onclick="removeRoleFromAllUsers('${role.name}')">Remove From All</button>
                 </div>
+                `}
             </div>`;
         }
         if(notFound) listH += "Nothing from API."
@@ -271,6 +276,7 @@ async function addRole() {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't add role:", e.message);
     }
 }
@@ -300,6 +306,7 @@ async function editRole(oldRoleName) {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't edit role:", e.message);
     }
 }
@@ -307,10 +314,12 @@ async function editRole(oldRoleName) {
 async function removeRole(roleName) {
     try {
         if(confirm(`Are you sure you want to delete the role "${roleName}"?`)) {
+            const passkey = await promptValue("password", "Enter key", "") || "";
+            if(passkey.trim() === "") return;
             const request = await axios({
                 method: 'delete',
                 url: `/settings/roles_List`,
-                data: {roleName: roleName}
+                data: {roleName: roleName, passkey: passkey}
             });
 
             const requestOK = request && request.status === 200 && request.statusText === 'OK';
@@ -325,6 +334,7 @@ async function removeRole(roleName) {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't delete role:", e.message);
     }
 }
@@ -352,6 +362,7 @@ async function updateLastSeen() {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't reset roles:", e.message);
     }
 }
@@ -379,6 +390,7 @@ async function resetUserRoles() {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't reset roles:", e.message);
     }
 }
@@ -404,6 +416,7 @@ async function addRoleToUser(roleName) {
             loadRoleList();
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't add role to user:", e.message);
     }
 }
@@ -429,6 +442,7 @@ async function removeRoleFromUser(roleName, userName) {
             loadRoleList();
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't remove role from user:", e.message);
     }
 }
@@ -456,6 +470,7 @@ async function addRoleToAllUsers(roleName) {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't add role to all users:", e.message);
     }
 }
@@ -483,6 +498,7 @@ async function removeRoleFromAllUsers(roleName) {
             }
         }
     } catch (e) {
+        loadRoleList();
         console.log("Can't remove role from all users:", e.message);
     }
 }

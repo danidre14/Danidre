@@ -40,6 +40,21 @@ router.get('/users/data_username', async function(req, res) {
 });
 
 router.get('/users/data_loggedIn', async function(req, res) {
+    // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+    // res.header('Access-Control-Allow-Credentials', true);
+
+/*
+var allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:5500', 'http://127.0.0.1:9000', 'http://localhost:9000'];
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  */
+
     try {
         if (req.isAuthenticated()) {
             return res.send({
@@ -103,19 +118,19 @@ router.get('/uploads/avatars/:name', async (req, res) => {
     }
 })
 
-router.get('/test_user_data', async function(req, res) {
-    try {
-        const user = await User.findOne({username:'Test'}, 'username secret');
-        res.send({
-            username: user.username,
-            secret: user.secret
-        });
-    } catch {
-        res.send({
-            username: "Test",
-            secret: ""
-        });
-    }
-});
+// router.get('/test_user_data', async function(req, res) {
+//     try {
+//         const user = await User.findOne({username:'Test'}, 'username secret');
+//         res.send({
+//             username: user.username,
+//             secret: user.secret
+//         });
+//     } catch {
+//         res.send({
+//             username: "Test",
+//             secret: ""
+//         });
+//     }
+// });
 
 module.exports = router;

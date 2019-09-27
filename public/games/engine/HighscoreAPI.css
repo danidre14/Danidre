@@ -1,0 +1,112 @@
+:root {
+    --highscore-board-color: hsl(var(--color-base-hue), var(--color-base-saturation), 60%);
+    --highscore-board-content-coor: hsl(var(--color-base-hue), var(--color-base-saturation), 74%);
+    --highscore-board-heading-color: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
+}
+
+.highscore-board {
+    background-color: var(--highscore-board-color);
+    border-radius: 10px;
+    /* font: inherit; */
+    
+    font-size: .8rem;
+    line-height: 1rem;
+    
+    overflow: hidden;
+    line-height: 1.2rem;
+    color: var(--color-dark-light);
+    padding-bottom: 10px;
+    margin: 10px 0;
+}
+
+.highscore-board a {
+    text-decoration: none;
+    color: var(--color-dark-light);
+    font-weight: normal;
+}
+
+.highscore-score-grid-selected a {
+    font-weight: bold;
+}
+
+.highscore-board a:hover {
+    text-decoration: none;
+    filter: opacity(65%);
+}
+
+.highscore-board a:active {
+    text-decoration: none;
+    filter: opacity(40%);
+}
+
+.highscore-content {
+    border-radius: 10px;
+    margin: 10px;
+    margin-bottom: 0;
+    overflow: hidden;
+    background-color: var(--highscore-board-content-coor)
+}
+
+.highscore-title-grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: auto;
+    padding: 10px;
+    background-color: var(--highscore-board-heading-color);
+    color: var(--color-text-light);
+    font-size: 1.5rem;
+}
+
+.highscore-page {
+    font-size: 1rem;
+}
+
+.highscore-name {
+    font-weight: bold;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.highscore-pagin {
+    font-weight: bold;
+    text-align: right;
+}
+
+.highscore-score-grid-container {
+    display: grid;
+    grid-template-columns: 1.2rem auto auto;
+    /* font-size: 20px; */
+}
+
+.highscore-score-grid-selected {
+    background-color: rgba(0, 0, 0, 0.089);
+}
+  
+.highscore-score-grid-norank {
+    padding: 5px;
+    text-align: center;
+    overflow: hidden;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+  
+.highscore-score-grid-rank {
+    padding: 5px;
+    /* padding-left: 10px; */
+    text-align: left;
+    overflow: hidden;
+}
+  
+.highscore-score-grid-name {
+    padding: 5px;
+    padding-left: 10px;
+    text-align: left;
+}
+  
+.highscore-score-grid-score {
+    padding: 5px;
+    padding-right: 10px;
+    text-align: right;
+}
