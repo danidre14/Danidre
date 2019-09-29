@@ -38,6 +38,7 @@ router.get('/:name', async (req, res) => { //add authentication check
             vars.blCode = "user_not_found";
             res.render('misc/blank', vars);
         } else {
+            profile.url = `/u/${profile.username}`;
             vars.profile = profile;
             vars.title = `${profile.username}'s Profile`;
             res.render('user/show', vars);
