@@ -69,7 +69,7 @@ const gamesList = function() {
 const gamesInformation = function(gameName) {
     const gameLibrary = {
         /*my_first_game: {
-            scripts: ["FirstGame/firstGame.js"], // /games/[src.js]
+            scripts: ["/games/FirstGame/firstGame.js"], // /games/[src.js]
             title: "My First Game",
             description: `The first game ever in a world of time and space with a humanitarian face Lorem Ipsum Diplum BloopDomTomLum A Dumbamom.
             Hope you enhoy.`,
@@ -77,13 +77,14 @@ const gamesInformation = function(gameName) {
             image: "FirstGame/Icon_Rakan.png" // /games/[src.png]
         }*/
         quiz_game: {
-            scripts: ["QuizGame/guizGame.js"],
+            scripts: ["/games/QuizGame/guizGame.js"],
             title: "Quiz Game",
             description: `My first game on this website.
             
             Answer 10 simple questions! :D`,
             minidesc: `Test your intellect with 10 simple questions.`,
-            image: "https://cdn.pixabay.com/photo/2018/08/31/11/17/quiz-3644414_960_720.png"
+            image: "https://cdn.pixabay.com/photo/2018/08/31/11/17/quiz-3644414_960_720.png",
+            url: "/games/quiz_game"
         }
     }
     return gameLibrary[gameName];

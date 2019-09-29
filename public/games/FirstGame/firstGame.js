@@ -1,11 +1,11 @@
 // const high = new HighscoreAPI("b256b190e975c2f1d36973448c0242c9", {optionalSort: "name", optionalName: "Highscores"});
-const high = new HighscoreAPI("203ccd12a854de78516e5d90220bfc6c", {optionalSort: "name", optionalName: "Highscores"});
+// const high = new HighscoreAPI("203ccd12a854de78516e5d90220bfc6c", {optionalSort: "name", optionalName: "Highscores"});
 
 
-(async()=> {
-    await high.connect()
-    await high.showScores("highscoreArea");
-})()
+// (async()=> {
+//     await high.connect()
+//     await high.showScores("highscoreArea");
+// })()
 
 const gema = new GamePanel("gameArea", {dimensions: {width:800, height:400}, name: "Game Demo"});
 

@@ -6,7 +6,7 @@
     <article>
         <div class="profile-main">
             <div>
-                <img class="profile-img-big" src="<%= profile.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                <img class="profile-img-big" src="<%= profile.profileImagePath %>" onerror="if (this.src != '../../images/UsersIcon.png') this.src = '../../images/UsersIcon.png';">
             </div>
             <div class="profile-main-det">
                 <div>
@@ -18,7 +18,7 @@
                 <div style="position:absolute;bottom:0;">
                     <div style="line-height:.8rem;">
                         <% if(profile.roles.length > 0) { %>
-                            Roles: <i> <%= extractAttribute(profile.roles, 'name').join(', ') %></i>
+                            Roles: <i><%= extractAttribute(profile.roles, 'name').join(', ') %></i>
                         <% } %>
                     </div>
                     <% distanceToNow = formatDistanceToNow(profile.lastSeen); %>
@@ -62,6 +62,7 @@
     </article>
 </section>
 <meta name="description" content="<%=profile.username%>'s Profile Page.">
+<meta name="twitter:site" content="@danidre">
 
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

@@ -329,7 +329,7 @@ table td#all_subjects, table td#your_subjects {
 
 @media screen and (min-width: 800px) {
     :root {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         --default-spacing-x:1.8rem;
         --default-spacing-y:2rem;
     }
@@ -342,7 +342,7 @@ table td#all_subjects, table td#your_subjects {
 
 @media screen and (min-width: 1400px) {
     :root {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         --container-width: 1200px;
     }
 }
@@ -350,7 +350,7 @@ table td#all_subjects, table td#your_subjects {
 
 @media screen and (min-width: 2000px) {
     :root {
-        font-size: 3rem;
+        font-size: 2.4rem;
         --container-width: 1750px;
     }
 }

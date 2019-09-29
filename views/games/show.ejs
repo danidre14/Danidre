@@ -23,6 +23,14 @@
 
 <meta name="description" content="Play <%= game.title %>! <%= game.minidesc || '' %>">
 
+<meta name="twitter:site" content="@danidre">
+<meta property="og:title" content="<%= game.title %>">
+<meta property="og:description" content="<%= game.minidesc || '' %>">
+<meta property="og:image" content="<%= game.image %>">
+<meta property="og:url" content="<%= game.url %>">
+
+<meta name="twitter:card" content="summary">
+
 <link rel="stylesheet" href="/games/engine/DialogBoxes.css">
 <link rel="stylesheet" href="/games/engine/GamePanel.css">
 <link rel="stylesheet" href="/games/engine/HighscoreAPI.css">
@@ -35,5 +43,5 @@
 <script defer src="/games/engine/HighscoreAPI.js"></script>
 
 <% game.scripts.forEach(script => { %>
-    <script defer src="/games/<%= script %>"></script>
+    <script defer src="<%= script %>"></script>
 <% }); %>

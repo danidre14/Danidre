@@ -4,6 +4,7 @@ const GamePanel = function(gameAreaId, options) {
     let WIDTH = defaultCW;
     let HEIGHT = defaultCH;
     let PAD = 40;
+    const LOCKSIZE = options ? options.dimensions ? options.dimensions.lock !== undefined ? options.dimensions.lock : true : true : true;
     const index = options? options.index? options.index || 0 : 0 : 0;
     const showLogs = options? options.showLogs !== undefined ? options.showLogs : true : true;
     const gameName = options? options.name? options.name || "Game" : "Game" : "Game";
@@ -78,9 +79,44 @@ const GamePanel = function(gameAreaId, options) {
                 gameCanvasDiv.style.width = defaultCW + "px";
                 gameCanvasDiv.style.height = defaultCH + "px";
             }
+            gameCanvas.width = gameCanvasDiv.clientWidth || gameCanvasDiv.offsetWidth || defaultCW;
+            gameCanvas.height = gameCanvasDiv.clientHeight || gameCanvasDiv.offsetHeight || defaultCH;
+            gameCanvas.style.left = "0px";
+            gameCanvas.style.top = "0px";
+        } else {
+            if(LOCKSIZE) {
+                const vp = getViewportSize();
+                const canvRatio = defaultCW / defaultCH;
+                const viewRatio = vp.w / vp.h;
+                if(viewRatio < canvRatio) {
+                    const heightRatio = defaultCW / defaultCH;
+                    const newW = vp.w;
+                    const newH = vp.w / heightRatio;
+                    gameCanvas.width = newW;
+                    gameCanvas.height = newH;
+                    gameCanvas.style.left = "0px";
+                    gameCanvas.style.top = ((vp.h - newH) / 2) + "px";
+                } else if(viewRatio > canvRatio) {
+                    const widthRatio = defaultCH / defaultCW;
+                    const newW = vp.h / widthRatio;
+                    const newH = vp.h;
+                    gameCanvas.width = newW;
+                    gameCanvas.height = newH;
+                    gameCanvas.style.left = ((vp.w - newW) / 2) + "px";
+                    gameCanvas.style.top = "0px";
+                } else {
+                    gameCanvas.width = gameCanvasDiv.clientWidth || gameCanvasDiv.offsetWidth || defaultCW;
+                    gameCanvas.height = gameCanvasDiv.clientHeight || gameCanvasDiv.offsetHeight || defaultCH;
+                    gameCanvas.style.left = "0px";
+                    gameCanvas.style.top = "0px";
+                }
+            } else {
+                gameCanvas.width = gameCanvasDiv.clientWidth || gameCanvasDiv.offsetWidth || defaultCW;
+                gameCanvas.height = gameCanvasDiv.clientHeight || gameCanvasDiv.offsetHeight || defaultCH;
+                gameCanvas.style.left = "0px";
+                gameCanvas.style.top = "0px";
+            }
         }
-        gameCanvas.width = gameCanvasDiv.clientWidth || gameCanvasDiv.offsetWidth || defaultCW;
-        gameCanvas.height = gameCanvasDiv.clientHeight || gameCanvasDiv.offsetHeight || defaultCH;
         if(dontRender === "true") return;
         render(); 
     }
@@ -209,12 +245,11 @@ const GamePanel = function(gameAreaId, options) {
     const gamePanel = document.createElement("div");
     gamePanel.className = "gamePanel";
     gameArea.appendChild(gamePanel);
-    //gameArea.appendChild(document.createElement("br"));
 
     const gamePanelHTML = `
         <div class="gameName">${gameName}</div>
-        <div class="gameCanvasDiv" id="gameCanvasDiv" style="width:${defaultCW}px;height:${defaultCH}px;">
-            <canvas id="gameCanvas" width="${defaultCW}" height="${defaultCH}"></canvas> <!-- set proper width -->
+        <div class="gameCanvasDiv" id="gameCanvasDiv" style="width:${defaultCW}px;height:${defaultCH}px;position:relative;text-align:left;">
+            <canvas id="gameCanvas" width="${defaultCW}" height="${defaultCH}" style="position:absolute;"></canvas>
         </div>
         <div class="gamePanelButtonsDiv">
             <button class="gamePanelButton btn btn-primary" id="fsBtn">Full Screen</button>
