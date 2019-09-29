@@ -60,6 +60,16 @@
     position: relative;
 }
 
+.footer nav a.twitch {
+    background-image: url("../../images/TwitchLogo3.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+}
+
 .footer nav a.newgrounds {
     background-image: url("../../images/NewgroundsLogo3.png");
     background-repeat: no-repeat;
