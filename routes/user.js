@@ -39,6 +39,7 @@ router.get('/:name', async (req, res) => { //add authentication check
             res.render('misc/blank', vars);
         } else {
             profile.url = `/u/${profile.username}`;
+            profile.rootUrl = `${req.get('Host')}`;
             vars.profile = profile;
             vars.title = `${profile.username}'s Profile`;
             res.render('user/show', vars);
