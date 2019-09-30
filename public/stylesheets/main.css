@@ -39,6 +39,18 @@ h2 {
     padding: var(--heading-spacing);
 }
 
+h3 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-align: center;
+    padding: var(--heading-spacing);
+}
+
+h4 {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
 pre {
     font-family: var(--global-fonts);
 }
@@ -52,19 +64,20 @@ pre {
     border-radius: var(--default-border-radius);
     color: var(--color-text-dark);
     padding: var(--mini-spacing);
-    width: 80%;
-    resize: none;
-    -webkit-transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+    width: 100%;
 }
 ::placeholder {
     font-style: italic;
 }
 
-.input:focus, textarea:focus {
+.input:focus {
     outline: none;
     border: solid 2px var(--color-input-border-focus);
-    width: 100%;
+}
+textarea:focus {
+    outline: none;
+    border: solid 2px var(--color-input-border-focus);
+    height: 6rem;
 }
 .input-inline {
     /* display: inline; */
@@ -135,10 +148,24 @@ section.news {
 section.contact {
     text-align: center;
 }
+section.contact pre {
+    color: var(--color-button-default);
+    font-size: .7rem;
+    font-family: var(--global-fonts);
+}
+section.contact ul {
+    display: flex;
+    flex-direction: row;
+
+    flex-wrap: wrap;
+    justify-content: center;
+}
+section.contact ul li {
+    margin-left: var(--default-spacing-x);
+}
 
 /* Sign Up Specifics */
 section.signup pre {
-    /* position: absolute; */
     color: var(--color-button-default);
     font-size: .7rem;
     font-family: var(--global-fonts);
@@ -289,16 +316,19 @@ table td#all_subjects, table td#your_subjects {
     }
     h2 {
         font-size: 1.6rem;
-        font-weight: 500;
-        text-align: center;
-        padding: var(--heading-spacing);
+    }
+    h3 {
+        font-size: 1.4rem;
+    }
+    section.contact ul {
+        display: block;
     }
     section .profile-img-big {    
         width: 120px;
         height: 120px;
     }
     section.profile .profile-name {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 }
 
@@ -314,9 +344,9 @@ table td#all_subjects, table td#your_subjects {
     }
     h2 {
         font-size: 1.3rem;
-        font-weight: 500;
-        text-align: center;
-        padding: var(--heading-spacing);
+    }
+    h3 {
+        font-size: 1.1rem;
     }
     section .profile-img-big {    
         width: 100px;

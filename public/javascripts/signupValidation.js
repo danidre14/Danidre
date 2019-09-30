@@ -1,23 +1,23 @@
-let regForm = document.getElementById("regForm");
+const regForm = document.getElementById("regForm");
 
-let usName = document.getElementById("username");
-let usMessage = document.getElementById("usMessage");
+const usName = document.getElementById("username");
+const usMessage = document.getElementById("usMessage");
 let uError = false;
 
-let pWord = document.getElementById("password");
-let pwMessage = document.getElementById("pwMessage");
+const pWord = document.getElementById("password");
+const pwMessage = document.getElementById("pwMessage");
 let pError = false;
 
-let p2Word = document.getElementById("password2");
-let pw2Message = document.getElementById("pw2Message");
+const p2Word = document.getElementById("password2");
+const pw2Message = document.getElementById("pw2Message");
 let p2Error = false;
 
-let email = document.getElementById("email");
-let email2 = document.getElementById("email2");
-let e2Message = document.getElementById("e2Message");
+const email = document.getElementById("email");
+const email2 = document.getElementById("email2");
+const e2Message = document.getElementById("e2Message");
 let e2Error = false;
 
-let sBtn = document.getElementById("sBtn");
+const sBtn = document.getElementById("sBtn");
 
 regForm.addEventListener('input', function (evt) {
     valU();
@@ -26,16 +26,14 @@ regForm.addEventListener('input', function (evt) {
     valE2();
 
     if(!uError && !pError && !p2Error && !e2Error) 
-        // sBtn.style.display = "block";
         sBtn.disabled = false;
     else
         sBtn.disabled = true;
-        // sBtn.style.display = "none";
 });
 
-valU = function() {
+const valU = function() {
     uError = false;
-    let value = usName.value;
+    const value = usName.value;
     let message = "";
     if(value.length !== 0) {
         if(value.length < 4 || value.length > 15) {
@@ -60,9 +58,9 @@ valU = function() {
         usMessage.style.display = "none";
 }
 
-valP = function() {
+const valP = function() {
     pError = false;
-    let value = pWord.value;
+    const value = pWord.value;
     let message = "";
     if(value.length !== 0) {
         if(value.length < 8) {
@@ -87,10 +85,10 @@ valP = function() {
         pwMessage.style.display = "none";
 }
 
-valP2 = function() {
+const valP2 = function() {
     p2Error = false;
-    let value1 = pWord.value;
-    let value2 = p2Word.value;
+    const value1 = pWord.value;
+    const value2 = p2Word.value;
     let message = "";
     if(value2.length !== 0) {
         if(value1 !== value2) {
@@ -107,10 +105,10 @@ valP2 = function() {
         pw2Message.style.display = "none";
 }
 
-valE2 = function() {
+const valE2 = function() {
     e2Error = false;
-    let value1 = email.value;
-    let value2 = email2.value;
+    const value1 = email.value;
+    const value2 = email2.value;
     let message = "";
     if(value2.length !== 0) {
         if(value1 !== value2) {

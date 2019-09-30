@@ -14,6 +14,8 @@ router.get('/', checkNotAuthenticated, async (req, res) => {
     vars.pMessage = req.flash('pMessage');
     vars.p2Message = req.flash('p2Message');
     vars.e2Message = req.flash('e2Message');
+    vars.bodyUname = req.flash('bodyUname') || '';
+    vars.bodyEmail = req.flash('bodyEmail') || '';
     vars.title = "Sign Up";
     if(req.isAuthenticated()) {
         try {
@@ -113,6 +115,8 @@ async function checkUserExists(req, res, next) {
         //if user verified
         if(user.isVerified) {
             req.flash('outsert', {message: 'Username unavailable.'});
+            req.flash('bodyUname', req.body.username || '');
+            req.flash('bodyEmail', req.body.email || '');
             return res.redirect('/signup');
         }
         
@@ -196,7 +200,6 @@ async function createUser(req, res) {
         
         req.flash('outsert', {message: `A token has been sent to ${user.email}. Check your email to verify your account.`});
         res.redirect('/signup/v');
-        //res.redirect(`users/${newUser.username}`);
     } catch (e) {
         console.log("Message:", e.message);
         req.flash('outsert', {message: 'An error has occured. Please report this issue or try again.'});
@@ -267,7 +270,9 @@ function validateInfomation(req, res, next) {
         req.flash('pMessage', pMessage);
         req.flash('p2Message', p2Message);
         req.flash('e2Message', e2Message);
-        return res.redirect('signup');
+        req.flash('bodyUname', username || '');
+        req.flash('bodyEmail', email || '');
+        return res.redirect('/signup');
     }
 
     next();

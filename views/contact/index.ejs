@@ -1,8 +1,65 @@
+<% var user;
+var formName;
+var formSubject;
+var formMessage;
+let userFullName = bodyName;
+let userEmail = bodyEmail;
+let userSubject = bodySubject;
+let userMessage = bodyMessage;
+if(user !== undefined) {
+    userFullName = userFullName? (user.firstName || "") + " " + (user.lastName || "") : userFullName;
+    if(userFullName === " ") { 
+        userFullName = user.username;
+    }
+    userEmail = userEmail? user.email : userEmail;
+} %>
 <h2>Contact Me</h2>
 <section class="contact">
+    <article style="text-align:left;">
+        <form id="regForm" class="contact-me signings" action="/contact" method="POST">
+            <div>
+                <label for="name">Name</label>
+                <input class="input" type="text" id="name" name="name" autocomplete="off" value="<%= userFullName %>" placeholder="Required" required>
+                <div>
+                    <% if (formName) { %>
+                        <pre id="formName" style="display:block;"><%= formName %></pre>
+                    <% } else { %>
+                        <pre id="formName" style="display:none;"></pre>
+                    <% } %>
+                </div>
+            </div>
+            <div>
+                <label for="email">Email Address</label>
+                <input class="input" type="email" id="email" name="email" autocomplete="off" value="<%= userEmail %>" placeholder="For reply">
+            </div>
+            <div>
+                <label for="subject">Subject</label>
+                <input class="input" type="text" id="subject" name="subject" autocomplete="off" placeholder="Required" value="<%= userSubject %>" required>
+                <div>
+                    <% if (formSubject) { %>
+                        <pre id="formSubject" style="display:block;"><%= formSubject %></pre>
+                    <% } else { %>
+                        <pre id="formSubject" style="display:none;"></pre>
+                    <% } %>
+                </div>
+            </div>
+            <div>
+                <label for="message">Message</label>
+                <textarea class="textarea" type="text" id="message" name="message" autocomplete="off" placeholder="Your message" required><%= userMessage %></textarea>
+                <div>
+                    <% if (formMessage) { %>
+                        <pre id="formMessage" style="display:block;"><%= formMessage %></pre>
+                    <% } else { %>
+                        <pre id="formMessage" style="display:none;"></pre>
+                    <% } %>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="sBtn" type="submit">Send Message</button>
+        </form>
+    </article>
     <article>
-        <p>Find me on:</p>
-        <ul class="contact-me">
+        <h3>Find me on:</h3>
+        <ul>
             <li><a class="btn btn-primary btn-large" href="https://twitter.com/danidre">
                 <div class="div-space-around">
                     <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Twitter</span>
@@ -22,6 +79,8 @@
     </article>
 </section>
 <meta name="description" content="Contact Danidre via social media, or leave a message.">
+
+<script defer src="/javascripts/contactmeValidation.js"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>

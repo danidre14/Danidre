@@ -1,28 +1,28 @@
-<% var uMessage; %>
-<% var pMessage; %>
-<% var p2Message; %>
-<% var e2Message; %>
+<% var uMessage;
+var pMessage;
+var p2Message;
+var e2Message; %>
 <h2>Sign Up</h2>
 <section class="signup">
     <article>
         <form id="regForm" class="signings" action="/signup" method="POST">
             <div>
                 <label for="username">Username</label>
-                <input class="input" type="text" id="username" name="username" autocomplete="off" placeholder="Enter username" autofocus required>
+                <input class="input" type="text" id="username" name="username" autocomplete="off" value="<%= bodyUname %>" placeholder="Enter username" autofocus required>
                 <div>
-                <% if (uMessage) { %>
-                    <pre id="usMessage" style="display:block;"><%= uMessage %></pre>
-                <% } else { %>
-                    <pre id="usMessage" style="display:none;"></pre>
-                <% } %>
+                    <% if (uMessage) { %>
+                        <pre id="usMessage" style="display:block;"><%= uMessage %></pre>
+                    <% } else { %>
+                        <pre id="usMessage" style="display:none;"></pre>
+                    <% } %>
                 </div>
             </div>
             <div>
                 <label for="email">Email Address</label>
-                <input class="input" type="email" id="email" name="email" autocomplete="off" placeholder="Enter email" required>
+                <input class="input" type="email" id="email" name="email" autocomplete="off" value="<%= bodyEmail %>" placeholder="Enter email" required>
             </div>
             <div>
-                <label for="email2">Re-Enter Email</label>
+                <label for="email2">Confirm Email</label>
                 <input class="input" type="email" id="email2" name="email2" autocomplete="off" placeholder="Re-Enter email" required>
                 <div>
                     <% if (e2Message) { %>
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div>
-                <label for="password2">Re-Enter Password</label>
+                <label for="password2">Confirm Password</label>
                 <input class="input" type="password" id="password2" name="password2" placeholder="Re-Enter password" required>
                 <div>
                     <% if (p2Message) { %>
@@ -67,14 +67,6 @@
                 <label for="dob">Date of Birth</label>
                 <input class="input" type="date" id="dob" name="dob" required>
             </div>
-            <div>
-                <label for="userCover">Profile Picture</label>
-                <input class="input" type="file" id="userCover" name="userCover" class="filepond" required>
-            </div>
-            <div>
-                <label for="description">About Me</label>
-                <textarea id="description" name="description"></textarea>
-            </div>
             -->*/%>
             <button class="btn btn-primary" id="sBtn" type="submit"
             <% if (uMessage!=''||pMessage!='') { %>
@@ -89,5 +81,6 @@
         <p> Already have an account? <a class="btn btn-primary" href="/signin">Sign In</a> </p>
     </article>
 </section>
-<script defer src="/javascripts/regVal.js"></script>
 <meta name="description" content="Sign up for a Danidre account.">
+
+<script defer src="/javascripts/signupValidation.js"></script>
