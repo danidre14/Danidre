@@ -155,7 +155,7 @@ section.posts .posts-grid > * {
 section .the_markdown * {
     color: var(--color-text-dark); 
     font-size: 1rem;
-    line-height: 1rem;
+    line-height: 1.5rem;
     margin: 0;
     font-weight: normal;
     font-style: normal;
