@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const Post = require('../models/post');
 
 router.get('/', async (req, res) => {
     let vars = {cPage: "home", searchOptions: req.query};
@@ -11,6 +12,9 @@ router.get('/', async (req, res) => {
             vars.user = user;
         } catch {}
     }
+    const posts = await Post.find({}, 'title name updatedAt createdAt summary image', {sort: {createdAt: -1}});
+
+    vars.posts = posts;
     res.render('index', vars);
 });
 

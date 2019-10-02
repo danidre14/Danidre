@@ -60,8 +60,8 @@ header {
     background-image: url("../../images/SignOutIcon.png");
     background-repeat: no-repeat;
     background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
+    width: var(--usernav-bar-image-size);
+    height: var(--usernav-bar-image-size);
     display: inline-block;
     position: relative;
 }
@@ -70,8 +70,8 @@ header {
     background-image: url("../../images/SettingsIcon.png");
     background-repeat: no-repeat;
     background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
+    width: var(--usernav-bar-image-size);
+    height: var(--usernav-bar-image-size);
     display: inline-block;
     position: relative;
 }
@@ -79,7 +79,7 @@ header {
 .btn-so {
     border: none;
     height: var(--usernav-bar-size);
-    padding: 0 .4rem;
+    /* padding: 0 .4rem; */
     font-size: 1rem;
     font-family: var(--global-fonts);
     color: var(--color-text-light);

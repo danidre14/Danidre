@@ -21,11 +21,11 @@ let fullName = (profile.firstName || "") + " " + (profile.lastName || ""); %>
                             Roles: <i><%= extractAttribute(profile.roles, 'name').join(', ') %></i>
                         <% } %>
                     </div>
-                    <% distanceToNow = formatDistanceToNow(profile.lastSeen); %>
+                    <% distanceToNow = checkLastOnline(profile.lastSeen); %>
                     <% if(distanceToNow === 'Online') { %>
                         <div class="bounded" style="color:var(--user-status-color-now);font-weight:500;font-size:.7rem;">⬤ <%= distanceToNow %> </div>
                     <% } else if(distanceToNow === 'never') { %>
-                        <% distanceToNow = formatDistanceToNow(profile.updatedAt, true); %>
+                        <% distanceToNow = checkLastOnline(profile.updatedAt, true); %>
                         <% if(distanceToNow === 'never') { %>
                             <div class="bounded" style="color:var(--user-status-color-error);font-weight:500;">⬤ Last seen: <%= distanceToNow %> </div>
                         <% } else { %>

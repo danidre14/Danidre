@@ -80,6 +80,16 @@
     position: relative;
 }
 
+.footer nav a.email {
+    background-image: url("../../images/EmailLogo3.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: var(--footer-image-size);
+    height: var(--footer-image-size);
+    display: inline-block;
+    position: relative;
+}
+
 /* Responsivity */
 @media screen and (max-width: 500px) {
     .footer {

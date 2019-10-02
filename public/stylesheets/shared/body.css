@@ -52,8 +52,20 @@ section .encapsulated-box {
     position: relative;
     background-color: var(--color-footer);
     color: var(--color-text-light);
-    border-radius: var(--default-border-radius);
+    border-radius: var(--panel-border-radius);
     padding: var(--small-spacing);
+}
+
+section .description {
+    display: flex;
+    
+    text-align: left;
+
+    font-size: .8rem;
+    line-height: 1rem;
+
+    word-break: break-word;
+    word-wrap: break-word;
 }
   
 p {

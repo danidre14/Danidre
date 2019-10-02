@@ -45,14 +45,17 @@
     --default-spacing-x:1.2rem;
     --default-spacing-y:1.5rem;
     --heading-spacing:1rem;
+    --list-spacing:2.3rem;
+    --blockquote-spacing:1.5rem;
     --message-spacing:calc(var(--default-spacing-y)/2);
     --paragraph-spacing:.8rem;
     --header-bar-spacing:.6rem;
     --mini-spacing:.3rem;
     --small-spacing:.6rem;
 
-    --default-border-radius:.3rem;
+    --default-border-radius:.2rem;
     --btn-border-radius:1rem;
+    --panel-border-radius:.4rem;
     --btn-border-radius-large:1rem;
 
     --footer-image-size:calc(var(--footer-size)/(10/8));

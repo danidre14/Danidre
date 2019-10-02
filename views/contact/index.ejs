@@ -45,7 +45,7 @@ if(user !== undefined) {
             </div>
             <div>
                 <label for="message">Message</label>
-                <textarea class="textarea" type="text" id="message" name="message" autocomplete="off" placeholder="Your message" required><%= userMessage %></textarea>
+                <textarea class="textarea" type="text" id="message" name="message" autocomplete="off"  rows="10" placeholder="Your message" required><%= userMessage %></textarea>
                 <div>
                     <% if (formMessage) { %>
                         <pre id="formMessage" style="display:block;"><%= formMessage %></pre>
@@ -54,7 +54,10 @@ if(user !== undefined) {
                     <% } %>
                 </div>
             </div>
-            <button class="btn btn-primary" id="sBtn" type="submit">Send Message</button>
+            <div class="div-space-between">
+                <button class="btn btn-primary" id="sBtn" type="submit">Send Message</button>
+                <a href="mailto:mailto@danidre.com" class="btn btn-primary">Email Instead</a>
+            </div>
         </form>
     </article>
     <article>

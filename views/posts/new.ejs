@@ -1,0 +1,30 @@
+<h2>Posts</h2>
+<section>
+    <article>
+        <div class="div-space-between">
+            <a class="btn btn-primary lock" href="/posts">Cancel</a>
+            <button class="btn btn-primary" onclick="attemptSendingPost()">Publish</button>
+        </div>
+        <button class="btn btn-primary" onclick="previewThePost()">Preview</button>
+        <button class="btn btn-primary" onclick="editThePost()">Edit</button>
+        <div id="Edits">
+            <input class="input" id="title" type="text" autocomplete="off" placeholder="title">
+            <textarea class="textarea" name="content" id="content" rows="15"  autocomplete="off" placeholder="Post Content"></textarea>
+            <textarea class="textarea" name="content" id="summary" rows="3"  autocomplete="off" placeholder="Summary"></textarea>
+            
+            <div style="display:grid;grid-template-columns: 50% 30% auto;">
+                <input class="input" id="image" type="text" autocomplete="off" placeholder="image src">
+                <input class="input" id="name" type="text" autocomplete="off" placeholder="url name">
+                <input class="input" id="code" type="text" autocomplete="off" placeholder="post's code">
+            </div>
+        </div>
+        <div class="the_markdown" id="Previews" style="display:none;"></div>
+    </article>
+</section>
+<meta name="robots" content="none"/>
+
+<script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="/javascripts/createPost.js"></script>
+<script defer src="/javascripts/validatePost.js"></script>
+<script defer src="/utility/MarkDownToUp.js"></script>
+<script defer src="/javascripts/editPreviewPost.js"></script>

@@ -26,11 +26,11 @@
                     </div>
                     <div>
                         <div>
-                            <% distanceToNow = formatDistanceToNow(user.lastSeen); %>
+                            <% distanceToNow = checkLastOnline(user.lastSeen); %>
                             <% if(distanceToNow === 'Online') { %>
                                 <span class="bounded" style="color:var(--user-status-color-now);font-weight:500;font-size:.7rem;"><%= distanceToNow %> </span>
                             <% } else if(distanceToNow === 'never') { %>
-                                <% distanceToNow = formatDistanceToNow(user.updatedAt, true); %>
+                                <% distanceToNow = checkLastOnline(user.updatedAt, true); %>
                                 <% if(distanceToNow === 'never') { %>
                                     <span class="bounded" style="color:var(--user-status-color-error);font-weight:500;font-size:.7rem;"><%= distanceToNow %> </span>
                                 <% } else { %>

@@ -1,12 +1,9 @@
-<% let hasPosts = false; %>
-<h2>Home Page</h2>
-<section class="home">
-    <article>
-        <p>I'm <a href="/about">Danidre</a>, a game programmer, web developer, and software engineer!</p>
-    </article>
-    <article>
-        <h3>Recent News</h3>
-        <div style="max-height:15rem;overflow:auto;">
+<% var user; 
+ let hasPosts = false; %>
+<h2>Posts</h2>
+<section class="posts">
+    <article class="posts-grid">
+        <div>
             <% posts.forEach(post => { %>
                 <% const createdAt = formatDistanceToNow(post.createdAt);
                 const updatedAt = formatDistanceToNow(post.updatedAt);
@@ -36,37 +33,27 @@
                 <% } %>
             <% }); %>
             <% if(!hasPosts) { %>
-                <p>No <a href="/posts">posts</a> yet. Stay tuned.</a></p>
+                <p>No posts yet. Stay tuned.</a></p>
             <% } %>
         </div>
-    </article>
-    <article class="common-grid">
-        <div>
-            <p>Similar developers:</p>
-            <ul>
-                <li><a href="https://zanzlanz.com/" target="_blank" rel="noreferrer">Zanzlanz</a></li>
-                <li><a href="http://ultraboodog.com/" target="_blank" rel="noreferrer">Boodog</a></li>
-            </ul>
-        </div>
-        <div>
-            <p>Previous works:</p>
-            <ul>  
-                <li><a href="https://danicoder.weebly.com/" target="_blank" rel="noreferrer">Dani Coder</a></li>
-                <li><a href="https://www.indiedb.com/company/dani-inc" target="_blank" rel="noreferrer">Dani-Inc</a></li>
-            </ul>
-        </div>
+        <a class="twitter-timeline" data-width="800" data-height="600" data-theme="dark" data-link-color="#998177" href="https://twitter.com/danidre?ref_src=twsrc%5Etfw">Tweets by Danidre</a>
     </article>
     <article>
-        <% //<a href="https://twitter.com/danidre?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-related="zanzlanz" data-show-count="false">Follow @Danidre</a> %>
-
-        <a class="btn btn-primary" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flocalhost%3A3000%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=danidre&tw_p=followbutton">
+        <% if(user !== undefined) {
+            if(isAdmin(user.username)) { %>
+                <a class="btn btn-primary" href="/posts/new">Create Post</a>
+            <% } 
+        }%>
+        <% //<a href="https://twitter.com/intent/tweet?screen_name=danidre&ref_src=twsrc%5Etfw" class="btn btn-primary twitter-mention-button" data-size="large" data-text="hey man," data-related="zanzlanz" data-show-count="false">Tweet to @Danidre</a> %>
+        <a class="btn btn-primary" href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A3000%2Fnews&ref_src=twsrc%5Etfw&related=zanzlanz&screen_name=danidre&text=hey%20man%2C&tw_p=tweetbutton">
             <div class="div-space-around">
-                <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Follow @danidre</span>
+                <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Tweet to @danidre</span>
             </div>
         </a>
+        
     </article>
 </section>
-<meta name="description" content="Danidre is a game developer and software engineer!">
+<meta name="description" content="Danidre's news page. Stay up to date with the latest infomration about projects and other content.">
 <meta name="twitter:site" content="@danidre">
 
 <script async src="https://platform.twitter.com/widgets.js"></script>

@@ -28,7 +28,7 @@
             <div>
                 <label for="bio">Bio:</label>
                 <br/>
-                <textarea class="textarea" name="bio" placeholder="Enter profile bio" id="bio"><%= profile.bio %></textarea>
+                <textarea class="textarea" name="bio"  rows="10" placeholder="Enter profile bio" id="bio"><%= profile.bio %></textarea>
             </div>
             <div>Roles: <%= extractAttribute(profile.roles, 'name').join(', ') %></div>
             <div>Created At: <%= profile.createdAt.toDateString() %></div>
@@ -41,6 +41,7 @@
         </form>
     </article>
 </section>
+<meta name="description" content="Edit your Danidre profile.">
 
 <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
@@ -52,4 +53,3 @@
 <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
 <script defer src="/javascripts/fileUpload.js"></script>
-<meta name="description" content="Edit your Danidre profile.">

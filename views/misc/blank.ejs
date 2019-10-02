@@ -12,6 +12,8 @@
         <% } %>
         <% if(blCode === "game_not_found") { %>
             <p style='font-size:.7rem'><i><a href="/games">Browse all my games here.</a> If you think this is a mistake, <a href="/contact">let me know.</a></i></p>
+        <% } else if(blCode === "post_not_found") { %>
+            <p style='font-size:.7rem'><i><a href="/posts">Read all news here.</a> If you think this is a mistake, <a href="/contact">let me know.</a></i></p>
         <% } else if(blCode === "user_not_found") { %>
             <p style='font-size:.7rem'><i>Sorry, this user does not exist.</i></p>
         <% } else if(blCode === "user_list_privacy") { %>

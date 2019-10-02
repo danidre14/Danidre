@@ -11,15 +11,18 @@ const session = require('express-session');
 const flash = require('express-flash');
 const methodOverride = require('method-override');
 
-//functions
-const formatDistanceToNow = require('date-fns/formatDistanceToNow')
+//functions/utils
+const formatDistanceToNow = require('date-fns/formatDistanceToNow');
+const MarkDownToUpJS = require('./utils/MarkDownToUp');
+const MarkDownToUp = new MarkDownToUpJS();
+
 
 //routes
 const globalChecks = require('./routes/globalChecks')
 const indexRouter = require('./routes/index');
 const gamesRouter = require('./routes/games');
 const aboutRouter = require('./routes/about');
-const newsRouter = require('./routes/news');
+const postsRouter = require('./routes/posts');
 const contactRouter = require('./routes/contact');
 
 const signupRouter = require('./routes/signup');
@@ -64,7 +67,7 @@ app.use(globalChecks);
 app.use('/', indexRouter);
 app.use('/games', gamesRouter);
 app.use('/about', aboutRouter);
-app.use('/news', newsRouter);
+app.use('/posts', postsRouter);
 app.use('/contact', contactRouter);
 
 app.use('/signup', signupRouter);
@@ -79,7 +82,11 @@ app.use('/settings', settingsRouter);
 app.use(error404Router); //make sure to put this after all routes
 
 //global views functions
-app.locals.formatDistanceToNow = function(date, old) {
+app.locals.formatDistanceToNow = function(date) {
+    let lastSeen = `${formatDistanceToNow(date)} ago`;
+    return lastSeen.replace("about", "");
+}
+app.locals.checkLastOnline = function(date, old) {
     const considerOnline = ["less than a minute ago", "1 minute ago", "2 minutes ago"];
     if(!date) {
         return 'never';
@@ -87,6 +94,9 @@ app.locals.formatDistanceToNow = function(date, old) {
     let lastSeen = `${formatDistanceToNow(date)} ago`;
     if(considerOnline.includes(lastSeen) && !old) lastSeen = "Online";
     return lastSeen.replace("about", "");
+}
+app.locals.MarkDownToUp = function(string) {
+    return MarkDownToUp.convert(string);
 }
 app.locals.stringify = function(obj) {
     var str = [];

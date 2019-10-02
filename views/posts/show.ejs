@@ -1,0 +1,40 @@
+<% var user; %>
+<h2><%= post.title || "Game" %></h2>
+<section class="posts">
+    <article class="the_markdown">
+        <div style="text-align:left;">
+            <%- MarkDownToUp(post.content) %>
+        </div>
+        <div class="div-space-between">
+            <% const createdAt = formatDistanceToNow(post.createdAt);
+            const updatedAt = formatDistanceToNow(post.updatedAt);
+            let lastChanged = '';
+            if(createdAt !== updatedAt) {
+                lastChanged = `edited ${updatedAt}`;
+            } %>
+            <div>
+                <a class="btn btn-primary" href="/posts">Other Posts</a>
+                <% if(user !== undefined) {
+                    if(isAdmin(user.username)) { %>
+                        <a class="btn btn-primary" href="/posts/view/<%= post.name %>/edit">Edit Post</a>
+                    <% } 
+                } %>
+            </div>
+            <div style="display:grid;grid-template-rows: auto auto;">
+                <i style="text-align:right;"><%= createdAt %></i>
+                <i style="font-size:.7rem;text-align:right;"><%= lastChanged %></i>
+            </div>
+
+        </div>
+    </article>
+</section>
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2781990552887713",
+    enable_page_level_ads: true
+});
+</script>

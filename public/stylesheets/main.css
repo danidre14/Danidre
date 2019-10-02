@@ -66,18 +66,16 @@ pre {
     padding: var(--mini-spacing);
     width: 100%;
 }
+.textarea {
+    resize: vertical; max-height: 25rem; min-height: 5rem;
+}
 ::placeholder {
     font-style: italic;
 }
 
-.input:focus {
+.input:focus, textarea:focus {
     outline: none;
     border: solid 2px var(--color-input-border-focus);
-}
-textarea:focus {
-    outline: none;
-    border: solid 2px var(--color-input-border-focus);
-    height: 6rem;
 }
 .input-inline {
     /* display: inline; */
@@ -139,10 +137,81 @@ section.about p {
     margin-bottom: calc(var(--paragraph-spacing)*2);
 }
 
-/* News Page Specifics */
-section.news {
+/* Posts Page Specifics */
+section.posts {
     text-align: center;
 }
+section.posts .posts-grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+section .common-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+section.posts .posts-grid > * {
+    padding: 5px;
+}
+section .the_markdown * {
+    color: var(--color-text-dark); 
+    font-size: 1rem;
+    line-height: 1rem;
+    margin: 0;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    font-family: var(--global-fonts);
+    margin-bottom: var(--paragraph-spacing);
+}
+section .the_markdown h4 {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+section .the_markdown h5 {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+section .the_markdown h6 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+section .the_markdown p {
+    font-size: 1rem;
+}
+section .the_markdown div.hr {
+    border-bottom: solid 2px var(--color-input-border);
+}
+section .the_markdown div.br {
+    border-bottom: solid 2px transparent;
+}
+section .the_markdown ul li {
+    margin-left: var(--list-spacing);
+    list-style-type: disc;
+}
+section .the_markdown ol li {
+    margin-left: var(--list-spacing);
+}
+section .the_markdown blockquote {
+    margin-left: var(--blockquote-spacing);
+    font-style: italic;
+}
+section .the_markdown a {
+    font-weight: 500;
+    color: var(--color-link-dark);
+    text-decoration: underline;
+}
+section .the_markdown em, section .the_markdown i {
+    font-style: italic;
+}
+section .the_markdown strong, section .the_markdown b {
+    font-weight: 500;
+} 
+section .the_markdown code {
+    font-family: monospace;
+    background-color: var(--color-input-border);
+    color: var(--color-text-light);
+}
+
 
 /* Contact Page Specifics */
 section.contact {
@@ -257,10 +326,6 @@ section.profile-edit img {
 section.profile-edit .profile-img {
     display:inline-block;
 }
-section.profile-edit textarea {
-    width: 100% !important;
-    height: 5rem;
-}
 section.profile-edit .filepond--root {
     font-family: var(--global-fonts);
     margin-bottom:0;
@@ -298,6 +363,19 @@ table td#all_subjects, table td#your_subjects {
 @media screen and (max-width: 700px) {
     :root {
         font-size: 1.1rem;
+    }
+    section.posts .posts-grid {
+        display: block;
+    }
+    section .common-grid {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+    }
+    section .common-grid > :first-child {
+        border-bottom: solid 2px var(--color-line);
+        padding-bottom: var(--default-spacing-y);
+        margin-bottom: var(--default-spacing-y);
     }
     section .profile-img-big {   
         width: 180px;
