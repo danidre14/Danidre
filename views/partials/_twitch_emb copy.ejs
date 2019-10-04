@@ -1,0 +1,34 @@
+<article>
+    <!-- Add a placeholder for the Twitch embed -->
+    <div id="twitch_embed" style="position:relative;height:0;padding-top:56.25%;width:100%;"></div>
+
+    <!-- Load the Twitch embed script -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <!--
+      Create a Twitch.Embed object that will render
+      within the "twitch-embed" root element.
+    -->
+    <script defer type="text/javascript">
+      var embed, iframe;
+      window.onload = () => {
+        embed = new Twitch.Embed("twitch_embed", {
+            width: '100%',
+            height: '100%',
+            channel: "monstercat",
+            layout: "video"
+        });
+        embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+            var player = embed.getPlayer();
+            player.play();
+            iframe = document.getElementsByTagName('iframe')[0];
+            iframe.style.cssText = "position:absolute;top:0;left:0;border:0;width:100%;height:100%;";
+        });
+        embed.addEventListener(Twitch.Embed.VIDEO_PLAY, () => {
+            console.log('streaming')
+        });
+      }
+
+    </script>
+   
+</article>
