@@ -51,6 +51,12 @@ const gamesList = function() {
             url: "/games/my_first_game"
         },*/
         {
+            title: "Bob The Brawler",
+            minidesc: "Beat up some baddies in this quick paced game.",
+            image: "https://static.jam.vg/content/88f/22/z/283ea.png.320x256.fit.jpg",
+            url: "/games/bob_the_brawler"
+        },
+        {
             title: "Quiz Game",
             minidesc: "Test your intellect with 10 simple questions.",
             image: "https://cdn.pixabay.com/photo/2018/08/31/11/17/quiz-3644414_960_720.png",
@@ -85,6 +91,22 @@ const gamesInformation = function(gameName) {
             minidesc: `Test your intellect with 10 simple questions.`,
             image: "https://cdn.pixabay.com/photo/2018/08/31/11/17/quiz-3644414_960_720.png",
             url: "/games/quiz_game"
+        },
+        bob_the_brawler: {
+            scripts: ["/games/BobTheBrawler/script.js"],
+            title: "Bob The Brawler",
+            description: `Made for Ludum Dare 45.
+            Objective? None. Basically nothing. Just go beat up some baddies!! :[
+            Chests drop occassionally, containing cool items, so be on the lookout!
+                
+            Controls:
+            WASD/Arrows- Move
+            Space- Attack
+            M/Q- Use Potion
+            G/L- Build Wall`,
+            minidesc: `Ludum Daree 45 Game.`,
+            image: "https://static.jam.vg/content/88f/22/z/283ea.png.320x256.fit.jpg",
+            url: "/games/bob_the_brawler"
         }
     }
     return gameLibrary[gameName];

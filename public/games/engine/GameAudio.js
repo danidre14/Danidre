@@ -1,8 +1,88 @@
+/*
+Functions we want
+Object GameAudio has:
+
+audios={};
+
+defaultSourceFolder='audio/'
+--where it will look for audio if none stated
+defaultFileType = 'mp3';
+--file extension if none stated
+
+setDefaultSourceFolder(source)
+setDefaultFileType(source)
+setDefaults({source, type})
+
+create(audioName, audioSrc) //adds audio
+--make it default to look for audio in default audio folder variable or 'audio/' folder if none found- if no source specified
+--use audioName as the audio name in src if no src specified
+--make it default to look for extension in default src folder variable or 'mp3' folder if none found- if no source specified
+
+get(audioName) //returns audio object to root folder for raw accessing
+
+play(audioName)
+pause(audioName)
+stop(audioName)
+restart(audioName)
+
+playLoop(audioName) //play audio in loop
+
+playOnce(audioName) //play audio once
+
+mute(audioName) //unmute one
+unmute(audioName) //unmute one
+togglemute(audioName) //toggle mute one
+
+muteAll() //mutes all
+unmuteAll() //unmutes all
+togglemuteAll() //toggle mutes all
+
+pauseAll() //pauses all
+stopAll() //stops all
+
+setVolume(audioName, [1-100]) or setVolume(audioName, vol, max)
+//sets volume of one to either val between 100, or val in max range stated (relative to master volume)
+setVolumeAll([1-100]) or setVolumeAll(vol, max)
+//sets volume of all to either val between 100, or val in max range stated (relative to master volume)
+setVolume([1-100]) or setVolume(vol, max)
+//sets volume of master volume (when no name is identified)
+getVolume(audioName) //gets volume of one
+getVolume() //gets master volume (when no name is identified)
+
+return:
+    setDefaultSourceFolder
+    setDefaultFileType
+    setDefaults
+    create
+    get
+    play
+    pause
+    stop
+    restart
+    playLoop
+    playOnce  
+    mute
+    unmute
+    togglemute
+    muteAll
+    unmuteAll
+    togglemuteAll
+    pauseAll
+    stopAll
+    getVolume
+    setVolume
+    setVolumeAll
+
+*/
+
 const GameAudio = function (options) {
+    /*options can have
+        source; type
+    */
     let audios = {};
     let volume = 1;
 
-    let defaultSourceFolder = options? options.source? options.source : 'audio/' : 'audio/';
+    let defaultSourceFolder = options? options.source? options.source : 'audio' : 'audio';
     let defaultFileType = options? options.type? options.type : 'mp3' : 'mp3';
 
     const setDefaultSourceFolder = function (source) {
@@ -12,6 +92,7 @@ const GameAudio = function (options) {
         defaultFileType = type;
     }
     const setDefaults = function (options) {
+        //options would be {source:'source', type:'type'}
         if (options.source) setDefaultSourceFolder(options.source);
         if (options.type) setDefaultFileType(options.type);
     }
@@ -34,12 +115,13 @@ const GameAudio = function (options) {
                 audioName = currStack[0];
                 audioSrc = currStack[1];
             }
+            //if already exists
             if (audios[audioName]) {
                 console.error(`Cannot create "${audioName}": Audio file already exists.`);
                 return resolve();
             }
 
-            const src = audioSrc ? audioSrc : `${defaultSourceFolder}${audioName}.${defaultFileType}`;
+            const src = audioSrc ? audioSrc : `${defaultSourceFolder}/${audioName}.${defaultFileType}`;
             const audio = new Audio(src);
             audio.onloadeddata = function () {
                 audios[audioName] = {};
@@ -56,6 +138,7 @@ const GameAudio = function (options) {
     }
 
     const get = function(audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot get "${audioName}": Audio file does not exists.`);
         }
@@ -64,6 +147,7 @@ const GameAudio = function (options) {
 
 
     const play = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
         }
@@ -73,6 +157,7 @@ const GameAudio = function (options) {
 
 
     const pause = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot pause "${audioName}": Audio file does not exists.`);
         }
@@ -82,6 +167,7 @@ const GameAudio = function (options) {
 
 
     const stop = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot stop "${audioName}": Audio file does not exists.`);
         }
@@ -93,6 +179,7 @@ const GameAudio = function (options) {
 
 
     const restart = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot restart "${audioName}": Audio file does not exists.`);
         }
@@ -104,6 +191,7 @@ const GameAudio = function (options) {
 
 
     const playLoop = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
         }
@@ -114,6 +202,7 @@ const GameAudio = function (options) {
 
 
     const playOnce = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
         }
@@ -121,10 +210,12 @@ const GameAudio = function (options) {
         audios[audioName].audioObj.pause();
         audios[audioName].audioObj.currentTime = 0;
         audios[audioName].audioObj.play();
+        audios[audioName].audioObj.loop = false;
     }
 
 
     const mute = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot mute "${audioName}": Audio file does not exists.`);
         }
@@ -134,6 +225,7 @@ const GameAudio = function (options) {
 
 
     const unmute = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot unmute "${audioName}": Audio file does not exists.`);
         }
@@ -143,6 +235,7 @@ const GameAudio = function (options) {
 
 
     const togglemute = function (audioName) {
+        //if does not exist
         if (!audios[audioName]) {
             return console.error(`Cannot toggle mute "${audioName}": Audio file does not exists.`);
         }
@@ -182,10 +275,11 @@ const GameAudio = function (options) {
         }
     }
 
-    const getVolume = function (audioName) {
+    const getVolume = function (audioName) {  //gets volume of one, or master volume (when no name is identified)
         if (!audioName) {
             return volume;
         } else {
+            //if does not exist
             if (!audios[audioName]) {
                 return console.error(`Cannot set volume of "${audioName}": Audio file does not exists.`);
             }
@@ -213,6 +307,7 @@ const GameAudio = function (options) {
             for (const audioNames in audios)
                 audios[audioNames].audioObj.volume = audios[audioNames].volume * volume;
         } else {
+            //if does not exist
             if (!audios[audioName]) {
                 return console.error(`Cannot set volume of "${audioName}": Audio file does not exists.`);
             }
@@ -250,6 +345,7 @@ const GameAudio = function (options) {
             audios[audioName].audioObj.volume = audios[audioName].volume * volume;
         }
     }
+
     return {
         setDefaultSourceFolder,
         setDefaultFileType,
