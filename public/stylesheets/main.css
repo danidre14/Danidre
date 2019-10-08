@@ -153,36 +153,50 @@ section.posts .posts-grid > * {
     padding: 5px;
 }
 section .the_markdown * {
-    color: var(--color-text-dark); 
-    font-size: 1rem;
-    line-height: 1.5rem;
+    color: var(--color-text-dark);
     margin: 0;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
     font-family: var(--global-fonts);
-    margin-bottom: var(--paragraph-spacing);
+    margin-bottom: .5rem;
+}
+section .the_markdown > * {
+    font-size: 1rem;
+    line-height: 1rem;
 }
 section .the_markdown h4 {
     font-size: 1.6rem;
+    line-height: 1.7rem;
+    margin: .9rem 0;
     font-weight: 500;
 }
 section .the_markdown h5 {
     font-size: 1.3rem;
+    line-height: 1.4rem;
+    margin: .8rem 0;
     font-weight: 500;
 }
 section .the_markdown h6 {
     font-size: 1.2rem;
+    line-height: 1.3rem;
+    margin: .7rem 0;
     font-weight: 500;
 }
 section .the_markdown p {
     font-size: 1rem;
+    line-height: 1.1rem;
+    margin-bottom: .6rem;
 }
 section .the_markdown div.hr {
     border-bottom: solid 2px var(--color-input-border);
+    margin-bottom: var(--paragraph-spacing);
 }
 section .the_markdown div.br {
     border-bottom: solid 2px transparent;
+}
+section .the_markdown ul, section .the_markdown ol {
+    margin-bottom: 1rem;
 }
 section .the_markdown ul li {
     margin-left: var(--list-spacing);
@@ -193,6 +207,7 @@ section .the_markdown ol li {
 }
 section .the_markdown blockquote {
     margin-left: var(--blockquote-spacing);
+    margin-bottom: 1rem;
     font-style: italic;
 }
 section .the_markdown a {
@@ -210,6 +225,18 @@ section .the_markdown code {
     font-family: monospace;
     background-color: var(--color-input-border);
     color: var(--color-text-light);
+}
+
+section .light_text * {
+    color: var(--color-text-light);
+}
+section .light_text a {
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+section .light_text div.hr {
+    border-bottom: solid 2px var(--color-text-light);
+    margin-bottom: var(--paragraph-spacing);
 }
 
 

@@ -95,16 +95,23 @@ const gamesInformation = function(gameName) {
         bob_the_brawler: {
             scripts: ["/games/BobTheBrawler/script.js"],
             title: "Bob The Brawler",
-            description: `Made for Ludum Dare 45.
-            Objective? None. Basically nothing. Just go beat up some baddies!! :[
-            Chests drop occassionally, containing cool items, so be on the lookout!
-                
-            Controls:
-            WASD/Arrows- Move
-            Space- Attack
-            M/Q- Use Potion
-            G/L- Build Wall`,
-            minidesc: `Ludum Daree 45 Game.`,
+            description: `## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/45/games).
+            # Objective:
+            None. Basically nothing. Just go beat up some baddies!! :[
+            Chests drop occasionally, containing cool items, so be on the lookout!
+            
+            # Controls:
+            **WASD/Arrows-** Move
+            **Space-** Attack
+            **M/Q-** Use Potion
+            **G/L-** Build Wall
+            **P-** Toggle Pause
+            **R-** Restart Game
+            *****
+            ## Credits:
+            **Programming-** [@danidre](/u/danidre)
+            **Art/Audio-** [@AXLplosion](/u/AXLplosion)`,
+            minidesc: `Ludum Dare 45 Game.`,
             image: "https://static.jam.vg/content/88f/22/z/283ea.png.320x256.fit.jpg",
             url: "/games/bob_the_brawler"
         }

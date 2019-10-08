@@ -266,16 +266,6 @@ const MarkDownToUp = function() {
                         bStart = -1;
                         bEnd = -1;
                     }
-                } else if (char === "_") {
-                    if(iStart === -1) {
-                        iStart = ind;
-                    } else if(iStart !== ind-1) {
-                        iEnd = ind;
-                        inline.push([iStart, '<i>']);
-                        inline.push([iEnd, '</i>']);
-                        iStart = -1;
-                        iEnd = -1;
-                    }
                 }
             }
             inline.sort((a,b) => a[0]-b[0]);
@@ -299,7 +289,7 @@ const MarkDownToUp = function() {
         let markUp = [];
         for(const i in lines) {
             if(lines[i].trim() !== '')
-                markUp.push(checkType(lines[i]));
+                markUp.push(checkType(lines[i].trim()));
         }
         return markUp.join('');
     }
