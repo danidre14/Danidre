@@ -65,7 +65,7 @@ const scorePowerUpPickup = 31;
 const spawnDropTries = 10;
 const crosshairSize = 30;
 
-const adjuster = 1250;
+const adjuster = 1000;
 
 let movingLeft = false;
 let movingRight = false;
