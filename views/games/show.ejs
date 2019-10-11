@@ -11,7 +11,7 @@
         <div style="text-align:left;border-top-left-radius:0;border-top-right-radius:0;" class="encapsulated-box">
             <!-- <img class="game-img-big" src="<%= game.image %>" onerror="if (this.src != '../../images/GamesIcon.png') this.src = '../../images/GamesIcon.png';"> -->
             <div class="the_markdown light_text" style="padding-left:1.2rem;width:100%;color:var(--color-text-light);">
-                <p><%= game.title %></p>
+                <p><%=// game.title %></p>
                 <% if(game.description) { %>
                     <%- MarkDownToUp(game.description) %>
                 <% } else { %>

@@ -96,20 +96,24 @@ const gamesInformation = function(gameName) {
             scripts: ["/games/BobTheBrawler/script.js"],
             title: "Bob The Brawler",
             description: `## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/45/games).
+
+            # Story:
+            A grave disagreement with the Ski Mask Baddies forces Bob to end his *Building* career for good. However, dissatisfied with just his unemployment, the Baddies are out for his life! Now, Bob the previous Builder becomes Bob the Brawler; living only to defend himself from the Baddies breaking into his warehouse, in hopes of regaining his positions, and...punching off... some steam!! >:[
+
             # Objective:
             None. Basically nothing. Just go beat up some baddies!! :[
-            Chests drop occasionally, containing cool items, so be on the lookout!
+            Items drop occasionally, ranging from wall packages to powerups, so be on the lookout!
             
             # Controls:
-            **WASD/Arrows-** Move
-            **Space-** Attack
-            **M/Q-** Use Potion
-            **G/L-** Build Wall
-            **P-** Toggle Pause
-            **R-** Restart Game
+            **WASD-** Move
+            **Space-** Heal
+            **Left Mouse-** Attack
+            **Right Mouse-** Build
+            **Q/P-** Toggle Pause
+            **R-** Restart Game (when dead)
             *****
             ## Credits:
-            **Programming-** [@danidre](/u/danidre)
+            **Programming/Design-** [@danidre](/u/danidre)
             **Art/Audio-** [@AXLplosion](/u/AXLplosion)`,
             minidesc: `Ludum Dare 45 Game.`,
             image: "https://static.jam.vg/content/88f/22/z/283ea.png.320x256.fit.jpg",

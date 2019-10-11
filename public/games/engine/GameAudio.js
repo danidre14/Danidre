@@ -48,6 +48,10 @@ setVolume([1-100]) or setVolume(vol, max)
 //sets volume of master volume (when no name is identified)
 getVolume(audioName) //gets volume of one
 getVolume() //gets master volume (when no name is identified)
+getLoop(audioName) //gets if audio is looped
+setLoop(audioName, [true/false]) //sets audio loop
+getTime(audioName) //gets current time of audio
+setTime(audioName, [true/false]) //sets current time of audio
 
 return:
     setDefaultSourceFolder
@@ -72,6 +76,10 @@ return:
     getVolume
     setVolume
     setVolumeAll
+    getLoop
+    setLoop
+    getTime
+    setTime
 
 */
 
@@ -146,13 +154,15 @@ const GameAudio = function (options) {
     }
 
 
-    const play = function (audioName) {
-        //if does not exist
-        if (!audios[audioName]) {
-            return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
-        }
+    const play = async function (audioName) {
+        try {
+            //if does not exist
+            if (!audios[audioName]) {
+                return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
+            }
 
-        audios[audioName].audioObj.play();
+            await audios[audioName].audioObj.play();
+        } catch {}
     }
 
 
@@ -178,39 +188,45 @@ const GameAudio = function (options) {
     }
 
 
-    const restart = function (audioName) {
-        //if does not exist
-        if (!audios[audioName]) {
-            return console.error(`Cannot restart "${audioName}": Audio file does not exists.`);
-        }
+    const restart = async function (audioName) {
+        try {
+            //if does not exist
+            if (!audios[audioName]) {
+                return console.error(`Cannot restart "${audioName}": Audio file does not exists.`);
+            }
 
-        audios[audioName].audioObj.pause();
-        audios[audioName].audioObj.currentTime = 0;
-        audios[audioName].audioObj.play();
+            audios[audioName].audioObj.pause();
+            audios[audioName].audioObj.currentTime = 0;
+            await audios[audioName].audioObj.play();
+        } catch {}
     }
 
 
-    const playLoop = function (audioName) {
-        //if does not exist
-        if (!audios[audioName]) {
-            return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
-        }
+    const playLoop = async function (audioName) {
+        try {
+            //if does not exist
+            if (!audios[audioName]) {
+                return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
+            }
 
-        audios[audioName].audioObj.play();
-        audios[audioName].audioObj.loop = true;
+            await audios[audioName].audioObj.play();
+            audios[audioName].audioObj.loop = true;
+        } catch {}
     }
 
 
-    const playOnce = function (audioName) {
-        //if does not exist
-        if (!audios[audioName]) {
-            return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
-        }
+    const playOnce = async function (audioName) {
+        try {
+            //if does not exist
+            if (!audios[audioName]) {
+                return console.error(`Cannot play "${audioName}": Audio file does not exists.`);
+            }
 
-        audios[audioName].audioObj.pause();
-        audios[audioName].audioObj.currentTime = 0;
-        audios[audioName].audioObj.play();
-        audios[audioName].audioObj.loop = false;
+            audios[audioName].audioObj.pause();
+            audios[audioName].audioObj.currentTime = 0;
+            await audios[audioName].audioObj.play();
+            audios[audioName].audioObj.loop = false;
+        } catch {}
     }
 
 
@@ -345,6 +361,40 @@ const GameAudio = function (options) {
             audios[audioName].audioObj.volume = audios[audioName].volume * volume;
         }
     }
+    
+    const getLoop = function (audioName) {
+        //if does not exist
+        if (!audios[audioName]) {
+            return console.error(`Cannot get loop for "${audioName}": Audio file does not exists.`);
+        }
+
+        return audios[audioName].audioObj.loop;
+    }
+    const setLoop = function (audioName, value) {
+        //if does not exist
+        if (!audios[audioName]) {
+            return console.error(`Cannot set loop for "${audioName}": Audio file does not exists.`);
+        }
+
+        return audios[audioName].audioObj.loop = value;
+    }
+
+    const getTime = function (audioName) {
+        //if does not exist
+        if (!audios[audioName]) {
+            return console.error(`Cannot get time for "${audioName}": Audio file does not exists.`);
+        }
+
+        return audios[audioName].audioObj.currentTime;
+    }
+    const setTime = function (audioName, value) {
+        //if does not exist
+        if (!audios[audioName]) {
+            return console.error(`Cannot set time for "${audioName}": Audio file does not exists.`);
+        }
+
+        return audios[audioName].audioObj.currentTime = value;
+    }
 
     return {
         setDefaultSourceFolder,
@@ -368,6 +418,10 @@ const GameAudio = function (options) {
         stopAll,
         getVolume,
         setVolume,
-        setVolumeAll
+        setVolumeAll,
+        getLoop,
+        setLoop,
+        getTime,
+        setTime
     }
 }

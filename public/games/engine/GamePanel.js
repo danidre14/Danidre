@@ -160,13 +160,22 @@ const GamePanel = function(gameAreaId, options) {
         parseInt(window.getComputedStyle(gameCanvasDiv, null).getPropertyValue('border-left-width'))) * 2;
     }
 
-    function setMousePosition() {
+    function setMousePosition(event) {
         const rect = gameCanvas.getBoundingClientRect(),
             scaleX = gameCanvas.width / rect.width,
             scaleY = gameCanvas.height / rect.height;
       
         mouseX = parseInt((event.clientX - rect.left) * scaleX);
         mouseY = parseInt((event.clientY - rect.top) * scaleY);
+
+        if(LOCKSIZE) {
+            const scale = defaultCW / getCanvasWidth();
+            mouseX *= scale;
+            mouseY *= scale;
+
+            mouseX = parseInt(mouseX);
+            mouseY = parseInt(mouseY);
+        }
         
         if(renderOnMouse)
             render();
