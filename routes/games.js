@@ -53,7 +53,7 @@ const gamesList = function() {
         {
             title: "Bob The Brawler",
             minidesc: "Beat up some baddies in this quick paced game.",
-            image: "https://static.jam.vg/content/88f/22/z/283ea.png.320x256.fit.jpg",
+            image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
             url: "/games/bob_the_brawler"
         },
         {
@@ -116,7 +116,7 @@ const gamesInformation = function(gameName) {
             **Programming/Design-** [@danidre](/u/danidre)
             **Art/Audio-** [@AXLplosion](/u/AXLplosion)`,
             minidesc: `Ludum Dare 45 Game.`,
-            image: "https://static.jam.vg/content/88f/22/z/283ea.png.320x256.fit.jpg",
+            image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
             url: "/games/bob_the_brawler"
         }
     }
