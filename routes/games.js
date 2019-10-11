@@ -52,7 +52,7 @@ const gamesList = function() {
         },*/
         {
             title: "Bob The Brawler",
-            minidesc: "Beat up some baddies in this quick paced game.",
+            minidesc: "Ski Mask Gang are out for you! Beat some baddies in this fast-paced brawler! (>:[=)",
             image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
             url: "/games/bob_the_brawler"
         },
@@ -98,10 +98,10 @@ const gamesInformation = function(gameName) {
             description: `## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/45/games).
 
             # Story:
-            A grave disagreement with the Ski Mask Baddies forces Bob to end his *Building* career for good. However, dissatisfied with just his unemployment, the Baddies are out for his life! Now, Bob the previous Builder becomes Bob the Brawler; living only to defend himself from the Baddies breaking into his warehouse, in hopes of regaining his positions, and...punching off... some steam!! >:[
+            A grave disagreement with the Ski Mask Baddies forces Bob to end his *Building* career for good. However, dissatisfied with just his unemployment, the Baddies are out for his life! Now, Bob the previous Builder becomes Bob the Brawler; living only to defend himself from the Baddies breaking into his warehouse, in hopes of regaining his positions, and...punching off... some steam!! (>:[=)
 
             # Objective:
-            None. Basically nothing. Just go beat up some baddies!! :[
+            None. Basically nothing. Just go beat up some baddies!! (>:[=)
             Items drop occasionally, ranging from wall packages to powerups, so be on the lookout!
             
             # Controls:
@@ -115,7 +115,7 @@ const gamesInformation = function(gameName) {
             ## Credits:
             **Programming/Design-** [@danidre](/u/danidre)
             **Art/Audio-** [@AXLplosion](/u/AXLplosion)`,
-            minidesc: `Ludum Dare 45 Game.`,
+            minidesc: `Ski Mask Gang are out for you! Beat some baddies in this fast-paced brawler! (>:[=)`,
             image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
             url: "/games/bob_the_brawler"
         }
