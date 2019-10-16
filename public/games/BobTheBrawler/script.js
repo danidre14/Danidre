@@ -58,6 +58,7 @@ let playerStartledCounter = 0;
 
 const scoreEnemyDead = 69;
 const scoreEnemyHit = 3;
+const scoreWallPlace = 8;
 const scorePotionPickup = 11;
 const scorePackagePickup = 42;
 const scorePowerUpPickup = 31;
@@ -142,6 +143,16 @@ let Dani = {
         if (num < max) num++;
         else num = min;
         return num;
+    },
+    fillString: function (string, length, filler) {
+        filler = filler || '0';
+
+        let my_string = '' + string;
+        while (my_string.length < length) {
+            my_string = filler + my_string;
+        }
+
+        return my_string;
     }
 }
 
@@ -149,13 +160,15 @@ const Aim = function () {
     const size = gameVars.level.size;
     let x = 0;
     let y = 0;
+    let newX = 0;
+    let newY = 0;
     let bX = 0;
     let bY = 0;
     let range = 0;
     function tick() {
 
-        let newX = mouseCords.x;
-        let newY = mouseCords.y;
+        newX = mouseCords.x / (WIDTH / gameVars.vcam.width) + gameVars.vcam.x;
+        newY = mouseCords.y / (HEIGHT / gameVars.vcam.height) + gameVars.vcam.y;
         let xx = newX - playerX;
         let yy = newY - (playerY - playerW / 2);
         let angleRad = Math.atan2(yy, xx);
@@ -174,8 +187,10 @@ const Aim = function () {
         bY = (Math.floor(y / gameVars.level.size) * gameVars.level.size);
     }
     function render() {
-        drawImg('crosshair', x - size / 2, y - size / 2, size, size);
-        drawImg('buildOptions', bX, bY, size, size);
+        gameVars.vcam.drawVCam('obj', 'crosshair', x - size / 2, y - size / 2, size, size);
+
+        //gameVars.vcam.drawVCam('obj', 'mousePos', newX - gameVars.level.size / 2, newY - gameVars.level.size / 2, gameVars.level.size, gameVars.level.size);
+        gameVars.vcam.drawVCam('obj', 'buildOptions', bX, bY, size, size);
     }
     function getCoords() {
         return { x: x, y: y, bX: bX, bY: bY };
@@ -243,7 +258,16 @@ const Entity = function () {
 
     function render() {
         for (const i in entities) {
-            entities[i].render();
+            const entity = entities[i];
+            const xx = gameVars.vcam.leftBound;
+            const yy = gameVars.vcam.topBound;
+            const ww = gameVars.vcam.rightBound;
+            const hh = gameVars.vcam.bottomBound;
+            const x = entity.getX();
+            const y = entity.getY();
+
+            if (x > xx && x < ww && y > yy && y < hh)
+                entities[i].render();
         }
     }
 
@@ -258,10 +282,10 @@ const Entity = function () {
             const x = entity.getX();
             const y = entity.getY();
 
-            const leftPoint = getBlockX(x - (w / 4));
-            const rightPoint = getBlockX(x + (w / 4));
-            const topPoint = getBlockY(y - (h * 3 / 4));
-            const bottomPoint = getBlockY(y - (h / 4));
+            const leftPoint = getBlockedVal(x - (w / 4));
+            const rightPoint = getBlockedVal(x + (w / 4));
+            const topPoint = getBlockedVal(y - (h * 3 / 4));
+            const bottomPoint = getBlockedVal(y - (h / 4));
 
             if (pointsMatch(leftPoint, topPoint, tX, tY) || pointsMatch(rightPoint, topPoint, tX, tY) || pointsMatch(leftPoint, bottomPoint, tX, tY) || pointsMatch(rightPoint, bottomPoint, tX, tY)) {
                 return false;
@@ -272,24 +296,24 @@ const Entity = function () {
     function testOutBounds(x, y, w, h) {
         // colliding with borders
         if (x - (w / 2) < 0) return true;
-        if (x + (w / 2) > WIDTH) return true;
+        if (x + (w / 2) > gameVars.level.w*gameVars.level.size) return true;
         if (y - h < 0) return true;
-        if (y > HEIGHT) return true;
+        if (y > gameVars.level.h*gameVars.level.size) return true;
         return false;
     }
     function testTouchingTileAxis(x, y, w, h, tiles) {
         let xAxis = false;
         let yAxis = false;
-        if (x - (w / 2) < 0 || x + (w / 2) > WIDTH) xAxis = true;
-        if (y - h < 0 || y > HEIGHT) yAxis = true;
+        if (x - (w / 2) < 0 || x + (w / 2) > gameVars.level.w*gameVars.level.size) xAxis = true;
+        if (y - h < 0 || y > gameVars.level.h*gameVars.level.size) yAxis = true;
 
-        const rightX = getBlockX(x + (w / 2));
-        const leftX = getBlockX(x - (w / 2));
-        const topY = getBlockY(y - h);
-        const bottomY = getBlockY(y);
+        const rightX = getBlockedVal(x + (w / 2));
+        const leftX = getBlockedVal(x - (w / 2));
+        const topY = getBlockedVal(y - h);
+        const bottomY = getBlockedVal(y);
 
-        const xCenter = getBlockX(x);
-        const yCenter = getBlockY(y - (h / 2));
+        const xCenter = getBlockedVal(x);
+        const yCenter = getBlockedVal(y - (h / 2));
 
         //touching wall
         if (isTouchingTile(leftX, yCenter, tiles) || isTouchingTile(rightX, yCenter, tiles)) xAxis = true;
@@ -298,10 +322,10 @@ const Entity = function () {
         return { x: xAxis, y: yAxis }
     }
     function testBurriedInTile(x, y, w, h, tiles) {
-        const leftPoint = getBlockX(x - (w / 4));
-        const rightPoint = getBlockX(x + (w / 4));
-        const topPoint = getBlockY(y - (h * 3 / 4));
-        const bottomPoint = getBlockY(y - (h * 3 / 8));
+        const leftPoint = getBlockedVal(x - (w / 4));
+        const rightPoint = getBlockedVal(x + (w / 4));
+        const topPoint = getBlockedVal(y - (h * 3 / 4));
+        const bottomPoint = getBlockedVal(y - (h * 3 / 8));
 
         if (isTouchingTile(leftPoint, topPoint, tiles) || isTouchingTile(rightPoint, topPoint, tiles) || isTouchingTile(leftPoint, bottomPoint, tiles) || isTouchingTile(rightPoint, bottomPoint, tiles)) {
             return true;
@@ -310,15 +334,15 @@ const Entity = function () {
     }
 
     function testTouchingTile(x, y, w, h, tiles) {
-        const rightX = getBlockX(x + (w / 2));
-        const leftX = getBlockX(x - (w / 2));
-        const topY = getBlockY(y - h);
-        const bottomY = getBlockY(y);
+        const rightX = getBlockedVal(x + (w / 2));
+        const leftX = getBlockedVal(x - (w / 2));
+        const topY = getBlockedVal(y - h);
+        const bottomY = getBlockedVal(y);
 
-        const xLeft = getBlockX(x - (w / 4))
-        const xRight = getBlockX(x + (w / 4));
-        const yTop = getBlockY(y - (h * 3 / 4));
-        const yBottom = getBlockY(y - (h / 4));
+        const xLeft = getBlockedVal(x - (w / 4))
+        const xRight = getBlockedVal(x + (w / 4));
+        const yTop = getBlockedVal(y - (h * 3 / 4));
+        const yBottom = getBlockedVal(y - (h / 4));
 
         //touching wall
         if (isTouchingTile(leftX, yBottom, tiles) || isTouchingTile(leftX, yTop, tiles)) {
@@ -352,21 +376,22 @@ const Entity = function () {
         const h = self.getH();
         const x = self.getX();
         const y = self.getY();
+        const tiles = self.unpassableTiles;
 
         // colliding with walls
         //collisions
-        const rightX = getBlockX(x + (w / 2));
-        const leftX = getBlockX(x - (w / 2));
-        const topY = getBlockY(y - h);
-        const bottomY = getBlockY(y);
+        const rightX = getBlockedVal(x + (w / 2));
+        const leftX = getBlockedVal(x - (w / 2));
+        const topY = getBlockedVal(y - h);
+        const bottomY = getBlockedVal(y);
 
-        const xLeft = getBlockX(x - (w / 4))
-        const xRight = getBlockX(x + (w / 4));
-        const yTop = getBlockY(y - (h * 3 / 4));
-        const yBottom = getBlockY(y - (h / 4));
+        const xLeft = getBlockedVal(x - (w / 4))
+        const xRight = getBlockedVal(x + (w / 4));
+        const yTop = getBlockedVal(y - (h * 3 / 4));
+        const yBottom = getBlockedVal(y - (h / 4));
 
         // left collide
-        if (collide(leftX, yTop)) {
+        if (collide(leftX, yTop, tiles)) {
             collided = true;
             let newX = leftX * gameVars.level.size + gameVars.level.size;
             let newY = yTop * gameVars.level.size + gameVars.level.size / 2;
@@ -381,7 +406,7 @@ const Entity = function () {
             self.setX(x + newDD);
             self.setY(y - yMov);
         }
-        if (collide(leftX, yBottom)) {
+        if (collide(leftX, yBottom, tiles)) {
             collided = true;
             let newX = leftX * gameVars.level.size + gameVars.level.size;
             let newY = yBottom * gameVars.level.size + gameVars.level.size / 2;
@@ -398,7 +423,7 @@ const Entity = function () {
         }
 
         // right collide
-        if (collide(rightX, yTop)) {
+        if (collide(rightX, yTop, tiles)) {
             collided = true;
             let newX = rightX * gameVars.level.size;
             let newY = yTop * gameVars.level.size + gameVars.level.size / 2;
@@ -413,7 +438,7 @@ const Entity = function () {
             self.setX(x + newDD);
             self.setY(y - yMov);
         }
-        if (collide(rightX, yBottom)) {
+        if (collide(rightX, yBottom, tiles)) {
             collided = true;
             let newX = rightX * gameVars.level.size;
             let newY = yBottom * gameVars.level.size + gameVars.level.size / 2;
@@ -430,7 +455,7 @@ const Entity = function () {
         }
 
         // top collide
-        if (collide(xLeft, topY)) {
+        if (collide(xLeft, topY, tiles)) {
             collided = true;
             let newX = xLeft * gameVars.level.size + gameVars.level.size / 2;
             let newY = topY * gameVars.level.size + gameVars.level.size;
@@ -445,7 +470,7 @@ const Entity = function () {
             self.setX(x - xMov);
             self.setY(y + newDD);
         }
-        if (collide(xRight, topY)) {
+        if (collide(xRight, topY, tiles)) {
             collided = true;
             let newX = xRight * gameVars.level.size + gameVars.level.size / 2;
             let newY = topY * gameVars.level.size + gameVars.level.size;
@@ -462,7 +487,7 @@ const Entity = function () {
         }
 
         // bottom collide
-        if (collide(xLeft, bottomY)) {
+        if (collide(xLeft, bottomY, tiles)) {
             collided = true;
             let newX = xLeft * gameVars.level.size + gameVars.level.size / 2;
             let newY = bottomY * gameVars.level.size;
@@ -477,7 +502,7 @@ const Entity = function () {
             self.setX(x - xMov);
             self.setY(y + newDD);
         }
-        if (collide(xRight, bottomY)) {
+        if (collide(xRight, bottomY, tiles)) {
             collided = true;
             let newX = xRight * gameVars.level.size + gameVars.level.size / 2;
             let newY = bottomY * gameVars.level.size;
@@ -494,30 +519,30 @@ const Entity = function () {
         }
 
         //locks
-        if (collide(leftX, yBottom) || collide(leftX, yTop)) {
+        if (collide(leftX, yBottom, tiles) || collide(leftX, yTop, tiles)) {
             collided = true;
-            self.setX(x + Math.abs(x - (w / 2) - ((leftX + 1) * gameVars.level.size) - 1));
+            self.setX(x + Math.abs(x - (w / 2) - ((leftX + 1) * gameVars.level.size) - 1)); //
         }
-        if (collide(rightX, yBottom) || collide(rightX, yTop)) {
+        if (collide(rightX, yBottom, tiles) || collide(rightX, yTop, tiles)) {
             collided = true;
             self.setX(x - Math.abs(x + (w / 2) - (rightX * gameVars.level.size) + 1));
         }
-        if (collide(xLeft, topY) || collide(xRight, topY)) {
+        if (collide(xLeft, topY, tiles) || collide(xRight, topY, tiles)) {
             collided = true;
-            self.setY(y + Math.abs(y - h - ((topY + 1) * gameVars.level.size) - 1));
+            self.setY(y + Math.abs(y - h - ((topY + 1) * gameVars.level.size) - 1)); //
         }
-        if (collide(xLeft, bottomY) || collide(xRight, bottomY)) {
+        if (collide(xLeft, bottomY, tiles) || collide(xRight, bottomY, tiles)) {
             collided = true;
             self.setY(y - Math.abs(y - (bottomY * gameVars.level.size) + 1));
         }
 
         // colliding with borders
-        if (x - (w / 2) < 0) {
-            collided = true; self.setX(w / 2);
-        }
-        if (x + (w / 2) > WIDTH) { collided = true; self.setX(WIDTH - w / 2); }
+
+        if (x - (w / 2) < 0) { collided = true; self.setX(w / 2); }
+        if (x + (w / 2) > gameVars.level.w*gameVars.level.size) { collided = true; self.setX(gameVars.level.w*gameVars.level.size - w / 2); }
         if (y - h < 0) { collided = true; self.setY(h); }
-        if (y > HEIGHT) { collided = true; self.setY(HEIGHT); }
+        if (y > gameVars.level.h*gameVars.level.size) { collided = true; self.setY(gameVars.level.h*gameVars.level.size); }
+
         //if(self.getType() === "enem" && collided && self.getIsDead()) self.setRemove(true);
     }
 
@@ -572,14 +597,8 @@ const Entity = function () {
         }
     }
 
-    /*function getBlock(val) {
-        return Math.floor(val/gameVars.level.size);
-    }*/
-    function getBlockX(x) {
-        return Math.floor(x / gameVars.level.size);
-    }
-    function getBlockY(y) {
-        return Math.floor(y / gameVars.level.size);
+    function getBlockedVal(val) {
+        return Math.floor(val / gameVars.level.size);
     }
     function pointsMatch(p1_X, p2_Y, p3_X, p4_Y) {
         if (arguments.length === 2) {
@@ -588,9 +607,11 @@ const Entity = function () {
             return p1_X === p3_X && p2_Y === p4_Y;
         }
     }
-    function collide(x, y) {
+    function collide(x, y, tiles) {
         try {
-            return (gameVars.level.isBlock(x, y, Tile.wall)) || (gameVars.level.isBlock(x, y, Tile.bedrock));
+            for (const i in tiles)
+                if (gameVars.level.isBlock(x, y, tiles[i]))
+                    return true;
         } catch {
             return false;
         }
@@ -637,6 +658,7 @@ const Character = function (x, y, w, h, type) {
     let weight = Math.floor(score / adjuster);
 
     let touchingWall = false;
+    const unpassableTiles = [Tile.wall, Tile.bedrock];
 
     let barrageClickCount = Dani.lock(5 - weight / 5, 1, 5);
     let barrageClickCounter = barrageClickCount;
@@ -661,6 +683,7 @@ const Character = function (x, y, w, h, type) {
         } else {
             x = val;
         }
+        playerX = x;
     }
     function setY(val, increment) {
         if (increment) {
@@ -668,6 +691,7 @@ const Character = function (x, y, w, h, type) {
         } else {
             y = val;
         }
+        playerY = y;
     }
     function getX() {
         return x;
@@ -712,6 +736,7 @@ const Character = function (x, y, w, h, type) {
             health = val;
         }
         health = Dani.lock(health, 0, maxHealth);
+        playerHealth = health;
     }
     function getSpeed() {
         return speed;
@@ -721,6 +746,26 @@ const Character = function (x, y, w, h, type) {
     }
     function getIsDead() {
         return playerDead;
+    }
+
+    function choosePosition() {
+        let gotPosition = false;
+        let xx, yy;
+        for (i = 0; i < spawnDropTries; i++) {
+            xx = Dani.random(gameVars.level.w);
+            yy = Dani.random(gameVars.level.h);
+            if (gameVars.entities.isFreeTile(xx, yy) && gameVars.level.isBlock(xx, yy, Tile.floor)) {
+                x = xx * gameVars.level.size + playerW / 2;
+                y = yy * gameVars.level.size + playerH;
+                gotPosition = true;
+                break;
+            }
+        }
+        if (!gotPosition) {
+            gameVars.level.setBlock(xx, yy, Tile.floor);
+            x = xx * gameVars.level.size + playerW / 2;
+            y = yy * gameVars.level.size + playerH;
+        }
     }
 
 
@@ -753,14 +798,6 @@ const Character = function (x, y, w, h, type) {
                 } else {
                     walking = true;
                 }
-
-                playerX = x;
-                playerY = y;
-                playerBX = (Math.floor((x - 5) / gameVars.level.size) * gameVars.level.size) + w / 2;
-                playerBY = (Math.floor((y - 10) / gameVars.level.size) * gameVars.level.size) + h;
-
-                if (crosshairCord.x > playerX) xDir = 1
-                else if (crosshairCord.x < playerX) xDir = -1;
 
 
                 if (xDir === -1) {
@@ -820,6 +857,15 @@ const Character = function (x, y, w, h, type) {
                 }
                 punchBack = [];
             }
+
+            playerX = x;
+            playerY = y;
+            playerBX = (Math.floor((x - 5) / gameVars.level.size) * gameVars.level.size) + w / 2;
+            playerBY = (Math.floor((y - 10) / gameVars.level.size) * gameVars.level.size) + h;
+
+            if (crosshairCord.x > playerX) xDir = 1
+            else if (crosshairCord.x < playerX) xDir = -1;
+
             if (gameVars.powerups.isBarrage()) {
                 weight = Math.floor(score / adjuster);
                 barrageClickCount = Dani.lock(5 - weight / 5, 1, 5);
@@ -834,10 +880,15 @@ const Character = function (x, y, w, h, type) {
                 weight = Math.floor(score / adjuster);
                 punchStrength = defaultPunchStrength + defaultPunchStrength * weight / 3 + Dani.random(15);
                 wallStrength = defaultWallStrength + defaultPunchStrength * weight / 3 + Dani.random(15);
-                barrageClickCount = Dani.lock(5 - weight / 5, 1, 5);
             } else {
                 if (punchStrength !== defaultPunchStrength) punchStrength = defaultPunchStrength;
                 if (wallStrength !== defaultWallStrength) wallStrength = defaultWallStrength;
+            }
+            if (gameVars.powerups.isRange()) {
+                weight = Math.floor(score / adjuster);
+                playerReach = defaultPlayerReach * 2;
+            } else {
+                if (playerReach !== defaultPlayerReach) playerReach = defaultPlayerReach;
             }
         } else {
             if (removeCount >= removeCounter) {
@@ -853,14 +904,19 @@ const Character = function (x, y, w, h, type) {
 
     function render() {
         if (gameVars.powerups.isStrength()) {
-            drawImg('glowStrength', x - w, y - h * 3 / 2, w * 2, h * 2);
+            gameVars.vcam.drawVCam('obj', 'glowStrength', x - w, y - h * 3 / 2, w * 2, h * 2);
         }
         if (gameVars.powerups.isBarrage()) {
-            drawImg('glowBarrage', x - w, y - h * 3 / 2, w * 2, h * 2);
+            gameVars.vcam.drawVCam('obj', 'glowBarrage', x - w, y - h * 3 / 2, w * 2, h * 2);
+        }
+        if (gameVars.powerups.isRange()) {
+            gameVars.vcam.drawVCam('obj', 'glowRange', x - w, y - h * 3 / 2, w * 2, h * 2);
         }
 
-        drawImg('player', x - (w / 2), y - h, w, h, hX * hW, hY * hH, hW, hH);
+        gameVars.vcam.drawVCam('obj', 'player', x - (w / 2), y - h, w, h, hX * hW, hY * hH, hW, hH);
     }
+
+    choosePosition();
     return {
         render,
         tick,
@@ -881,7 +937,8 @@ const Character = function (x, y, w, h, type) {
         setHealth,
         getSpeed,
         playHurtFrame,
-        getIsDead
+        getIsDead,
+        unpassableTiles
     }
 }
 
@@ -904,6 +961,10 @@ const Enemy = function (x, y, w, h, type) {
     const eReach = Dani.lock(23 + weight / 10, 23, 30);
 
     let touchingWall = false;
+    const unpassableTiles = [Tile.wall, Tile.bedrock, Tile.door];
+    const walkableTiles = [Tile.floor];
+    const pathableTiles = [Tile.wall, Tile.floor, Tile.door];
+    const breakableTiles = [Tile.wall];
 
     let startled = false;
     let startledCount = defaultStartledCount - Dani.lock(weight / 8, 1, defaultStartledCount);
@@ -930,7 +991,7 @@ const Enemy = function (x, y, w, h, type) {
     let removeCount = 0;
     const removeCounter = 50;
 
-    const maxHealth = 50 + Dani.lock(Math.round(weight * 2.5), 0, 450);
+    const maxHealth = 150 + Dani.lock(Math.round(weight * 2.5), 0, 350);
     let health = maxHealth;
     let isDead = false;
     let canRemove = false;
@@ -1081,8 +1142,8 @@ const Enemy = function (x, y, w, h, type) {
                     const playersY = Math.floor(playerBY / gameVars.level.size);
                     const blockX = Math.floor(blX / gameVars.level.size);
                     const blockY = Math.floor(blY / gameVars.level.size);
-                    nextMoves = gameVars.level.findPath({ x: blockX, y: blockY }, { x: playersX, y: playersY }, [Tile.floor]);
-                    if (nextMoves.length === 0) nextMoves = gameVars.level.findPath({ x: blockX, y: blockY }, { x: playersX, y: playersY }, [Tile.floor, Tile.wall]);
+                    nextMoves = gameVars.level.findPath({ x: blockX, y: blockY }, { x: playersX, y: playersY }, walkableTiles);
+                    if (nextMoves.length === 0) nextMoves = gameVars.level.findPath({ x: blockX, y: blockY }, { x: playersX, y: playersY }, pathableTiles);
                     if (nextMoves.length === 0) { //chase
                         if (!nearChar()) {
                             targetMet = true;
@@ -1142,7 +1203,7 @@ const Enemy = function (x, y, w, h, type) {
                         getAimCord(newX, newY + h / 2, x, y, w, h);
                     }
 
-                    touchingWall = gameVars.entities.testTouchingTile(x, y, w, h, [Tile.wall]);
+                    touchingWall = gameVars.entities.testTouchingTile(x, y, w, h, breakableTiles);
                     if (touchingWall) {
                         if (wallBreakCount >= wallBreakCounter) {
                             wallBreakCount = 0;
@@ -1175,9 +1236,9 @@ const Enemy = function (x, y, w, h, type) {
                 } else { //idle
                     x += xMove * speed;
                     y += yMove * speed;
-                    touchingWall = gameVars.entities.testTouchingTile(x, y, w, h, [Tile.wall, Tile.bedrock]) || gameVars.entities.testOutBounds(x, y, w, h);
+                    touchingWall = gameVars.entities.testTouchingTile(x, y, w, h, unpassableTiles) || gameVars.entities.testOutBounds(x, y, w, h);
                     if (touchingWall) {
-                        const touchTileAxis = gameVars.entities.testTouchingTileAxis(x, y, w, h, [Tile.wall, Tile.bedrock]);
+                        const touchTileAxis = gameVars.entities.testTouchingTileAxis(x, y, w, h, unpassableTiles);
                         if (touchTileAxis.x) xMove = 0;
                         if (touchTileAxis.y) yMove = 0;
                     } else {
@@ -1220,7 +1281,7 @@ const Enemy = function (x, y, w, h, type) {
             }
 
         } else {
-            if (gameVars.entities.testTouchingTile(x, y, w / 2, h / 2, [Tile.wall, Tile.bedrock])) canRemove = true;
+            if (gameVars.entities.testTouchingTile(x, y, w / 2, h / 2, unpassableTiles)) canRemove = true;
             if (removeCount >= removeCounter) {
                 removeCount = 0;
                 canRemove = true;
@@ -1234,9 +1295,9 @@ const Enemy = function (x, y, w, h, type) {
     function render() {
         // for(let i in nextMoves)
         //     draw('enemm', nextMoves[i].x * gameVars.level.size + w/2, nextMoves[i].y * gameVars.level.size + h, w, h);
-        drawImg('enemy', x - (w / 2), y - h, w, h, hX * hW, hY * hH, hW, hH);
+        gameVars.vcam.drawVCam('obj', 'enemy', x - (w / 2), y - h, w, h, hX * hW, hY * hH, hW, hH);
         if (followingPlayer && !isDead)
-            drawImg('enemAim', enemAimCord.x - gameVars.level.size / 2, enemAimCord.y - gameVars.level.size / 2, gameVars.level.size, gameVars.level.size);
+            gameVars.vcam.drawVCam('obj', 'enemAim', enemAimCord.x - gameVars.level.size / 2, enemAimCord.y - gameVars.level.size / 2, gameVars.level.size, gameVars.level.size);
 
         //drawImg('buildOptions', bX, bY, gameVars.level.size, gameVars.level.size);
         /*drawImg('buildOptions', enemAimCord.bX, enemAimCord.bY, gameVars.level.size, gameVars.level.size);*/
@@ -1278,7 +1339,8 @@ const Enemy = function (x, y, w, h, type) {
         playHurtFrame,
         getIsDead,
         turnHostile,
-        startThinking
+        startThinking,
+        unpassableTiles
     }
 }
 
@@ -1372,7 +1434,7 @@ const Audios = function () {
 
 const Texture = function (pathRef) {
 
-    let textureList = ["player", "wall", "floor", "bedrock", "blockDamage", "enemy", "health", "potion", "package", "GUIPanel", "pauseScreen", "playScreen", "deathScreen", "crosshair", "buildOptions", "mousePos", "packageTime", "powerupTime", "enemAim", "powerupBarrage", "powerupStrength", "glowBarrage", "glowStrength", "blackDropSmall"];
+    let textureList = ["player", "wallTile", "floorTile", "doorTile", "bedrockTile", "blankTile", "blockDamage", "enemy", "health", "potion", "package", "GUIPanel", "pauseScreen", "playScreen", "deathScreen", "crosshair", "buildOptions", "mousePos", "packageTime", "powerupTime", "enemAim", "powerupBarrage", "powerupStrength", "powerupRange", "glowBarrage", "glowStrength", "glowRange", "blackDropSmall"];
     let textures = {};
 
     let path = pathRef ? pathRef : "textures/";
@@ -1406,7 +1468,40 @@ const Texture = function (pathRef) {
     }
 }
 
-function drawImg(obj, x, y, w, h, dx, dy, dw, dh) {
+function VCAM(w, h) {
+    const boundOffset = 50;
+    this.x = 0;
+    this.y = 0;
+    this.width = w || WIDTH;
+    this.height = h || HEIGHT;
+    this.leftBound = (this.x - boundOffset);
+    this.topBound = (this.y - boundOffset);
+    this.rightBound = this.leftBound + (this.width + boundOffset * 2);
+    this.bottomBound = this.topBound + (this.height + boundOffset * 2);
+
+    this.tick = function () {
+        this.x = playerX - this.width / 2 //Dani.lock(playerX - this.width/2, -40, 540 - this.width);
+        this.y = playerY - this.height / 2 //Dani.lock(playerY - this.height/2, -40, 490 - this.height);
+        this.leftBound = (this.x - boundOffset);
+        this.topBound = (this.y - boundOffset);
+        this.rightBound = this.leftBound + (this.width + boundOffset * 2);
+        this.bottomBound = this.topBound + (this.height + boundOffset * 2);
+    }
+
+    this.drawVCam = function (type, obj, x, y, w, h, dx, dy, dw, dh) {
+        x = x - (this.x || 0);
+        y = y - (this.y || 0);
+        x = WIDTH / this.width * x || x;
+        y = HEIGHT / this.height * y || y;
+        w = WIDTH / this.width * w || w;
+        h = HEIGHT / this.height * h || h;
+
+        if (type === 'obj') drawImg(obj, x, y, w, h, dx, dy, dw, dh);
+        else if (type === 'string') drawTxt(obj, x, y, w, h, dx, dy, dw, dh);
+    }
+}
+
+const drawImg = function (obj, x, y, w, h, dx, dy, dw, dh) {
     const width = panel.canvasWidth();
     const scale = width / WIDTH;
     dx = dx || 0;
@@ -1422,7 +1517,7 @@ function drawImg(obj, x, y, w, h, dx, dy, dw, dh) {
     screen.drawImage(gameVars.texture.textures[obj], dx, dy, dw, dh, x, y, w, h); // parseInt(w), parseInt(h));
 }
 
-function drawTxt(string, x, y, h, dx, dy, dw, dh) {
+function drawTxt(string, x, y, w, h, dx, dy, dw, dh) {
     const width = panel.canvasWidth();
     const scale = width / WIDTH;
     dx = dx || 0;
@@ -1433,7 +1528,7 @@ function drawTxt(string, x, y, h, dx, dy, dw, dh) {
     let dist = 3;
     h = h || 10; //parseInt(h) || 10;
 
-    let w = h / 2;
+    w = w || h / 2;
     x *= scale;
     y *= scale;
     w *= scale;
@@ -1453,26 +1548,28 @@ function drawTxt(string, x, y, h, dx, dy, dw, dh) {
 }
 
 const Tile = {
-    floor: 'floor',
-    wall: 'wall',
-    bedrock: 'bedrock'
+    floor: 'floorTile',
+    wall: 'wallTile',
+    bedrock: 'bedrockTile',
+    blank: 'blankTile',
+    door: 'doorTile'
 }
 
 function Level(w, h) {
-    w = w || 10;
-    h = h || 10;
+    this.w = w || 10;
+    this.h = h || 10;
     const blockMaxHealth = 100;
     const blockDamageFrames = 5;
     this.size = 50;
     this.block = [];
     const clearMap = () => {
-        for (let x = 0; x < w; x++) {
+        for (let x = 0; x < this.w; x++) {
             this.block[x] = [];
-            for (let y = 0; y < h; y++) {
+            for (let y = 0; y < this.h; y++) {
                 this.block[x][y] = { id: Tile.floor, health: blockMaxHealth };
             }
         }
-        for (let x = 0; x < w; x++) {
+        for (let x = 0; x < this.w; x++) {
             const y = 8;
             this.block[x][y].id = Tile.bedrock;
         }
@@ -1540,9 +1637,7 @@ function Level(w, h) {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
     ]
-
-    const generateMap = () => {
-        clearMap();
+    const drawByArray = () => {
         const theMap = Dani.random(maps, 1);
         for (let y = 0; y < theMap.length; y++) {
             for (let x = 0; x < theMap[y].length; x++) {
@@ -1554,17 +1649,70 @@ function Level(w, h) {
         }
         const i = Dani.random(1);
         const j = Dani.random(1);
-        for (let x = 0; x < w; x++)
-            for (let y = 0; y < h; y++) {
+        for (let x = 0; x < this.w; x++)
+            for (let y = 0; y < this.h; y++) {
                 if ((x - i) % 2 === 0 && (y - j) % 2 === 0 && Dani.random(10) > 7)
                     this.block[x][y].id = Tile.bedrock;
             }
+    }
+
+    const drawByImage = async function (self, map) {
+        // const mapImg = new Image();
+        const mapImg = await function () {
+            return new Promise((resolve, reject) => {
+
+                var img = new Image();
+                img.onerror = function () {
+                    resolve();
+                }
+                img.onload = function () {
+                    resolve(img);
+                }
+                img.src = '/games/BobTheBrawler/textures/maps/' + map + ".png";
+            })
+        }()
+        const img = mapImg;
+        const blankCanv = document.createElement('canvas');
+        blankCanv.width = img.width;
+        blankCanv.height = img.height;
+        blankCanv.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+
+        const imgData = blankCanv.getContext('2d').getImageData(0, 0, blankCanv.width, blankCanv.height).data;
+
+        function getPixel(index) {
+            var i = index * 4, d = imgData;
+            return `${Dani.fillString(d[i], 3)}${Dani.fillString(d[i + 1], 3)}${Dani.fillString(d[i + 2], 3)}`; // returns string 'RGB'
+        }
+        function getPixelXY(x, y) {
+            return getPixel(y * blankCanv.width + x);
+        }
+
+        const mapIds = {};
+        mapIds[getPixelXY(0, 0)] = Tile.blank;
+        mapIds[getPixelXY(1, 0)] = Tile.bedrock;
+        mapIds[getPixelXY(2, 0)] = Tile.wall;
+        mapIds[getPixelXY(3, 0)] = Tile.floor;
+        mapIds[getPixelXY(4, 0)] = Tile.door;
+
+
+        for (let x = 0; x < blankCanv.width; x++)
+            for (let y = 1; y < blankCanv.height; y++) {
+                self.setBlock(x, y - 1, mapIds[getPixelXY(x, y)]);
+            }
+        self.w = img.width;
+        self.h = img.height - 1;
+    }
+
+    const generateMap = () => {
+        clearMap();
+        drawByImage(this, 'gameMap');
+        // drawByArray();
 
         //clearing char tiles
-        this.block[4][3].id = Tile.floor;
-        this.block[5][3].id = Tile.floor;
-        this.block[4][4].id = Tile.floor;
-        this.block[5][4].id = Tile.floor;
+        // this.block[4][3].id = Tile.floor;
+        // this.block[5][3].id = Tile.floor;
+        // this.block[4][4].id = Tile.floor;
+        // this.block[5][4].id = Tile.floor;
     }
 
     this.reset = function () {
@@ -1575,27 +1723,39 @@ function Level(w, h) {
     }
     this.render = function () {
         let id, i = 0;
-        for (let x = 0; x < w; x++)
-            for (let y = 0; y < h; y++) {
-                i++;
-                id = this.block[x][y].id
+        const xx = this.getBlockedVal(gameVars.vcam.leftBound);
+        const yy = this.getBlockedVal(gameVars.vcam.topBound);
+        const ww = this.getBlockedVal(gameVars.vcam.rightBound);
+        const hh = this.getBlockedVal(gameVars.vcam.bottomBound);
+        for (let x = xx; x < ww; x++)
+            for (let y = yy; y < hh; y++) {
+                // i = y*this.w+x;
+                i = y + x;
+                id = this.getBlock(x, y).id;
                 if (id === Tile.floor) {
                     const dX = i % 12 === 0 ? 1 : i % 2 === 0 ? 2 : 0;
-                    drawImg(id, x * this.size, y * this.size, this.size, this.size, dX * 16, 0, 16, 16);
+                    gameVars.vcam.drawVCam('obj', id, x * this.size, y * this.size, this.size, this.size, dX * 16, 0, 16, 16);
                 } else {
-                    drawImg(id, x * this.size, y * this.size, this.size, this.size, 0, 0, 16, 16);
+                    gameVars.vcam.drawVCam('obj', id, x * this.size, y * this.size, this.size, this.size, 0, 0, 16, 16);
                 }
 
-                const dmgAnim = Math.floor(this.block[x][y].health / blockMaxHealth * blockDamageFrames);
-                drawImg('blockDamage', x * this.size, y * this.size, this.size, this.size, dmgAnim * 16, 0, 16, 16);
+                const dmgAnim = Math.floor(this.getBlock(x, y).health / blockMaxHealth * blockDamageFrames);
+                gameVars.vcam.drawVCam('obj', 'blockDamage', x * this.size, y * this.size, this.size, this.size, dmgAnim * 16, 0, 16, 16);
             }
     }
+    this.getBlockedVal = function (val) {
+        return Math.floor(val / this.size);
+    }
     this.findPath = function (startPos, endPos, passables) {
+        const pathLookingDistance = 5;
+        if (endPos.x < startPos.x - pathLookingDistance || endPos.x > startPos.x + pathLookingDistance || endPos.y < startPos.y - pathLookingDistance || endPos.y > startPos.y + pathLookingDistance) {
+            return [];
+        }
         const block = this.block;
         const map = {};
-        for (let x = 0; x < w; x++) {
+        for (let x = 0; x < this.w; x++) {
             map[x] = [];
-            for (let y = 0; y < h; y++) {
+            for (let y = 0; y < this.h; y++) {
                 map[x][y] = { taken: false, num: 0, roots: [] };
             }
         }
@@ -1618,6 +1778,9 @@ function Level(w, h) {
         const spreadsLeft = [];
         function attemptSpread(id, x, y, roots) {
             try {
+                if (x < startPos.x - pathLookingDistance || x > startPos.x + pathLookingDistance || y < startPos.y - pathLookingDistance || y > startPos.y + pathLookingDistance) {
+                    return;
+                }
                 for (let i in passables)
                     if (!map[x][y].taken && block[x][y].id === passables[i] && !pathFound) {
                         map[x][y].taken = true;
@@ -1658,19 +1821,28 @@ function Level(w, h) {
         }
     }
 
-    this.setBlock = function (x, y, id) {
+    this.setBlock = function (x, y, id, health) {
         try {
-            this.block[x][y].id = id;
-            this.block[x][y].health = blockMaxHealth;
-        } catch { }
+            if (!this.block[x]) this.block[x] = [];
+            if (!this.block[x][y]) this.block[x][y] = {}
+            this.block[x][y].id = id || Tile.blank;
+            this.block[x][y].health = health || blockMaxHealth;
+        } catch (e) { }
     }
 
     this.getBlock = function (x, y) {
+        let id, health;
         try {
-            return this.block[x][y].id;
+            id = this.block[x][y].id;
         } catch {
-            return null;
+            id = Tile.blank;
         }
+        try {
+            health = this.block[x][y].health;
+        } catch {
+            health = blockMaxHealth;
+        }
+        return { id, health }
     }
 
     this.hitBlock = function (x, y, damage, target) {
@@ -1696,20 +1868,29 @@ function Level(w, h) {
 }
 
 function Spawner() {
-    const lowestEnems = 8;
+    const lowestEnems = 15;
     let maxEntities = 1 + lowestEnems;
     let weight = Math.floor(score / adjuster);
     let spawnTimer = Dani.random(25, 50) - weight / 2;
     let spawnTime = 0;
     const spawn = function () {
+        if (!playerDead) {
+            playerHealth += 1;
+            playerHealth = Dani.lock(playerHealth, 0, playerMaxHealth);
+        }
         if (gameVars.entities.Length() < maxEntities) {
             for (i = 0; i < spawnDropTries; i++) {
-                const x = Dani.random(lW);
-                const y = Dani.random(lH - 1);
-                if (gameVars.entities.isFreeTile(x, y) && gameVars.level.isBlock(x, y, Tile.floor)) {
-                    const xx = x * gameVars.level.size + playerW / 2;
-                    const yy = y * gameVars.level.size + playerH;
-                    gameVars.entities.addEntity('enem', xx, yy);
+                const xxx = gameVars.level.getBlockedVal(gameVars.vcam.leftBound);
+                const yyy = gameVars.level.getBlockedVal(gameVars.vcam.topBound);
+                const www = gameVars.level.getBlockedVal(gameVars.vcam.rightBound);
+                const hhh = gameVars.level.getBlockedVal(gameVars.vcam.bottomBound);
+
+                const xx = Dani.random(xxx, www);
+                const yy = Dani.random(yyy, hhh);
+                if (gameVars.entities.isFreeTile(xx, yy) && gameVars.level.isBlock(xx, yy, Tile.floor)) {
+                    const x = xx * gameVars.level.size + playerW / 2;
+                    const y = yy * gameVars.level.size + playerH;
+                    gameVars.entities.addEntity('enem', x, y);
                     break;
                 }
             }
@@ -1718,7 +1899,7 @@ function Spawner() {
     function tick() {
         if (spawnTime >= spawnTimer) {
             weight = Math.floor(score / adjuster);
-            maxEntities = 1 + lowestEnems + Dani.lock(Math.floor(weight / 3), 0, 11);
+            maxEntities = 1 + lowestEnems + Dani.lock(Math.floor(weight / 3), 0, 14);
             spawnTimer = Dani.lock(Dani.random(25, 50) - weight / 3, 15, 50);
 
             spawnTime = 0;
@@ -1751,6 +1932,7 @@ function Checker() {
                 if (gameVars.entities.isFreeTile(pX, pY) && gameVars.level.isBlock(pX, pY, Tile.floor)) {
                     gameVars.audios.audio.playOnce('WallPlace');
                     gameVars.level.setBlock(pX, pY, Tile.wall);
+                    gameVars.gui.addScore(scoreWallPlace);
                     gameVars.gui.removeWall();
                 }
             } catch (e) { console.warn(e.message) }
@@ -1788,10 +1970,12 @@ function Drops() {
     const size = 50;
     const items = [];
     const ticker = 50;
+    const powerUps = ['powerupBarrage', 'powerupStrength', 'powerupRange'];
 
     let weight = Math.floor(score / adjuster);
     let dropTimer = 250 - weight * 10;
     let dropTime = 0;
+    const undropableTiles = [Tile.wall, Tile.door, Tile.bedrock];
 
     const drop = function (name, x, y, timeLeft) {
         items.push({ name, x, y, time: timeLeft || ticker, ticker: timeLeft || ticker });
@@ -1809,15 +1993,20 @@ function Drops() {
         if (rand >= 75 - Dani.lock(weight, 0, 5))       //rand of 75 to 70
             drop('package', x, y, 150);
         else if (rand >= 40 - Dani.lock(weight, 0, 5)) //rand of 40 to 35
-            drop(Dani.random(['powerupBarrage', 'powerupStrength'], 1), x, y, 200);
+            drop(Dani.random(powerUps, 1), x, y, 200);
         else
             drop('potion', x, y, 100);
     }
     const dropSomethingDown = function () {
         if (Dani.random(100) > 25) {
             for (i = 0; i < spawnDropTries; i++) {
-                const xx = Dani.random(lW);
-                const yy = Dani.random(lH - 1);
+                const xxx = gameVars.level.getBlockedVal(gameVars.vcam.leftBound);
+                const yyy = gameVars.level.getBlockedVal(gameVars.vcam.topBound);
+                const www = gameVars.level.getBlockedVal(gameVars.vcam.rightBound);
+                const hhh = gameVars.level.getBlockedVal(gameVars.vcam.bottomBound);
+
+                const xx = Dani.random(xxx, www);
+                const yy = Dani.random(yyy, hhh);
                 if (gameVars.entities.isFreeTile(xx, yy) && gameVars.level.isBlock(xx, yy, Tile.floor)) {
                     gameVars.audios.audio.playOnce('PackageDrop');
                     const x = xx * gameVars.level.size + size / 2;
@@ -1846,19 +2035,28 @@ function Drops() {
                 gameVars.audios.audio.playOnce('PackageDeath');
                 items.splice(parseInt(i), 1);
             }
-            if (gameVars.entities.testBurriedInTile(item.x, item.y, size / 2, size / 2, [Tile.wall, Tile.bedrock])) {
+            if (gameVars.entities.testBurriedInTile(item.x, item.y, size / 2, size / 2, undropableTiles)) {
                 items.splice(parseInt(i), 1);
             }
 
         }
         checkToPickupItem();
     }
-    function render() {
+    function render() {// if
         for (const i in items) {
             const item = items[i];
-            drawImg(item.name, item.x - (size / 2), item.y - (size), size, size);
-            drawImg('packageTime', item.x - (size / 2), item.y - (size * 3 / 4), size, size / 4, 0, 0, 16, 4); //background itself
-            drawImg('packageTime', item.x - (size / 2), item.y - (size * 3 / 4), size / item.time * item.ticker, size / 4, 0, 4, 16 / item.time * item.ticker, 4); //timer itself
+            const xx = gameVars.vcam.leftBound;
+            const yy = gameVars.vcam.topBound;
+            const ww = gameVars.vcam.rightBound;
+            const hh = gameVars.vcam.bottomBound;
+            const x = item.x;
+            const y = item.y;
+
+            if (x > xx && x < ww && y > yy && y < hh) {
+                gameVars.vcam.drawVCam('obj', item.name, x - (size / 2), y - (size), size, size);
+                gameVars.vcam.drawVCam('obj', 'packageTime', x - (size / 2), y - (size * 3 / 4), size, size / 4, 0, 0, 16, 4); //background itself
+                gameVars.vcam.drawVCam('obj', 'packageTime', x - (size / 2), y - (size * 3 / 4), size / item.time * item.ticker, size / 4, 0, 4, 16 / item.time * item.ticker, 4); //timer itself
+            }
         }
     }
 
@@ -1886,6 +2084,10 @@ function Drops() {
                 } else if (item.name === 'powerupStrength') {
                     gameVars.audios.audio.playOnce('PowerupPickup');
                     gameVars.powerups.addPowerUp('strength', 150 + Dani.lock(Dani.random(weight * 8), 0, 120));
+                    gameVars.gui.addScore(scorePowerUpPickup);
+                } else if (item.name === 'powerupRange') {
+                    gameVars.audios.audio.playOnce('PowerupPickup');
+                    gameVars.powerups.addPowerUp('range', 120 + Dani.lock(Dani.random(weight * 8), 0, 160));
                     gameVars.gui.addScore(scorePowerUpPickup);
                 }
                 items.splice(parseInt(i), 1); //to remove the item (put inside separate if statements if you dont want to remove all instantly in the future)
@@ -1930,7 +2132,6 @@ function Drops() {
 }
 
 function GUI() {
-    const size = gameVars.level.size;
     function addScore(val) {
         const weight = Math.floor(score / adjuster);
         score += Math.round(val + val * weight / 5) || Math.round(1 + weight / 5);
@@ -1972,16 +2173,16 @@ function GUI() {
 
         //player health
         drawImg('health', 16, 415.5, 100 / playerMaxHealth * playerHealth, 25, 0, 0, 32 / playerMaxHealth * playerHealth, 8); //health itself
-        drawTxt(`${playerHealth}/${Math.ceil(playerMaxHealth)}`, 20, 415, 19);
+        drawTxt(`${playerHealth}/${Math.ceil(playerMaxHealth)}`, 20, 415, null, 19);
 
         //potion gui
-        drawTxt(`${potions}`, 158, 415, 19);
+        drawTxt(`${potions}`, 158, 415, null, 19);
 
         //wall gui
-        drawTxt(`${walls}`, 275, 415, 19);
+        drawTxt(`${walls}`, 275, 415, null, 19);
 
         //score gui
-        drawTxt(`${score}`, 393, 415, 19);
+        drawTxt(`${score}`, 393, 415, null, 19);
     }
     return {
         addScore,
@@ -1997,12 +2198,15 @@ function GUI() {
 
 function PowerUps() {
     const timed = powerUpDuration;
-    let powerUps = {
+    const defPowerUps = {
         strength: { timer: 0, active: false, hY: 1 },
-        barrage: { timer: 0, active: false, hY: 2 }
+        barrage: { timer: 0, active: false, hY: 2 },
+        range: { timer: 0, active: false, hY: 3 }
     }
+    let powerUps = Dani.cloneObject(defPowerUps);
     const addPowerUp = function (name, time) {
         powerUps[name].timer = time || timed;
+        powerUps[name].timed = time || timed;
         powerUps[name].active = true;
     }
     const tick = function () {
@@ -2013,6 +2217,7 @@ function PowerUps() {
             } else {
                 if (powerUps[i].active) {
                     gameVars.audios.audio.playOnce('PowerupDeath');
+                    powerUps[i].timed = 0;
                     powerUps[i].active = false;
                 }
             }
@@ -2031,9 +2236,9 @@ function PowerUps() {
             if (powerUps[i].active) {
                 drawImg('blackDropSmall', 6.25, 6.25 + j * (txtH + yOffSet), 125, 46.875); //blackdrop itself
 
-                drawTxt(`${i}+`, 12.5, 12.5 + (j * (txtH + yOffSet)), txtH);
+                drawTxt(`${i}+`, 12.5, 12.5 + (j * (txtH + yOffSet)), null, txtH);
                 drawImg('powerupTime', 12.5, 15.65 + (j * (txtH + yOffSet)) + txtH, powerWidth, barH, 0, 0, powerImgW, powerImgH); //background itself
-                drawImg('powerupTime', 12.5, 15.65 + (j * (txtH + yOffSet)) + txtH, powerWidth / timed * powerUps[i].timer, barH, 0, powerUps[i].hY * powerImgH, powerImgW / timed * powerUps[i].timer, powerImgH); //timer itself
+                drawImg('powerupTime', 12.5, 15.65 + (j * (txtH + yOffSet)) + txtH, powerWidth / powerUps[i].timed * powerUps[i].timer, barH, 0, powerUps[i].hY * powerImgH, powerImgW / timed * powerUps[i].timer, powerImgH); //timer itself
                 j++;
             }
         }
@@ -2045,13 +2250,13 @@ function PowerUps() {
     function isStrength() {
         return powerUps['strength'].active;
     }
+    function isRange() {
+        return powerUps['range'].active;
+    }
 
 
     const reset = function () {
-        powerUps = {
-            strength: { timer: 0, active: false, hY: 1 },
-            barrage: { timer: 0, active: false, hY: 2 }
-        }
+        powerUps = Dani.cloneObject(defPowerUps);
     }
 
     return {
@@ -2060,6 +2265,7 @@ function PowerUps() {
         addPowerUp,
         isBarrage,
         isStrength,
+        isRange,
         reset
     }
 }
@@ -2078,6 +2284,8 @@ async function main() {
 
     gameVars.texture = await new Texture('/games/BobTheBrawler/textures/');
     gameVars.font = await new Font('/games/BobTheBrawler/PixelFont/font_');
+
+    gameVars.vcam = new VCAM(WIDTH, HEIGHT);
 
     gameVars.level = new Level(lW, lH);
     gameVars.checker = new Checker();
@@ -2159,9 +2367,11 @@ function tick() {
     gameVars.aim.tick();
     gameVars.checker.tick();
     gameVars.powerups.tick();
+
+    gameVars.vcam.tick();
 }
 
-function render() {
+function render(g) {
 
     screen.mozImageSmoothingEnabled = false;
     screen.webkitImageSmoothingEnabled = false;
@@ -2169,6 +2379,8 @@ function render() {
     screen.imageSmoothingEnabled = false;
 
     panel.clear();
+    screen.fillStyle = 'black';
+    // screen.fillRect(0, 0, panel.canvasWidth(), panel.canvasHeight());
 
     gameVars.level.render();
     gameVars.drops.render();
@@ -2221,9 +2433,9 @@ window.onload = function () {
     stage.addEventListener('mousemove', mouseIsMoving);
     stage.onselectstart = function () { return false; }
     stage.addEventListener('contextmenu', function (e) { e.preventDefault(); e.stopPropagation(); });
-    stage.style.cursor = 'none';
+    //stage.style.cursor = 'none';
 
-    document.addEventListener('mousedown', function() {if(!mouseClicked)clickedOutScreen()}, false);
+    document.addEventListener('mousedown', function () { if (!mouseClicked) clickedOutScreen() }, false);
 }
 
 function mouseIsUp(e) {
