@@ -36,8 +36,4 @@ router.use((req, res, next) => {    //redirecting
     return next();
 });
 
-router.get('/sitemap.xml', (req, res) => {
-    res.sendFile('./sitemap.xml');
-});
-
 module.exports = router;

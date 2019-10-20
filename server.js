@@ -80,7 +80,11 @@ app.use('/secret', secretRouter);
 app.use('/api', apiRouter);
 app.use('/settings', settingsRouter);
 
+app.get('/sitemap.xml', (req, res) => res.sendFile(__dirname + '/sitemap.xml'));
+
 app.use(error404Router); //make sure to put this after all routes
+
+
 
 //global views functions
 app.locals.formatDistanceToNow = function(date) {
@@ -120,6 +124,8 @@ app.locals.extractAttribute = function (obj, attr){
   
     return out;
 }
+
+
 app.listen(process.env.PORT || 3000, () => {
     stayAwakeDyno("https://danidre.herokuapp.com"); // will start once server starts
 });
