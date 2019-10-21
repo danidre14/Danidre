@@ -23,7 +23,7 @@ const stayAwakeDyno = (url, interval = 25, callback) => {
             }
             finally {
                 // do it all again
-                return wakeUpDyno(url, interval, callback);
+                return stayAwakeDyno(url, interval, callback);
             }
             
         }

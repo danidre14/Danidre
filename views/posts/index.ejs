@@ -14,7 +14,7 @@
                 } %>
                 <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;margin-bottom:1rem;">
                     <% if(post.image) { %>
-                        <img class="game-img" style="margin-right:1.2rem;" src="<%= post.image %>" onerror="if (this.src != '../../images/PostsIcon.png') this.src = '../../images/PostsIcon.png';">
+                        <img class="game-img" style="margin-right:1.2rem;" src="<%= post.image %>" onerror="this.src = '../../images/PostsIcon.png';">
                     <% } %>
                     <div style="width:100%;">
                         <div style="display:grid;grid-template-columns: auto auto;">
