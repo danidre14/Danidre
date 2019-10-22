@@ -260,31 +260,31 @@ const GameAudio = function (options) {
     }
 
 
-    const muteAll = function (audioName) {
+    const muteAll = function () {
         for (const audioName in audios)
             audios[audioName].audioObj.muted = true;
     }
 
 
-    const unmuteAll = function (audioName) {
+    const unmuteAll = function () {
         for (const audioName in audios)
             audios[audioName].audioObj.muted = false;
     }
 
 
-    const togglemuteAll = function (audioName) {
+    const togglemuteAll = function () {
         for (const audioName in audios)
             audios[audioName].audioObj.muted = !audios[audioName].audioObj.muted;
     }
 
 
-    const pauseAll = function (audioName) {
+    const pauseAll = function () {
         for (const audioName in audios)
             audios[audioName].audioObj.pause();
     }
 
 
-    const stopAll = function (audioName) {
+    const stopAll = function () {
         for (const audioName in audios) {
             audios[audioName].audioObj.pause();
             audios[audioName].audioObj.currentTime = 0;

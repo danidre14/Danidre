@@ -215,6 +215,11 @@ section .the_markdown a {
     color: var(--color-link-dark);
     text-decoration: underline;
 }
+section .the_markdown a:hover {
+    font-weight: 500;
+    color: var(--color-section);
+    background: var(--color-text-dark);
+}
 section .the_markdown em, section .the_markdown i {
     font-style: italic;
 }
@@ -233,6 +238,11 @@ section .light_text * {
 section .light_text a {
     font-weight: 500;
     color: var(--color-text-light);
+}
+section .light_text a:hover {
+    font-weight: 500;
+    color: var(--color-footer);
+    background: var(--color-text-light);
 }
 section .light_text div.hr {
     border-bottom: solid 2px var(--color-text-light);

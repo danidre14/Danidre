@@ -8,7 +8,7 @@
             <% } %>
             <a class="userIcon" href="/u/<%= user.username %>/">
                 <div class="div-space-around">
-                    <img id="userIcon" class="userIcon" src="<%= user.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                    <img id="userIcon" class="userIcon" src="<%= user.profileImagePath %>" onerror="this.src = '../../../images/UsersIcon.png';">
                 </div>
                 
             </a>

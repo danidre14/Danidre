@@ -6,7 +6,7 @@
             <div>
                 <label>Profile Picture:</label> 
                 <br/>
-                <img class="profile-img-big" src="<%= profile.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                <img class="profile-img-big" src="<%= profile.profileImagePath %>" onerror="this.src = '../../../images/UsersIcon.png';">
                 <input type="file" name="profileImage" class="profile-img-big profile-img filepond">
             </div>
             <div>

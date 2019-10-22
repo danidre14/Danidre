@@ -206,7 +206,7 @@ const loadRoleList = async function() {
                 directUsersH += `<div class="bounded userTab">
                     <div>
                         <a href="/u/${user.username}" target="_blank" rel="noreferrer">
-                            <img src="${await getImagePath(user.username)}" onerror="if (this.src != '/images/UsersIcon.png') this.src = '/images/UsersIcon.png';">
+                            <img src="${await getImagePath(user.username)}"this.src = '/images/UsersIcon.png';">
                             <span>${user.username}</span>
                         </a>
                     </div>

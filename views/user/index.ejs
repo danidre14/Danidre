@@ -20,7 +20,7 @@
                 <div class="userList">
                     <div>
                         <a href="/u/<%= user.username %>/#navMenu">
-                            <img src="<%= user.profileImagePath %>" onerror="if (this.src != '../../../images/UsersIcon.png') this.src = '../../../images/UsersIcon.png';">
+                            <img src="<%= user.profileImagePath %>" onerror="this.src = '../../../images/UsersIcon.png';">
                             <span><%= user.username %><%= user.email %></span>
                         </a>
                     </div>
