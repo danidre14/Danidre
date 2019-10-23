@@ -62,12 +62,12 @@ let playerStartled = false;
 let playerStartledCount = defaultStartledCount;
 let playerStartledCounter = 0;
 
-const scoreEnemyDead = 114;
-const scoreEnemyHit = 23;
-const scoreWallPlace = 12;
-const scorePotionPickup = 37;
-const scorePackagePickup = 52;
-const scorePowerUpPickup = 65;
+const scoreEnemyDead = 86;
+const scoreEnemyHit = 12;
+const scoreWallPlace = 9;
+const scorePotionPickup = 29;
+const scorePackagePickup = 37;
+const scorePowerUpPickup = 45;
 
 const spawnDropTries = 10;
 const crosshairSize = 30;
