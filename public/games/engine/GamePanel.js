@@ -311,6 +311,14 @@ const GamePanel = function(gameAreaId, options) {
         }
     }
 
+    function toggleFullScreen() {
+        if(isFullScreen()) {
+            closeFullscreen();
+        } else {
+            openFullscreen();
+        }
+    }
+
     window.addEventListener('resize', resizeCanvas, false);
     gameCanvasDiv.addEventListener('fullscreenchange', exitHandler, false);
     gameCanvasDiv.addEventListener('mozfullscreenchange', exitHandler, false);
@@ -340,6 +348,7 @@ const GamePanel = function(gameAreaId, options) {
         setHeight,
         setSize: setDimension,
         setWidth,
-        width: getWidth
+        width: getWidth,
+        toggleFullScreen
     }
 }

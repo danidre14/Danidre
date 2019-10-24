@@ -36,7 +36,7 @@ const bounceDistance = 20;
 const defaultPunchStrength = 24;
 const defaultWallStrength = 55;
 const defaultPlayerReach = 45;
-const defaultStartledCount = 3;
+const defaultStartledCount = 2;
 const defaultGameMusicVolume = 75;
 const defaultPathLookingDistance = 6;
 
@@ -54,6 +54,9 @@ let playerBY = 0;
 let playerDead = false;
 let canRestart = false;
 let validateRestart = false;
+let wonGame = false;
+let wonGameTimer = 0;
+const wonGameTimed = 50;
 let punchStrength = defaultPunchStrength;
 let wallStrength = defaultWallStrength;
 let playerReach = defaultPlayerReach;
@@ -62,12 +65,12 @@ let playerStartled = false;
 let playerStartledCount = defaultStartledCount;
 let playerStartledCounter = 0;
 
-const scoreEnemyDead = 86;
-const scoreEnemyHit = 12;
-const scoreWallPlace = 9;
-const scorePotionPickup = 29;
-const scorePackagePickup = 37;
-const scorePowerUpPickup = 45;
+const scoreEnemyDead = 113;
+const scoreEnemyHit = 22;
+const scoreWallPlace = 13;
+const scorePotionPickup = 36;
+const scorePackagePickup = 51;
+const scorePowerUpPickup = 71;
 
 const spawnDropTries = 10;
 const crosshairSize = 30;
@@ -142,11 +145,18 @@ let Dani = {
         else if (num > b) num = b;
         return num;
     },
-    cycle: function (num, max, min) {
+    eitherOr: function(num, either, or) {
+        if(num === undefined) return 0;
+        if(num !== either && num !== or) num = either;
+        else if(num === either) num = or;
+        else if(num === or) num = either;
+        return num;
+    },
+    cycle: function (num, max, min, inc) {
         if (num === undefined || max === undefined) return 0;
         min = min || 0;
         num = this.lock(num, min, max);
-        if (num < max) num++;
+        if (num < max) num+=inc||1;
         else num = min;
         return num;
     },
@@ -219,6 +229,14 @@ const Entity = function () {
     const reset = function () {
         while (entities.length) {
             entities.pop();
+        }
+    }
+
+    const removeBaddies = function () {
+        for (let i = entities.length - 1; i >= 0; i--) {
+            const entity = entities[i];
+            if (entity.getType() == 'char') continue;
+            entities.splice(parseInt(i), 1);
         }
     }
 
@@ -665,6 +683,7 @@ const Entity = function () {
         makeEmThink,
         processPunch,
         reset,
+        removeBaddies,
         testTouchingTile,
         testTouchingTileAxis,
         testOutBounds,
@@ -710,8 +729,8 @@ const Character = function (x, y, w, h, type) {
 
     let canRemove = false;
 
-    let sendingAttackCount = 0;
-    const sendingAttackCounter = 2;
+    let sendingAttackCount = -1;
+    const sendingAttackCounter = 1;
 
     function setX(val, increment) {
         if (increment) {
@@ -864,8 +883,7 @@ const Character = function (x, y, w, h, type) {
                 }
                 if (doingAction) {
                     doingAction = false;
-                    sendingAttackCount = sendingAttackCounter;
-                    //hX = punchFrame; //punch
+                    if(sendingAttackCount === -1) sendingAttackCount = sendingAttackCounter;
                 }
             }
             if (punchBack.length > 0) {
@@ -927,8 +945,13 @@ const Character = function (x, y, w, h, type) {
                 punchStrength = defaultPunchStrength + Dani.lock(defaultPunchStrength * weight / 10, defaultPunchStrength, 300) + Dani.random(15);
                 wallStrength = defaultWallStrength + Dani.lock(defaultPunchStrength * weight / 10, defaultPunchStrength, 300) + Dani.random(15);
             } else {
-                if (punchStrength !== defaultPunchStrength) punchStrength = defaultPunchStrength;
-                if (wallStrength !== defaultWallStrength) wallStrength = defaultWallStrength;
+                if (!wonGame) {
+                    if (punchStrength !== defaultPunchStrength) punchStrength = defaultPunchStrength;
+                    if (wallStrength !== defaultWallStrength) wallStrength = defaultWallStrength;
+                } else {
+                    if (punchStrength !== 1000) punchStrength = 1000;
+                    if (wallStrength !== 1000) wallStrength = 1000;
+                }
             }
             if (gameVars.powerups.isRange()) {
                 weight = Math.floor(score / adjuster);
@@ -940,6 +963,10 @@ const Character = function (x, y, w, h, type) {
 
             if (sendingAttackCount > 0) {
                 sendingAttackCount--;
+            } else if(sendingAttackCount === 0) {
+                sendingAttackCount = -1;
+                
+                hX = Dani.cycle(hX, punchFrame, 1); 
                 hX = punchFrame;
             }
         } else {
@@ -1049,7 +1076,7 @@ const Enemy = function (x, y, w, h, type) {
     let removeCount = 0;
     const removeCounter = Dani.random(200, 250);
 
-    const maxHealth = 150 + Dani.lock(Math.round(weight * 2.5), 0, 650);
+    const maxHealth = 150 + Dani.lock(Math.round(weight * 2.5), 0, 450);
     let health = maxHealth;
     let isDead = false;
     let canDespawn = false;
@@ -1225,7 +1252,10 @@ const Enemy = function (x, y, w, h, type) {
                     const blockX = Math.floor(blX / defaultBlockSize);
                     const blockY = Math.floor(blY / defaultBlockSize);
                     nextMoves = gameVars.level.findPath({ x: blockX, y: blockY }, { x: playersX, y: playersY }, walkableTiles);
-                    if (nextMoves.length === 0) nextMoves = gameVars.level.findPath({ x: playersX, y: playersY }, { x: blockX, y: blockY }, pathableTiles, true);
+                    if (nextMoves.length === 0) {
+                        if (!wonGame) nextMoves = gameVars.level.findPath({ x: playersX, y: playersY }, { x: blockX, y: blockY }, pathableTiles, true);
+                        else followingPlayer = false;
+                    }
                     if (nextMoves.length === 0) nextMoves = gameVars.level.findPath({ x: playersX, y: playersY }, { x: blockX, y: blockY }, seethroughTiles, true);
                     if (nextMoves.length === 0) { //chase
                         if (!nearChar()) {
@@ -1292,7 +1322,7 @@ const Enemy = function (x, y, w, h, type) {
                     }
 
 
-                    if (!playerDead && nearChar()) {
+                    if (!wonGame && !playerDead && nearChar()) {
                         if (attackCount >= attackCounter) {
                             attackCount = 0;
                             sendingAttackCount = sendingAttackCounter;
@@ -1325,25 +1355,27 @@ const Enemy = function (x, y, w, h, type) {
                     }
                     getAimCord(playerX, playerY, x, y, w, h);
 
-                    if (Dani.random(100) > 96) {
+                    if (!wonGame && Dani.random(100) > 96) {
                         followingPlayer = true;
                     }
                 }
 
-                touchingWall = gameVars.entities.testTouchingTile(x, y, w, h, breakableTiles);
-                if (!playerDead && touchingWall) {
-                    if (wallBreakCount >= wallBreakCounter) {
-                        wallBreakCount = 0;
+                if (!wonGame) {
+                    touchingWall = gameVars.entities.testTouchingTile(x, y, w, h, breakableTiles);
+                    if (!playerDead && touchingWall) {
+                        if (wallBreakCount >= wallBreakCounter) {
+                            wallBreakCount = 0;
 
-                        gameVars.checker.punchWall(enemAimCord.bX, enemAimCord.bY, Dani.random(eWallStrength - 2, eWallStrength), 'enemy');
-                        sendingAttackCount = sendingAttackCounter;
+                            gameVars.checker.punchWall(enemAimCord.bX, enemAimCord.bY, Dani.random(eWallStrength - 2, eWallStrength), 'enemy');
+                            sendingAttackCount = sendingAttackCounter;
 
 
-                        punchingChar = true;
-                    } else {
-                        wallBreakCount++;
+                            punchingChar = true;
+                        } else {
+                            wallBreakCount++;
+                        }
+                        touchingWall = false;
                     }
-                    touchingWall = false;
                 }
 
                 if (xDir === -1) {
@@ -1498,7 +1530,7 @@ const Audios = function () {
 
     async function loadAudios() {
         audio.setDefaults({ source: '/games/BobTheBrawler/audios', type: 'wav' });
-        await audio.create('GameMusic', 'EnemyDeath', 'EnemyHurt', 'EnemyHurtHard', 'WallPlace', 'WallHurt', 'WallDeath', 'HealthPickup', 'HealthUse', 'PlayerDeath', 'PlayerHurt', 'PlayerSwing', 'HealthNull', 'PackagePickup', 'PackageDrop', 'PlayerStep', 'PackageDeath', 'PowerupPickup', 'PowerupDeath');
+        await audio.create('GameMusic', 'EnemyDeath', 'EnemyHurt', 'EnemyHurtHard', 'WallPlace', 'WallHurt', 'WallDeath', 'HealthPickup', 'HealthUse', 'PlayerDeath', 'PlayerHurt', 'PlayerSwing', 'HealthNull', 'PackagePickup', 'PackageDrop', 'PlayerStep', 'PackageDeath', 'PowerupPickup', 'PowerupDeath', "GameWon");
         audio.setVolume('GameMusic', defaultGameMusicVolume);
         audio.setVolume('HealthUse', 60);
         audio.setVolume('HealthPickup', 60);
@@ -1517,6 +1549,7 @@ const Audios = function () {
         audio.setVolume('PackageDeath', 60);
         audio.setVolume('PowerupPickup', 90);
         audio.setVolume('PowerupDeath', 90);
+        audio.setVolume('GameWon', 90);
     }
 
     loadAudios();
@@ -1528,7 +1561,7 @@ const Audios = function () {
 
 const Texture = function (pathRef) {
 
-    let textureList = ["player", "wallTile", "floorTile", "doorTile", "bedrockTile", "blankTile", "blockDamage", "enemyBody0", "enemyHead0", "enemyHead1", "enemyHead2", "enemyHead3", "health", "potion", "package", "GUIPanel", "pauseScreen", "restartScreen", "playScreen", "deathScreen", "crosshair", "buildOptions", "mousePos", "packageTime", "powerupTime", "enemAim", "powerupBarrage", "powerupStrength", "powerupRange", "glowBarrage", "glowStrength", "glowRange", "blackDropSmall", "dropIndicator", "potionIndicator", "packageIndicator", "powerupBarrageIndicator", "powerupStrengthIndicator", "powerupRangeIndicator", "muteOn", "muteOff"];
+    let textureList = ["player", "wallTile", "floorTile", "doorTile", "bedrockTile", "blankTile", "blockDamage", "enemyBody0", "enemyHead0", "enemyHead1", "enemyHead2", "enemyHead3", "health", "potion", "package", "GUIPanel", "pauseScreen", "restartScreen", "playScreen", "deathScreen", "wonScreen", "crosshair", "buildOptions", "mousePos", "packageTime", "powerupTime", "enemAim", "powerupBarrage", "powerupStrength", "powerupRange", "glowBarrage", "glowStrength", "glowRange", "blackDropSmall", "dropIndicator", "potionIndicator", "packageIndicator", "powerupBarrageIndicator", "powerupStrengthIndicator", "powerupRangeIndicator", "muteOn", "muteOff"];
     let textures = {};
 
     let path = pathRef ? pathRef : "textures/";
@@ -1775,8 +1808,8 @@ function Level(w, h) {
             [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
             [2, 2, 2, 0, 2, 2, 2, 2, 0, 0],
-            [0, 0, 2, 0, 3, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 3, 0, 0, 2, 0, 0],
+            [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
             [0, 0, 2, 2, 2, 2, 0, 2, 2, 2],
             [0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 2, 0, 0, 0, 0]
@@ -2180,6 +2213,14 @@ function Checker() {
         if (rightClicked && !playerDead) {
             placeWall();
         }
+
+        // if (wonGame) {
+        //     if (wonGameTimer > wonGameTimed) {
+        //         canRestart = true;
+        //     } else {
+        //         wonGameTimer++;
+        //     }
+        // }
     }
     return {
         tick,
@@ -2239,13 +2280,13 @@ function Drops() {
     }
 
     function awayFromPlayer(x, y) {
-        return !(x > gameVars.vcam.leftRangeBound && y > gameVars.vcam.topRangeBound && x < gameVars.vcam.rightRangeBound && y < gameVars.vcam.bottomRangeBound)
+        return false;// !(x > gameVars.vcam.leftRangeBound && y > gameVars.vcam.topRangeBound && x < gameVars.vcam.rightRangeBound && y < gameVars.vcam.bottomRangeBound)
     }
     function tick() {
         if (dropTime >= dropTimer) {
             //if (dropTime >= 2) { //beastMode
             weight = Math.floor(score / adjuster);
-            dropTimer = Dani.random(225, 250) - Dani.lock(weight * 2, 0, 135); //go as low to 30
+            dropTimer = Dani.random(225, 250) - Dani.lock(weight * 2, 0, 195); //go as low to 30
 
             dropTime = 0;
             dropSomethingDown();
@@ -2422,6 +2463,13 @@ function Drops() {
     }
 }
 
+function winGame() {
+    wonGame = true;
+    canRestart = true;
+    punchStrength = 1000;
+    gameVars.audios.audio.playOnce('GameWon');
+}
+
 function GUI() {
     const size = defaultBlockSize;
     const renderStuff = [];
@@ -2432,6 +2480,10 @@ function GUI() {
         const weight = Math.floor(score / adjuster);
         score += Math.round(val + val * weight / 5) || Math.round(1 + weight / 5);
         score = Dani.lock(score, 0, 9999999);
+
+        if (score >= 9999999) {
+            if (!wonGame) winGame();
+        }
     }
     function removeScore(val) {
         score -= val || 1;
@@ -2580,6 +2632,7 @@ function PowerUps() {
 function performClick(mouseDidIt) {
     if (mouseDidIt && gameVars.powerups.isBarrage()) return;
     if (playerStartled) return;
+    if (canRestart) return;
     gameVars.audios.audio.playOnce('PlayerSwing');
     gameVars.entities.processPunch();
     gameVars.checker.punchWall(crosshairCord.bX, crosshairCord.bY, Dani.random(wallStrength - 5, wallStrength), 'player');
@@ -2627,6 +2680,8 @@ const resetGame = async function () {
     playerDead = false;
     canRestart = false;
     validateRestart = false;
+    wonGame = false;
+    wonGameTimer = 0;
     punchStrength = defaultPunchStrength;
     wallStrength = defaultWallStrength;
     playerReach = defaultPlayerReach;
@@ -2721,6 +2776,12 @@ function run() {
                 gameVars.audios.audio.setLoop('GameMusic', false);
                 musicStopped = true;
             }
+        } else if (wonGame && canRestart) {
+            drawImg('wonScreen', 0, 0, WIDTH, HEIGHT);
+            if (!musicStopped) {
+                gameVars.audios.audio.setVolume('GameMusic', defaultGameMusicVolume * 2 / 3);
+                musicStopped = true;
+            }
         }
     } else {
         drawImg('playScreen', 0, 0, 500, 450);
@@ -2786,7 +2847,7 @@ function mouseIsDown(e) {
 
 function keyIsUp(e) {
     e.preventDefault();
-    if (e.keyCode === 80 || e.keyCode === 81 || e.keyCode === 32 || e.keyCode === 82 || e.keyCode === 77 || e.keyCode === 78 || e.keyCode === 89) //P or Q or space or R or M or N or Y
+    if (e.keyCode === 80 || e.keyCode === 81 || e.keyCode === 32 || e.keyCode === 82 || e.keyCode === 77 || e.keyCode === 78 || e.keyCode === 89 || e.keyCode === 75 || e.keyCode === 67) //P or Q or space or R or M or N or Y or K or C
         setKey(e.keyCode, false, true);
     else
         setKey(e.keyCode, false);
@@ -2867,6 +2928,19 @@ function setKey(key, cond, pressOnly) {
             if (pressOnly) {
                 if (validateRestart && PAUSED) {
                     resetGame();
+                }
+            }
+            break;
+        case 75: //K
+            if (pressOnly) {
+                panel.toggleFullScreen();
+            }
+            break;
+        case 67: //C
+            if (pressOnly) {
+                if (wonGame && canRestart) {
+                    canRestart = false;
+                    gameVars.audios.audio.setVolume('GameMusic', defaultGameMusicVolume);
                 }
             }
             break;

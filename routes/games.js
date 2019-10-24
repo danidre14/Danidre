@@ -99,12 +99,16 @@ const gamesInformation = function(gameName) {
             [coverimg](https://static.jam.vg/raw/0fb/8/z/28772.jpg)
             ## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/45/games).
 
-            # Story:
-            A grave disagreement with the Ski Mask Baddies forces Bob to end his *Building* career for good. However, dissatisfied with just his unemployment, the Baddies are out for his life! Now, Bob the previous Builder becomes Bob the Brawler; living only to defend himself from the Baddies breaking into his warehouse, in hopes of regaining his positions, and...punching off... some steam!! (>:[=)
-
             # Objective:
-            None. Basically nothing. Just go beat up some baddies!! (>:[=)
-            Items drop occasionally, ranging from wall packages to powerups, so be on the lookout!
+            Start with nothing but your fists, and punch your way into becoming the ultimate brawler!
+            Explore numerous maps, fight off endless baddies, and collect powerups/item drops; they make you stronger
+
+            # Drops:
+            **Potion-** adds potion to inventory; Space to consume**; (heals increase with difficulty)**
+            **Package-** increases max health; gives walls and potions
+            **Strength Powerup-** exponentially increases attack power**; (lasts longer with difficulty)**
+            **Barrage Powerup-** enters a barrage of auto attacks**; (lasts longer with difficulty)**
+            **Range Powerup-** increases attack range and view distance**; (lasts longer with difficulty)**
             
             # Controls:
             **WASD-** Move
@@ -114,6 +118,10 @@ const gamesInformation = function(gameName) {
             **Q/P-** Toggle Pause
             **M-** Toggle Mute
             **R-** Restart Game
+            **K-** Toggle Fullscreen
+
+            # Story:
+            A grave disagreement with the Ski Mask Baddies forces Bob to end his *Building* career for good. However, dissatisfied with just his unemployment, the Baddies are out for his life! Now, **Bob the** previous **Builder** becomes **Bob the Brawler**; living only to defend himself from the Baddies breaking into his warehouse, in hopes of regaining his positions, and...punching off... some steam!! (>:[=)
             *****
             ## Credits:
             **Programming/Design-** [@danidre](/u/danidre)
