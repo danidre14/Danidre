@@ -218,7 +218,7 @@ section .the_markdown a {
 section .the_markdown a:hover {
     font-weight: 500;
     color: var(--color-section);
-    background: var(--color-text-dark);
+    background: var(--color-link-dark);
 }
 section .the_markdown em, section .the_markdown i {
     font-style: italic;
