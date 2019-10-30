@@ -185,7 +185,7 @@ section .the_markdown h6 {
 }
 section .the_markdown p {
     font-size: 1rem;
-    line-height: 1.1rem;
+    line-height: 1.25rem;
     margin-bottom: .6rem;
 }
 section .the_markdown div.hr {

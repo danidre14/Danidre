@@ -167,7 +167,7 @@ router.get('/view/:postName', async (req, res) => {
     }
 
     const postName = req.params.postName.toLowerCase();
-    const post = await Post.findOne({name: new RegExp("^" + postName + "$", "i")}, 'title content name updatedAt createdAt');
+    const post = await Post.findOne({name: new RegExp("^" + postName + "$", "i")}, 'title content name updatedAt createdAt summary image');
     
 
     if(!post) {

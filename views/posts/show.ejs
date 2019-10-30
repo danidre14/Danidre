@@ -14,10 +14,10 @@
             } %>
             <div>
                 <a class="btn btn-primary" href="/posts">Other Posts</a>
-                <% if(user !== undefined) {
-                    if(isAdmin(user.username)) { %>
-                        <a class="btn btn-primary" href="/posts/view/<%= post.name %>/edit">Edit Post</a>
-                    <% } 
+                <% if(user !== undefined) {%>
+                <%    if(isAdmin(user.username)) { %>
+                <a class="btn btn-primary" href="/posts/view/<%= post.name %>/edit">Edit Post</a>
+                <% } 
                 } %>
             </div>
             <div style="display:grid;grid-template-rows: auto auto;">
@@ -29,12 +29,24 @@
     </article>
 </section>
 
+<meta name="description" content="Read <%= post.title %>. <%= post.summary || '' %>">
+
+<meta name="twitter:site" content="@danidre">
+<meta property="og:title" content="<%= post.title %>">
+<meta property="og:description" content="<%= post.summary || '' %>">
+<meta property="og:image" content="<%= post.image %>">
+<meta property="og:image:width" content="150" />
+<meta property="og:image:height" content="150" />
+<meta property="og:image:alt" content="Post image for <%= post.title %>" />
+<meta property="og:url" content="<%= post.name %>">
+<meta name="twitter:card" content="summary">
+
 
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-2781990552887713",
-    enable_page_level_ads: true
-});
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2781990552887713",
+        enable_page_level_ads: true
+    });
 </script>

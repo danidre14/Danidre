@@ -17,7 +17,7 @@
                 } %>
                 <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;margin-bottom:1rem;">
                     <% if(post.image) { %>
-                        <img class="game-img" style="margin-right:1.2rem;" src="<%= post.image %>" onerror="this.src = '../../images/PostsIcon.png';">
+                        <img class="game-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
                     <% } %>
                     <div style="width:100%;">
                         <div style="display:grid;grid-template-columns: auto auto;">
@@ -62,7 +62,7 @@
 
         <a class="btn btn-primary" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flocalhost%3A3000%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=danidre&tw_p=followbutton">
             <div class="div-space-around">
-                <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Follow @danidre</span>
+                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Follow @danidre</span>
             </div>
         </a>
     </article>
