@@ -141,6 +141,26 @@ section.about p {
 section.posts {
     text-align: center;
 }
+section .posts-img {
+    width:150px;
+    height:150px;
+    max-width: fit-content;
+}
+section div[data-p-newspost] {
+    position: relative;
+}
+pre[data-p-newspost] {
+    overflow: hidden;
+    max-height: 90px;
+}
+section .description[data-p-newspost] {
+    color: var(--color-text-dark);
+    padding: var(--small-spacing);
+    border-top: solid 2px var(--color-line);
+}
+section .description[data-p-newspost]:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
 section.posts .posts-grid {
     display: grid;
     grid-template-columns: 60% 40%;
@@ -397,12 +417,15 @@ table td#all_subjects, table td#your_subjects {
     }
 }
 
+@media screen and (max-width: 1050px) {
+    section.posts .posts-grid {
+        display: block;
+    }
+}
+
 @media screen and (max-width: 700px) {
     :root {
         font-size: 1.1rem;
-    }
-    section.posts .posts-grid {
-        display: block;
     }
     section .common-grid {
         display: grid;

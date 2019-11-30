@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
             vars.user = user;
         } catch {}
     }
-    const posts = await Post.find({}, 'title name updatedAt createdAt summary image', {sort: {createdAt: -1}});
+    const posts = await Post.find({}, 'title name updatedAt createdAt summary image', {sort: {createdAt: -1}, limit: 2});
 
     vars.posts = posts;
     res.render('index', vars);

@@ -7,7 +7,7 @@
     <%- include('./partials/_twitch_emb.ejs') %>
     <article>
         <h3>Recent News</h3>
-        <div style="max-height:15rem;overflow:auto;">
+        <div>
             <% posts.forEach(post => { %>
                 <% const createdAt = formatDistanceToNow(post.createdAt);
                 const updatedAt = formatDistanceToNow(post.updatedAt);
@@ -15,22 +15,20 @@
                 if(createdAt !== updatedAt) {
                     lastChanged = ' *';
                 } %>
-                <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;margin-bottom:1rem;">
-                    <% if(post.image) { %>
-                        <img class="game-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
-                    <% } %>
+                <div data-p-newspost>
+                <a href="/posts/view/<%= post.name %>" class="description" style="text-decoration:none;" data-p-newspost>
+                    <img class="posts-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
                     <div style="width:100%;">
-                        <div style="display:grid;grid-template-columns: auto auto;">
-                            <p><%= post.title %> </p>
-                            <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
-                        </div>
+                        <p><strong><%= post.title %></strong></p>
                         <% if(post.summary) { %>
-                            <pre><%= post.summary %></pre>
+                            <pre data-p-newspost><%= post.summary %></pre>
                         <% } else { %>
                             <span>Read <%= post.title %></span>
                         <% } %>
+                        <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
                     </div>
                 </a>
+                </div>
 
                 <% if(!hasPosts) { %>
                     <% hasPosts = true; %>
@@ -38,8 +36,15 @@
             <% }); %>
             <% if(!hasPosts) { %>
                 <p>No <a href="/posts">posts</a> yet. Stay tuned.</a></p>
+            <% } else { %>
+                <a style="display:block;text-align:right;" href="/posts"><i>More posts</i></a>
             <% } %>
         </div>
+    </article>
+    <article>
+        <h3>Latest Video</h3>
+        <div style="position:relative;height:0;padding-top:56.25%;width:100%;"><iframe style="position:absolute;top:0;left:0;border:0;width:100%;height:100%;" src="https://www.youtube.com/embed/videoseries?list=UUtY43z1ZfeSjprj1Rs1np3A" frameborder="0" allow="accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
+        <a style="display:block;text-align:right;" href="https://www.youtube.com/Danidre15Dev/videos"><i>More videos</i></a>
     </article>
     <article class="common-grid">
         <div>
@@ -62,7 +67,12 @@
 
         <a class="btn btn-primary" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flocalhost%3A3000%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=danidre&tw_p=followbutton">
             <div class="div-space-around">
-                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Follow @danidre</span>
+                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Follow</span>
+            </div>
+        </a>
+        <a class="btn btn-primary" href="https://www.youtube.com/Danidre15Dev?sub_confirmation=1">
+            <div class="div-space-around">
+                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/YoutubeLogo2.png" alt=""> <span class="div-space-around">Subscribe</span>
             </div>
         </a>
     </article>

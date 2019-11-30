@@ -22,8 +22,9 @@
 }
   
 section article {
-    border-top: solid 2px var(--color-line);
-    padding: var(--default-spacing-y) 0;
+    /* border-top: solid 2px var(--color-line); */
+    padding: var(--default-spacing-y) 0 0 0;
+    /* padding: var(--default-spacing-y) 0; */
     margin-bottom: 0;
 }
 

@@ -12,22 +12,20 @@
                 if(createdAt !== updatedAt) {
                     lastChanged = ' *';
                 } %>
-                <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;margin-bottom:1rem;">
-                    <% if(post.image) { %>
-                        <img class="game-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
-                    <% } %>
-                    <div style="width:100%;">
-                        <div style="display:grid;grid-template-columns: auto auto;">
-                            <p><%= post.title %> </p>
+                <div data-p-newspost>
+                    <a href="/posts/view/<%= post.name %>" class="description" style="text-decoration:none;" data-p-newspost>
+                        <img class="posts-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
+                        <div style="width:100%;">
+                            <p><strong><%= post.title %></strong></p>
+                            <% if(post.summary) { %>
+                                <pre data-p-newspost><%= post.summary %></pre>
+                            <% } else { %>
+                                <span>Read <%= post.title %></span>
+                            <% } %>
                             <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
                         </div>
-                        <% if(post.summary) { %>
-                            <pre><%= post.summary %></pre>
-                        <% } else { %>
-                            <span>Read <%= post.title %></span>
-                        <% } %>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
                 <% if(!hasPosts) { %>
                     <% hasPosts = true; %>

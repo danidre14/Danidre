@@ -97,7 +97,7 @@ const MarkDownToUp = function() {
                 string = string;
             } else if(/https:\/\/www.youtube.com\/watch\?v=/.test(string)) {
                 string = string.replace(/watch\?v=/, 'embed/');
-            } else if(/https:\/\/www.youtu.be\//.test(string)) {
+            } else if((/https:\/\/www.youtu.be\//.test(string)) || (/https:\/\/youtu.be\//.test(string))) {
                 string = string.replace(/.be\//, 'be.com/embed/');
             }
             if(string.indexOf('&') !== -1) {
