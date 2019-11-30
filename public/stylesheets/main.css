@@ -151,6 +151,7 @@ section div[data-p-newspost] {
 }
 pre[data-p-newspost] {
     overflow: hidden;
+    height:90px;
     max-height: 90px;
 }
 section .description[data-p-newspost] {
