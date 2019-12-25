@@ -16,18 +16,18 @@
                     lastChanged = ' *';
                 } %>
                 <div data-p-newspost>
-                <a href="/posts/view/<%= post.name %>" class="description" style="text-decoration:none;" data-p-newspost>
-                    <img class="posts-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
-                    <div style="width:100%;">
-                        <p><strong><%= post.title %></strong></p>
-                        <% if(post.summary) { %>
-                            <pre data-p-newspost><%= post.summary %></pre>
-                        <% } else { %>
-                            <span>Read <%= post.title %></span>
-                        <% } %>
-                        <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
-                    </div>
-                </a>
+                    <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;" data-p-newspost>
+                        <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
+                        <div style="width:100%;margin-left:var(--small-spacing);">
+                            <h4><strong><%= post.title %></strong></h4>
+                            <% if(post.summary) { %>
+                                <pre data-p-newspost><%= post.summary %></pre>
+                            <% } else { %>
+                                <span>Read <%= post.title %></span>
+                            <% } %>
+                            <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
+                        </div>
+                    </a>
                 </div>
 
                 <% if(!hasPosts) { %>
@@ -37,14 +37,14 @@
             <% if(!hasPosts) { %>
                 <p>No <a href="/posts">posts</a> yet. Stay tuned.</a></p>
             <% } else { %>
-                <a style="display:block;text-align:right;" href="/posts"><i>More posts</i></a>
+                <div style="text-align:right;"><a href="/posts"><i>More posts</i></a></div>
             <% } %>
         </div>
     </article>
     <article>
         <h3>Latest Video</h3>
         <div style="position:relative;height:0;padding-top:56.25%;width:100%;"><iframe style="position:absolute;top:0;left:0;border:0;width:100%;height:100%;" src="https://www.youtube.com/embed/videoseries?list=UUtY43z1ZfeSjprj1Rs1np3A" frameborder="0" allow="accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
-        <a style="display:block;text-align:right;" href="https://www.youtube.com/Danidre15Dev/videos"><i>More videos</i></a>
+        <div style="text-align:right;"><a href="https://www.youtube.com/Danidre15Dev/videos"><i>More videos</i></a></div>
     </article>
     <article class="common-grid">
         <div>

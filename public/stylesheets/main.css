@@ -151,16 +151,25 @@ section div[data-p-newspost] {
 }
 pre[data-p-newspost] {
     overflow: hidden;
-    height:90px;
-    max-height: 90px;
+    height:85px;
+    max-height: 85px;
 }
 section .description[data-p-newspost] {
-    color: var(--color-text-dark);
     padding: var(--small-spacing);
     border-top: solid 2px var(--color-line);
+    margin-bottom: var(--small-spacing);
+    transition: background .2s;
+}
+section .description[data-p-newspost] h4 {
+    padding: 0 0 var(--small-spacing) 0;
+    text-align: left;
+    line-height: 1;
 }
 section .description[data-p-newspost]:hover {
     background: rgba(255, 255, 255, 0.15);
+    /* color: var(--color-text-dark); */
+    /* background: rgba(255, 255, 255, 0.15); */
+    background: var(--color-button-hover);
 }
 section.posts .posts-grid {
     display: grid;

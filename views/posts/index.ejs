@@ -13,10 +13,10 @@
                     lastChanged = ' *';
                 } %>
                 <div data-p-newspost>
-                    <a href="/posts/view/<%= post.name %>" class="description" style="text-decoration:none;" data-p-newspost>
-                        <img class="posts-img" style="margin-right:1.2rem;" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
-                        <div style="width:100%;">
-                            <p><strong><%= post.title %></strong></p>
+                    <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;" data-p-newspost>
+                        <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
+                        <div style="width:100%;margin-left:var(--small-spacing);">
+                            <h4><strong><%= post.title %></strong></h4>
                             <% if(post.summary) { %>
                                 <pre data-p-newspost><%= post.summary %></pre>
                             <% } else { %>
