@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
-    }, 
+    },
     content: {
         type: String,
         required: true
@@ -26,6 +26,10 @@ const postSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    views: {
+        type: Number,
+        default: 0
     },
     summary: {
         type: String

@@ -8,6 +8,7 @@
         <div class="div-space-between">
             <% const createdAt = formatDistanceToNow(post.createdAt);
             const updatedAt = formatDistanceToNow(post.updatedAt);
+                const totalViews = post.views? post.views + (post.views==1? " view" : " views") : "1 view";
             let lastChanged = '';
             if(createdAt !== updatedAt) {
                 lastChanged = `edited ${updatedAt}`;
@@ -21,7 +22,7 @@
                 } %>
             </div>
             <div style="display:grid;grid-template-rows: auto auto;">
-                <i style="text-align:right;"><%= createdAt %></i>
+                <i style="text-align:right;"><%= totalViews %> | <%= createdAt %></i>
                 <i style="font-size:.7rem;text-align:right;"><%= lastChanged %></i>
             </div>
 

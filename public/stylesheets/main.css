@@ -1,540 +1,552 @@
-@import 'shared/reset.css';
-@import 'shared/variables.css';
-@import 'shared/message.css';
-@import 'shared/fonts.css';
-@import 'shared/header.css';
-@import 'shared/body.css';
-@import 'shared/footer.css';
-@import 'shared/form.css';
-@import 'shared/buttons.css';
+@import "shared/reset.css";
+@import "shared/variables.css";
+@import "shared/message.css";
+@import "shared/fonts.css";
+@import "shared/header.css";
+@import "shared/body.css";
+@import "shared/footer.css";
+@import "shared/form.css";
+@import "shared/buttons.css";
 
 :root {
-    font-family: var(--global-fonts);
-    font-size: 1.3rem;
-    font-weight: normal;
-    color: var(--color-text-light);
+  font-family: var(--global-fonts);
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: var(--color-text-light);
 }
 
 html {
-    height:100%;
+  height: 100%;
 }
 
 body {
-    background: var(--color-background);
-    height:100%;
+  background: var(--color-background);
+  height: 100%;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 h1 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 h2 {
-    font-size: 2rem;
-    font-weight: 500;
-    text-align: center;
-    padding: var(--heading-spacing);
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  padding: var(--heading-spacing);
 }
 
 h3 {
-    font-size: 1.6rem;
-    font-weight: 500;
-    text-align: center;
-    padding: var(--heading-spacing);
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-align: center;
+  padding: var(--heading-spacing);
 }
 
 h4 {
-    font-size: 1.4rem;
-    font-weight: 500;
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
 pre {
-    font-family: var(--global-fonts);
+  font-family: var(--global-fonts);
 }
 
-.input, .textarea {
-    display: block;
-    font-family: var(--global-fonts);
-    font-weight: normal;
-    background: var(--color-input);
-    border: solid 2px var(--color-input-border);
-    border-radius: var(--default-border-radius);
-    color: var(--color-text-dark);
-    padding: var(--mini-spacing);
-    width: 100%;
+.input,
+.textarea {
+  display: block;
+  font-family: var(--global-fonts);
+  font-weight: normal;
+  background: var(--color-input);
+  border: solid 2px var(--color-input-border);
+  border-radius: var(--default-border-radius);
+  color: var(--color-text-dark);
+  padding: var(--mini-spacing);
+  width: 100%;
 }
 .textarea {
-    resize: vertical; max-height: 25rem; min-height: 5rem;
+  resize: vertical;
+  max-height: 25rem;
+  min-height: 5rem;
 }
 ::placeholder {
-    font-style: italic;
+  font-style: italic;
 }
 
-.input:focus, textarea:focus {
-    outline: none;
-    border: solid 2px var(--color-input-border-focus);
+.input:focus,
+textarea:focus {
+  outline: none;
+  border: solid 2px var(--color-input-border-focus);
 }
 .input-inline {
-    /* display: inline; */
-    font-family: var(--global-fonts);
-    font-weight: normal;
-    background: var(--color-input);
-    border: solid 2px var(--color-input-border);
-    border-radius: var(--default-border-radius);
-    color: var(--color-text-dark);
-    padding: var(--mini-spacing);
-    width: 100%;
-    resize: none;
+  /* display: inline; */
+  font-family: var(--global-fonts);
+  font-weight: normal;
+  background: var(--color-input);
+  border: solid 2px var(--color-input-border);
+  border-radius: var(--default-border-radius);
+  color: var(--color-text-dark);
+  padding: var(--mini-spacing);
+  width: 100%;
+  resize: none;
 }
 
 .icon {
-    filter: hue-rotate(calc(var(--color-base-hue)*1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-dark));
+  filter: hue-rotate(calc(var(--color-base-hue) * 1deg))
+    saturate(var(--color-base-saturation))
+    brightness(var(--color-base-brightness-dark));
 }
 
 .icon:hover {
-    filter: hue-rotate(calc(var(--color-base-hue)*1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-light));
+  filter: hue-rotate(calc(var(--color-base-hue) * 1deg))
+    saturate(var(--color-base-saturation))
+    brightness(var(--color-base-brightness-light));
 }
 
 /* Home Page Specifics */
 section.home {
-    text-align: center;
+  text-align: center;
 }
 
 /* Game Page Specifics */
 section.games {
-    text-align: center;
+  text-align: center;
 }
 section.games .description {
-    display: flex;
-    
-    text-align: left;
+  display: flex;
 
-    font-size: .8rem;
-    line-height: 1rem;
+  text-align: left;
 
-    word-break: break-word;
-    word-wrap: break-word;
+  font-size: 0.8rem;
+  line-height: 1rem;
+
+  word-break: break-word;
+  word-wrap: break-word;
 }
 section .game-img {
-    width:100px;
-    height:100px;
-    max-width: fit-content;
+  width: 100px;
+  height: 100px;
+  max-width: fit-content;
 }
 section .game-img-big {
-    width:150px;
-    height:150px;
-    max-width: fit-content;
+  width: 150px;
+  height: 150px;
+  max-width: fit-content;
 }
 
 /* About Page Specifics */
-section.about desc {
-    font-weight: 500;
+section.about .desc {
+  font-weight: 500;
+  font-size: 1.1rem;
 }
 section.about p {
-    margin-bottom: calc(var(--paragraph-spacing)*2);
+  margin-bottom: calc(var(--paragraph-spacing) * 2);
 }
 
 /* Posts Page Specifics */
 section.posts {
-    text-align: center;
+  text-align: center;
 }
 section .posts-img {
-    width:150px;
-    height:150px;
-    max-width: fit-content;
+  width: 150px;
+  height: 150px;
+  max-width: fit-content;
 }
 section div[data-p-newspost] {
-    position: relative;
+  position: relative;
 }
 pre[data-p-newspost] {
-    overflow: hidden;
-    height:85px;
-    max-height: 85px;
+  overflow: hidden;
+  height: 85px;
+  max-height: 85px;
 }
 section .description[data-p-newspost] {
-    padding: var(--small-spacing);
-    border-top: solid 2px var(--color-line);
-    margin-bottom: var(--small-spacing);
-    transition: background .2s;
+  padding: var(--small-spacing);
+  border-top: solid 2px var(--color-line);
+  margin-bottom: var(--small-spacing);
+  transition: background 0.2s;
 }
 section .description[data-p-newspost] h4 {
-    padding: 0 0 var(--small-spacing) 0;
-    text-align: left;
-    line-height: 1;
+  padding: 0 0 var(--small-spacing) 0;
+  text-align: left;
+  line-height: 1;
 }
 section .description[data-p-newspost]:hover {
-    background: rgba(255, 255, 255, 0.15);
-    /* color: var(--color-text-dark); */
-    /* background: rgba(255, 255, 255, 0.15); */
-    background: var(--color-button-hover);
+  background: rgba(255, 255, 255, 0.15);
+  /* color: var(--color-text-dark); */
+  /* background: rgba(255, 255, 255, 0.15); */
+  background: var(--color-button-hover);
 }
 section.posts .posts-grid {
-    display: grid;
-    grid-template-columns: 60% 40%;
+  display: grid;
+  grid-template-columns: 60% 40%;
 }
 section .common-grid {
-    display: grid;
-    grid-template-columns: 50% 50%;
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 section.posts .posts-grid > * {
-    padding: 5px;
+  padding: 5px;
 }
 section .the_markdown * {
-    color: var(--color-text-dark);
-    margin: 0;
-    font-weight: normal;
-    font-style: normal;
-    text-decoration: none;
-    font-family: var(--global-fonts);
-    margin-bottom: .5rem;
+  color: var(--color-text-dark);
+  margin: 0;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  font-family: var(--global-fonts);
+  margin-bottom: 0.5rem;
 }
 section .the_markdown > * {
-    font-size: 1rem;
-    line-height: 1rem;
+  font-size: 1rem;
+  line-height: 1rem;
 }
 section .the_markdown h4 {
-    font-size: 1.6rem;
-    line-height: 1.7rem;
-    margin: .9rem 0;
-    font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.7rem;
+  margin: 0.9rem 0;
+  font-weight: 500;
 }
 section .the_markdown h5 {
-    font-size: 1.3rem;
-    line-height: 1.4rem;
-    margin: .8rem 0;
-    font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.4rem;
+  margin: 0.8rem 0;
+  font-weight: 500;
 }
 section .the_markdown h6 {
-    font-size: 1.2rem;
-    line-height: 1.3rem;
-    margin: .7rem 0;
-    font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.3rem;
+  margin: 0.7rem 0;
+  font-weight: 500;
 }
 section .the_markdown p {
-    font-size: 1rem;
-    line-height: 1.25rem;
-    margin-bottom: .6rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin-bottom: 0.6rem;
 }
 section .the_markdown div.hr {
-    border-bottom: solid 2px var(--color-input-border);
-    margin-bottom: var(--paragraph-spacing);
+  border-bottom: solid 2px var(--color-input-border);
+  margin-bottom: var(--paragraph-spacing);
 }
 section .the_markdown div.br {
-    border-bottom: solid 2px transparent;
+  border-bottom: solid 2px transparent;
 }
-section .the_markdown ul, section .the_markdown ol {
-    margin-bottom: 1rem;
+section .the_markdown ul,
+section .the_markdown ol {
+  margin-bottom: 1rem;
 }
 section .the_markdown ul li {
-    margin-left: var(--list-spacing);
-    list-style-type: disc;
+  margin-left: var(--list-spacing);
+  list-style-type: disc;
 }
 section .the_markdown ol li {
-    margin-left: var(--list-spacing);
+  margin-left: var(--list-spacing);
 }
 section .the_markdown blockquote {
-    margin-left: var(--blockquote-spacing);
-    margin-bottom: 1rem;
-    font-style: italic;
+  margin-left: var(--blockquote-spacing);
+  margin-bottom: 1rem;
+  font-style: italic;
 }
 section .the_markdown a {
-    font-weight: 500;
-    color: var(--color-link-dark);
-    text-decoration: underline;
+  font-weight: 500;
+  color: var(--color-link-dark);
+  text-decoration: underline;
 }
 section .the_markdown a:hover {
-    font-weight: 500;
-    color: var(--color-section);
-    background: var(--color-link-dark);
+  font-weight: 500;
+  color: var(--color-section);
+  background: var(--color-link-dark);
 }
-section .the_markdown em, section .the_markdown i {
-    font-style: italic;
+section .the_markdown em,
+section .the_markdown i {
+  font-style: italic;
 }
-section .the_markdown strong, section .the_markdown b {
-    font-weight: 500;
-} 
+section .the_markdown strong,
+section .the_markdown b {
+  font-weight: 500;
+}
 section .the_markdown code {
-    font-family: monospace;
-    background-color: var(--color-input-border);
-    color: var(--color-text-light);
+  font-family: monospace;
+  background-color: var(--color-input-border);
+  color: var(--color-text-light);
 }
 
 section .light_text * {
-    color: var(--color-text-light);
+  color: var(--color-text-light);
 }
 section .light_text a {
-    font-weight: 500;
-    color: var(--color-text-light);
+  font-weight: 500;
+  color: var(--color-text-light);
 }
 section .light_text a:hover {
-    font-weight: 500;
-    color: var(--color-footer);
-    background: var(--color-text-light);
+  font-weight: 500;
+  color: var(--color-footer);
+  background: var(--color-text-light);
 }
 section .light_text div.hr {
-    border-bottom: solid 2px var(--color-text-light);
-    margin-bottom: var(--paragraph-spacing);
+  border-bottom: solid 2px var(--color-text-light);
+  margin-bottom: var(--paragraph-spacing);
 }
-
 
 /* Contact Page Specifics */
 section.contact {
-    text-align: center;
+  text-align: center;
 }
 section.contact pre {
-    color: var(--color-button-default);
-    font-size: .7rem;
-    font-family: var(--global-fonts);
+  color: var(--color-button-default);
+  font-size: 0.7rem;
+  font-family: var(--global-fonts);
 }
 section.contact ul {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    flex-wrap: wrap;
-    justify-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 section.contact ul li {
-    margin-left: var(--default-spacing-x);
+  margin-left: var(--default-spacing-x);
 }
 
 /* Sign Up Specifics */
 section.signup pre {
-    color: var(--color-button-default);
-    font-size: .7rem;
-    font-family: var(--global-fonts);
+  color: var(--color-button-default);
+  font-size: 0.7rem;
+  font-family: var(--global-fonts);
 }
 section.signup-verify input.token-box {
-    display: none !important;
+  display: none !important;
 }
 
 /* User Page Specifics */
 section.users div.userList {
-    display: flex;
-    justify-content: flex-start;
-    padding: var(--mini-spacing);
+  display: flex;
+  justify-content: flex-start;
+  padding: var(--mini-spacing);
 }
 section.users div.userList > div {
-    flex: 1;
+  flex: 1;
 }
 section.users div.userList > div div {
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-around;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
 }
 
 section.users div.userList > div a {
-    width: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-around;
-    text-decoration: none;
-    font-weight: normal;
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  text-decoration: none;
+  font-weight: normal;
 
-    color: inherit;
+  color: inherit;
 }
 
 section.users div.userList a span {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-around;
-    text-decoration: none;
-    font-weight: normal;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  text-decoration: none;
+  font-weight: normal;
 }
 
 section.users div.userList a img {
-    border-radius: var(--default-border-radius);
-    width: var(--users-image-size);
-    height: var(--users-image-size);
-    margin-right: var(--small-spacing);
+  border-radius: var(--default-border-radius);
+  width: var(--users-image-size);
+  height: var(--users-image-size);
+  margin-right: var(--small-spacing);
 }
 
 section.users div.userList:nth-child(odd) {
-    background-color: var(--color-footer);
-    color: var(--color-text-light);
-    border-radius: var(--default-border-radius);
+  background-color: var(--color-footer);
+  color: var(--color-text-light);
+  border-radius: var(--default-border-radius);
 }
 
 /* Profile Page Specifics */
 section.profile div.profile-main {
-    position:relative;
-    display:flex;
+  position: relative;
+  display: flex;
 }
 section.profile .profile-name {
-    font-size: 1.7rem;
-    font-weight: 500;
+  font-size: 1.7rem;
+  font-weight: 500;
 }
 section.profile pre {
-    font-family: var(--global-fonts);
+  font-family: var(--global-fonts);
 }
 section.profile div.profile-main-det {
-    padding-left: var(--default-spacing-x);
+  padding-left: var(--default-spacing-x);
 }
 section.profile desc {
-    font-weight: 500;
+  font-weight: 500;
 }
 section .profile-img-big {
-    width:256px;
-    height:256px;
-    max-width: initial;
+  width: 256px;
+  height: 256px;
+  max-width: initial;
 }
 section.profile img {
-    border-radius: var(--default-border-radius);
+  border-radius: var(--default-border-radius);
 }
 section.profile p {
-    margin-bottom: calc(var(--paragraph-spacing)*2);
+  margin-bottom: calc(var(--paragraph-spacing) * 2);
 }
 section.profile-edit img {
-    border-radius: var(--default-border-radius);
+  border-radius: var(--default-border-radius);
 }
 section.profile-edit .profile-img {
-    display:inline-block;
+  display: inline-block;
 }
 section.profile-edit .filepond--root {
-    font-family: var(--global-fonts);
-    margin-bottom:0;
-    color: var(--color-text-dark);
-    font-size: inherit;
+  font-family: var(--global-fonts);
+  margin-bottom: 0;
+  color: var(--color-text-dark);
+  font-size: inherit;
 }
 section.profile-edit .filepond--panel-root {
-    background-color: var(--color-input);
-    border: solid 2px var(--color-input-border);
+  background-color: var(--color-input);
+  border: solid 2px var(--color-input-border);
 }
 section.profile-edit .filepond--drop-label {
-    color: var(--color-text-dark);
-    font-size: inherit;
+  color: var(--color-text-dark);
+  font-size: inherit;
 }
 
 /* Secrets */
 div.hptt {
-    font-weight: bold;
-    font-size: 1.6rem;
-    text-align: center;
+  font-weight: bold;
+  font-size: 1.6rem;
+  text-align: center;
 }
-table td#all_subjects, table td#your_subjects {
-    font-size: 0.8rem;
+table td#all_subjects,
+table td#your_subjects {
+  font-size: 0.8rem;
 }
 
 /* Responsivity */
 
 @media screen and (max-height: 500px) {
-    table td.pttd {
-        font-size:0.7rem;
-        height: 0.8rem !important;
-    }
+  table td.pttd {
+    font-size: 0.7rem;
+    height: 0.8rem !important;
+  }
 }
 
 @media screen and (max-width: 1050px) {
-    section.posts .posts-grid {
-        display: block;
-    }
+  section.posts .posts-grid {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 700px) {
-    :root {
-        font-size: 1.1rem;
-    }
-    section .common-grid {
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: auto auto;
-    }
-    section .common-grid > :first-child {
-        border-bottom: solid 2px var(--color-line);
-        padding-bottom: var(--default-spacing-y);
-        margin-bottom: var(--default-spacing-y);
-    }
-    section .profile-img-big {   
-        width: 180px;
-        height: 180px;
-    }
-    section.profile .profile-name {
-        font-size: 1.5rem;
-    }
+  :root {
+    font-size: 1.1rem;
+  }
+  section .common-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+  }
+  section .common-grid > :first-child {
+    border-bottom: solid 2px var(--color-line);
+    padding-bottom: var(--default-spacing-y);
+    margin-bottom: var(--default-spacing-y);
+  }
+  section .profile-img-big {
+    width: 180px;
+    height: 180px;
+  }
+  section.profile .profile-name {
+    font-size: 1.5rem;
+  }
 }
 
 @media screen and (max-width: 500px) {
-    :root {
-        font-size: 1rem;
-        --default-spacing-x:1rem;
-        --default-spacing-y:1.2rem;
-    }
-    h2 {
-        font-size: 1.6rem;
-    }
-    h3 {
-        font-size: 1.4rem;
-    }
-    section.contact ul {
-        display: block;
-    }
-    section .profile-img-big {    
-        width: 120px;
-        height: 120px;
-    }
-    section.profile .profile-name {
-        font-size: 1.4rem;
-    }
+  :root {
+    font-size: 1rem;
+    --default-spacing-x: 1rem;
+    --default-spacing-y: 1.2rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
+  section.contact ul {
+    display: block;
+  }
+  section .profile-img-big {
+    width: 120px;
+    height: 120px;
+  }
+  section.profile .profile-name {
+    font-size: 1.4rem;
+  }
 }
 
 @media screen and (max-width: 400px) {
-    :root {
-        font-size: .9rem;
-    }
-    table td.pttd {
-        font-size:0.7rem;
-        word-wrap: break-word;
-        height: 0.8rem !important;
-        text-indent:-9999px;
-    }
-    h2 {
-        font-size: 1.3rem;
-    }
-    h3 {
-        font-size: 1.1rem;
-    }
-    section .profile-img-big {    
-        width: 100px;
-        height: 100px;
-    }
-    section.profile .profile-name {
-        font-size: 1rem;
-    }
+  :root {
+    font-size: 0.9rem;
+  }
+  table td.pttd {
+    font-size: 0.7rem;
+    word-wrap: break-word;
+    height: 0.8rem !important;
+    text-indent: -9999px;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
+  section .profile-img-big {
+    width: 100px;
+    height: 100px;
+  }
+  section.profile .profile-name {
+    font-size: 1rem;
+  }
 }
 
 @media screen and (min-width: 800px) {
-    :root {
-        font-size: 1.3rem;
-        --default-spacing-x:1.8rem;
-        --default-spacing-y:2rem;
-    }
+  :root {
+    font-size: 1.3rem;
+    --default-spacing-x: 1.8rem;
+    --default-spacing-y: 2rem;
+  }
 }
 @media screen and (min-width: 1024px) {
-    :root {
-        --container-width: 1024px;
-    }
+  :root {
+    --container-width: 1024px;
+  }
 }
 
 @media screen and (min-width: 1400px) {
-    :root {
-        font-size: 1.6rem;
-        --container-width: 1200px;
-    }
+  :root {
+    font-size: 1.6rem;
+    --container-width: 1200px;
+  }
 }
 
-
 @media screen and (min-width: 2000px) {
-    :root {
-        font-size: 2.4rem;
-        --container-width: 1750px;
-    }
+  :root {
+    font-size: 2.4rem;
+    --container-width: 1750px;
+  }
 }
 
 /* Error 404 Specifics */
 section.error404 {
-    text-align: right;
+  text-align: right;
 }
-

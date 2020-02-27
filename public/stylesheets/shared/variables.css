@@ -1,77 +1,137 @@
 :root {
-    --color-base-hue: 19;
-    /* 19; */
-    --color-base-saturation: 14%;
-    /* 14 */
+  --color-base-hue: 19;
+  /* 19; */
+  --color-base-saturation: 14%;
+  /* 14 */
 
-    --color-base-brightness-light: 130%;
-    --color-base-brightness-dark: 70%;
+  --color-base-brightness-light: 130%;
+  --color-base-brightness-dark: 70%;
 
-    --color-background: hsl(var(--color-base-hue), var(--color-base-saturation), 70%);
+  --color-background: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    75%
+  );
 
-    --color-text-light: hsl(var(--color-base-hue), var(--color-base-saturation), 87%);
-    --color-text-dark: hsl(var(--color-base-hue), var(--color-base-saturation), 17%);
+  --color-text-light: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    87%
+  );
+  --color-text-dark: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    17%
+  );
 
-    --color-link-light: var(--color-text-dark);
-    --color-link-dark: hsl(var(--color-base-hue), var(--color-base-saturation), 50%);
+  --color-link-light: var(--color-text-dark);
+  --color-link-dark: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    50%
+  );
 
+  --color-button-default: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    53%
+  );
+  --color-button-hover: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    58%
+  );
+  --color-button-active: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    63%
+  );
+  --color-button-disabled: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    33%
+  );
 
-    --color-button-default: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
-    --color-button-hover: hsl(var(--color-base-hue), var(--color-base-saturation), 58%);
-    --color-button-active: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
-    --color-button-disabled: hsl(var(--color-base-hue), var(--color-base-saturation), 33%);
+  --color-button-current-page: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    38%
+  );
+  --color-button-current-page-hover: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    43%
+  );
+  --color-button-current-page-active: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    48%
+  );
 
+  --color-messager: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    43%
+  );
 
-    --color-button-current-page: hsl(var(--color-base-hue), var(--color-base-saturation), 38%);
-    --color-button-current-page-hover: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
-    --color-button-current-page-active: hsl(var(--color-base-hue), var(--color-base-saturation), 48%);
+  --color-line: var(--color-button-default);
+  --color-footer: var(--color-button-default);
+  --color-usernavauth: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    43%
+  );
+  --color-section: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    85%
+  );
+  --color-input: hsl(var(--color-base-hue), var(--color-base-saturation), 85%);
+  --color-input-border: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    53%
+  );
+  --color-input-border-focus: hsl(
+    var(--color-base-hue),
+    var(--color-base-saturation),
+    63%
+  );
 
-    --color-messager: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
+  --footer-size: 2.3rem;
+  --header-bar-size: 1.8rem;
+  --usernav-bar-size: 2.3rem;
 
+  --default-spacing: 1rem;
+  --default-spacing-x: 1.2rem;
+  --default-spacing-y: 1.5rem;
+  --heading-spacing: 1rem;
+  --list-spacing: 2.3rem;
+  --blockquote-spacing: 1.5rem;
+  --message-spacing: calc(var(--default-spacing-y) / 2);
+  --paragraph-spacing: 0.8rem;
+  --header-bar-spacing: 0.6rem;
+  --mini-spacing: 0.3rem;
+  --small-spacing: 0.6rem;
 
-    --color-line: var(--color-button-default);
-    --color-footer: var(--color-button-default);
-    --color-usernavauth: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
-    --color-section: hsl(var(--color-base-hue), var(--color-base-saturation), 80%);
-    --color-input: hsl(var(--color-base-hue), var(--color-base-saturation), 85%);
-    --color-input-border: hsl(var(--color-base-hue), var(--color-base-saturation), 53%);
-    --color-input-border-focus: hsl(var(--color-base-hue), var(--color-base-saturation), 63%);
+  --default-border-radius: 0.2rem;
+  --btn-border-radius: 1rem;
+  --panel-border-radius: 0.4rem;
+  --btn-border-radius-large: 1rem;
 
-    --footer-size:2.3rem;
-    --header-bar-size:1.8rem;
-    --usernav-bar-size:2.3rem;
-    
-    --default-spacing:1rem;
-    --default-spacing-x:1.2rem;
-    --default-spacing-y:1.5rem;
-    --heading-spacing:1rem;
-    --list-spacing:2.3rem;
-    --blockquote-spacing:1.5rem;
-    --message-spacing:calc(var(--default-spacing-y)/2);
-    --paragraph-spacing:.8rem;
-    --header-bar-spacing:.6rem;
-    --mini-spacing:.3rem;
-    --small-spacing:.6rem;
+  --footer-image-size: calc(var(--footer-size) / (10 / 8));
+  --usernav-bar-image-size: calc(var(--usernav-bar-size) / (10 / 8));
+  --users-image-size: 2rem;
 
-    --default-border-radius:.2rem;
-    --btn-border-radius:1rem;
-    --panel-border-radius:.4rem;
-    --btn-border-radius-large:1rem;
+  --container-width: 100vw;
+  --wildf: calc(100vw - var(--container-width) - (100vw - 100%));
 
-    --footer-image-size:calc(var(--footer-size)/(10/8));
-    --usernav-bar-image-size:calc(var(--usernav-bar-size)/(10/8)); 
-    --users-image-size:2rem; 
+  --user-status-color-now: #3bdd3b;
+  --user-status-color-then: #f8a62a;
+  --user-status-color-never: #d8d6d5;
+  --user-status-color-error: #d32929;
 
-    --container-width: 100vw;
-    --wildf: calc(100vw - var(--container-width)  - (100vw - 100%));
+  --signinupnav-width: 50%;
 
-    --user-status-color-now: #3bdd3b;
-    --user-status-color-then: #f8a62a;
-    --user-status-color-never: #d8d6d5;
-    --user-status-color-error: #d32929;
-
-
-    --signinupnav-width: 50%;
-
-    --global-fonts: 'Gotham Rounded', Helvetica;
-  }
+  --global-fonts: "Gotham Rounded", Helvetica;
+}

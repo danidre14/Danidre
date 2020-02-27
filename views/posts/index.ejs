@@ -6,61 +6,69 @@
     <article class="posts-grid">
         <div>
             <% posts.forEach(post => { %>
-                <% const createdAt = formatDistanceToNow(post.createdAt);
+            <% const createdAt = formatDistanceToNow(post.createdAt);
                 const updatedAt = formatDistanceToNow(post.updatedAt);
+                const totalViews = post.views? post.views + (post.views==1? " view" : " views") : "1 view";
                 let lastChanged = '';
                 if(createdAt !== updatedAt) {
                     lastChanged = ' *';
                 } %>
-                <div data-p-newspost>
-                    <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;" data-p-newspost>
-                        <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
-                        <div style="width:100%;margin-left:var(--small-spacing);">
-                            <h4><strong><%= post.title %></strong></h4>
-                            <% if(post.summary) { %>
-                                <pre data-p-newspost><%= post.summary %></pre>
-                            <% } else { %>
-                                <span>Read <%= post.title %></span>
-                            <% } %>
-                            <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
-                        </div>
-                    </a>
-                </div>
+            <div data-p-newspost>
+                <a href="/posts/view/<%= post.name %>" class="description encapsulated-box"
+                    style="text-decoration:none;" data-p-newspost>
+                    <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>"
+                        onerror="this.src = 'images/PostsIcon.png';">
+                    <div style="width:100%;margin-left:var(--small-spacing);">
+                        <h4><strong><%= post.title %></strong></h4>
+                        <% if(post.summary) { %>
+                        <pre data-p-newspost><%= post.summary %></pre>
+                        <% } else { %>
+                        <span>Read <%= post.title %></span>
+                        <% } %>
+                        <i style="font-size:.56rem;text-align:right;"><%= totalViews %> |
+                            <%= createdAt %><%= lastChanged %></i>
+                    </div>
+                </a>
+            </div>
 
-                <% if(!hasPosts) { %>
-                    <% hasPosts = true; %>
-                <% } %>
+            <% if(!hasPosts) { %>
+            <% hasPosts = true; %>
+            <% } %>
             <% }); %>
             <% if(!hasPosts) { %>
-                <p>No posts yet. Stay tuned.</a></p>
+            <p>No posts yet. Stay tuned.</a></p>
             <% } %>
         </div>
-        <a class="twitter-timeline" data-width="800" data-height="600" data-theme="dark" data-link-color="#998177" href="https://twitter.com/danidre?ref_src=twsrc%5Etfw">Tweets by Danidre</a>
+        <a class="twitter-timeline" data-width="800" data-height="600" data-theme="dark" data-link-color="#998177"
+            href="https://twitter.com/danidre?ref_src=twsrc%5Etfw">Tweets by Danidre</a>
     </article>
     <article>
         <% if(user !== undefined) {
             if(isAdmin(user.username)) { %>
-                <a class="btn btn-primary" href="/posts/new">Create Post</a>
-            <% } 
+        <a class="btn btn-primary" href="/posts/new">Create Post</a>
+        <% } 
         }%>
         <% //<a href="https://twitter.com/intent/tweet?screen_name=danidre&ref_src=twsrc%5Etfw" class="btn btn-primary twitter-mention-button" data-size="large" data-text="hey man," data-related="zanzlanz" data-show-count="false">Tweet to @Danidre</a> %>
-        <a class="btn btn-primary" href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A3000%2Fnews&ref_src=twsrc%5Etfw&related=zanzlanz&screen_name=danidre&text=hey%20man%2C&tw_p=tweetbutton">
+        <a class="btn btn-primary"
+            href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A3000%2Fnews&ref_src=twsrc%5Etfw&related=zanzlanz&screen_name=danidre&text=hey%20man%2C&tw_p=tweetbutton">
             <div class="div-space-around">
-                <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Tweet to @danidre</span>
+                <img style="size:1rem;width:1rem;height:1rem;margin-right:var(--mini-spacing);"
+                    src="../images/TwitterLogo2.png" alt=""> <span class="div-space-around">Tweet to @danidre</span>
             </div>
         </a>
-        
+
     </article>
 </section>
-<meta name="description" content="Danidre's news page. Stay up to date with the latest infomration about projects and other content.">
+<meta name="description"
+    content="Danidre's news page. Stay up to date with the latest infomration about projects and other content.">
 <meta name="twitter:site" content="@danidre">
 
 <script async src="https://platform.twitter.com/widgets.js"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-2781990552887713",
-    enable_page_level_ads: true
-});
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2781990552887713",
+        enable_page_level_ads: true
+    });
 </script>
