@@ -9,42 +9,50 @@
         <h3>Recent News</h3>
         <div>
             <% posts.forEach(post => { %>
-                <% const createdAt = formatDistanceToNow(post.createdAt);
+            <% const createdAt = formatDistanceToNow(post.createdAt);
                 const updatedAt = formatDistanceToNow(post.updatedAt);
+                const totalViews = post.views? post.views + (post.views==1? " view" : " views") : "1 view";
                 let lastChanged = '';
                 if(createdAt !== updatedAt) {
                     lastChanged = ' *';
                 } %>
-                <div data-p-newspost>
-                    <a href="/posts/view/<%= post.name %>" class="description encapsulated-box" style="text-decoration:none;" data-p-newspost>
-                        <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>" onerror="this.src = 'images/PostsIcon.png';">
-                        <div style="width:100%;margin-left:var(--small-spacing);">
-                            <h4><strong><%= post.title %></strong></h4>
-                            <% if(post.summary) { %>
-                                <pre data-p-newspost><%= post.summary %></pre>
-                            <% } else { %>
-                                <span>Read <%= post.title %></span>
-                            <% } %>
-                            <i style="font-size:.56rem;text-align:right;"><%= createdAt %><%= lastChanged %></i>
-                        </div>
-                    </a>
-                </div>
+            <div data-p-newspost>
+                <a href="/posts/view/<%= post.name %>" class="description encapsulated-box"
+                    style="text-decoration:none;" data-p-newspost>
+                    <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>"
+                        onerror="this.src = 'images/PostsIcon.png';">
+                    <div style="width:100%;margin-left:var(--small-spacing);">
+                        <h4><strong><%= post.title %></strong></h4>
+                        <% if(post.summary) { %>
+                        <pre data-p-newspost><%= post.summary %></pre>
+                        <% } else { %>
+                        <span>Read <%= post.title %></span>
+                        <% } %>
+                        <i style="font-size:.56rem;text-align:right;"><%= totalViews %> |
+                            <%= createdAt %><%= lastChanged %></i>
+                    </div>
+                </a>
+            </div>
 
-                <% if(!hasPosts) { %>
-                    <% hasPosts = true; %>
-                <% } %>
+            <% if(!hasPosts) { %>
+            <% hasPosts = true; %>
+            <% } %>
             <% }); %>
             <% if(!hasPosts) { %>
-                <p>No <a href="/posts">posts</a> yet. Stay tuned.</a></p>
+            <p>No <a href="/posts">posts</a> yet. Stay tuned.</a></p>
             <% } else { %>
-                <div style="text-align:right;"><a href="/posts"><i>More posts</i></a></div>
+            <div style="text-align:right;"><a href="/posts"><i>More posts</i></a></div>
             <% } %>
         </div>
     </article>
     <article>
         <h3>Latest Video</h3>
-        <div style="position:relative;height:0;padding-top:56.25%;width:100%;"><iframe style="position:absolute;top:0;left:0;border:0;width:100%;height:100%;" src="https://www.youtube.com/embed/videoseries?list=UUtY43z1ZfeSjprj1Rs1np3A" frameborder="0" allow="accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
-        <div style="text-align:right;"><a href="https://www.youtube.com/Danidre15Dev/videos"><i>More videos</i></a></div>
+        <div style="position:relative;height:0;padding-top:56.25%;width:100%;"><iframe
+                style="position:absolute;top:0;left:0;border:0;width:100%;height:100%;"
+                src="https://www.youtube.com/embed/videoseries?list=UUtY43z1ZfeSjprj1Rs1np3A" frameborder="0"
+                allow="accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
+        <div style="text-align:right;"><a href="https://www.youtube.com/Danidre15Dev/videos"><i>More videos</i></a>
+        </div>
     </article>
     <article class="common-grid">
         <div>
@@ -56,23 +64,27 @@
         </div>
         <div>
             <p>Previous works:</p>
-            <ul>  
+            <ul>
                 <li><a href="https://danicoder.weebly.com/" target="_blank" rel="noreferrer">Dani Coder</a></li>
-                <li><a href="https://www.indiedb.com/company/dani-inc" target="_blank" rel="noreferrer">Dani-Inc</a></li>
+                <li><a href="https://www.indiedb.com/company/dani-inc" target="_blank" rel="noreferrer">Dani-Inc</a>
+                </li>
             </ul>
         </div>
     </article>
     <article>
         <% //<a href="https://twitter.com/danidre?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-related="zanzlanz" data-show-count="false">Follow @Danidre</a> %>
 
-        <a class="btn btn-primary" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flocalhost%3A3000%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=danidre&tw_p=followbutton">
+        <a class="btn btn-primary"
+            href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flocalhost%3A3000%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=danidre&tw_p=followbutton">
             <div class="div-space-around">
-                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Follow</span>
+                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/TwitterLogo2.png"
+                    alt=""> <span class="div-space-around">Follow</span>
             </div>
         </a>
         <a class="btn btn-primary" href="https://www.youtube.com/Danidre15Dev?sub_confirmation=1">
             <div class="div-space-around">
-                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/YoutubeLogo2.png" alt=""> <span class="div-space-around">Subscribe</span>
+                <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/YoutubeLogo2.png"
+                    alt=""> <span class="div-space-around">Subscribe</span>
             </div>
         </a>
     </article>
@@ -83,4 +95,5 @@
 
 <script async src="https://platform.twitter.com/widgets.js"></script>
 
-<script data-ad-client="ca-pub-2781990552887713" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script data-ad-client="ca-pub-2781990552887713" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

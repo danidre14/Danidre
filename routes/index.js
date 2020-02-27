@@ -4,15 +4,15 @@ const User = require('../models/user');
 const Post = require('../models/post');
 
 router.get('/', async (req, res) => {
-    let vars = {cPage: "home", searchOptions: req.query};
+    let vars = { cPage: "home", searchOptions: req.query };
     vars.title = "Home";
-    if(req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
         try {
-            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            const user = await User.findOne({ username: new RegExp("^" + req.user.username + "$", "i") }, 'username profileImage profileImageType');
             vars.user = user;
-        } catch {}
+        } catch { }
     }
-    const posts = await Post.find({}, 'title name updatedAt createdAt summary image', {sort: {createdAt: -1}, limit: 2});
+    const posts = await Post.find({}, 'title name updatedAt createdAt summary image views', { sort: { createdAt: -1 }, limit: 2 });
 
     vars.posts = posts;
     res.render('index', vars);

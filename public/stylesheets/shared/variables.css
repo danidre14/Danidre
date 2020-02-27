@@ -10,7 +10,7 @@
   --color-background: hsl(
     var(--color-base-hue),
     var(--color-base-saturation),
-    75%
+    72%
   );
 
   --color-text-light: hsl(
@@ -84,7 +84,7 @@
   --color-section: hsl(
     var(--color-base-hue),
     var(--color-base-saturation),
-    85%
+    82%
   );
   --color-input: hsl(var(--color-base-hue), var(--color-base-saturation), 85%);
   --color-input-border: hsl(
