@@ -165,13 +165,13 @@ const gamesInformation = function (gameName) {
             -----
             -----
 
-            ## Made for Ludum Dare 46
+            ## Made for Ludum Dare 46 and Geta Jam!
             -----
             # Credits:
             **Programming-** [@danidre](/u/danidre)
             **Design-** [@TMG](/u/TeaEhmGee)
             **Art-** [@rbatistadelima](https://ldjam.com/users/rbatistadelima/)
-            **Audio/Composer-** [@JasmineCooper](https://ldjam.com/users/jasmine-cooper/)`,
+            **Audio/Composer-** [@JasmineCooper](https://twitter.com/perennialcoop)`,
             minidesc: `Why does everything seem to go missing? You've just found Miscen! But…there she goes again…`,
             image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
             url: "/games/miscen_again"
