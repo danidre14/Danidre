@@ -3,13 +3,13 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/', async (req, res) => {
-    let vars = {cPage: "games", searchOptions: req.query};
+    let vars = { cPage: "games", searchOptions: req.query };
     vars.title = "Games";
-    if(req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
         try {
-            const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
+            const user = await User.findOne({ username: new RegExp("^" + req.user.username + "$", "i") }, 'username profileImage profileImageType');
             vars.user = user;
-        } catch {}
+        } catch { }
     }
 
     vars.games = gamesList();
@@ -18,19 +18,19 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:gameName', async (req, res) => {
-    let vars = {cPage: "games", searchOptions: req.query};
-    if(req.isAuthenticated()) {
+    let vars = { cPage: "games", searchOptions: req.query };
+    if (req.isAuthenticated()) {
         try {
-        const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
-        vars.user = user;
-        } catch {}
+            const user = await User.findOne({ username: new RegExp("^" + req.user.username + "$", "i") }, 'username profileImage profileImageType');
+            vars.user = user;
+        } catch { }
     }
 
     const gameName = req.params.gameName.toLowerCase();
     const game = gamesInformation(gameName);
 
 
-    if(!game) {
+    if (!game) {
         vars.title = "Games";
         vars.description = "Missing game. This game does not exist!";
         vars.blCode = "game_not_found";
@@ -42,7 +42,7 @@ router.get('/:gameName', async (req, res) => {
     }
 })
 
-const gamesList = function() {
+const gamesList = function () {
     const gameList = [
         /*{
             title: "My First Game",
@@ -50,6 +50,12 @@ const gamesList = function() {
             image: "FirstGame/Icon_Rakan.png",
             url: "/games/my_first_game"
         },*/
+        {
+            title: "Miscen...AGAIN!?",
+            minidesc: "Why does everything seem to go missing? You've just found Miscen! But…there she goes again…",
+            image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
+            url: "/games/miscen_again"
+        },
         {
             title: "Bob The Brawler",
             minidesc: "Ski Mask Gang are out for you! Beat some baddies in this fast-paced brawler! (>:[=)",
@@ -72,7 +78,7 @@ const gamesList = function() {
     return gameList;
 }
 
-const gamesInformation = function(gameName) {
+const gamesInformation = function (gameName) {
     const gameLibrary = {
         /*my_first_game: {
             scripts: ["/games/FirstGame/firstGame.js"], // /games/[src.js]
@@ -129,6 +135,46 @@ const gamesInformation = function(gameName) {
             minidesc: `Ski Mask Gang are out for you! Beat some baddies in this fast-paced brawler! (>:[=)`,
             image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
             url: "/games/bob_the_brawler"
+        },
+        miscen_again: {
+            scripts: ["/games/MiscenAgain/script.js"],
+            title: "Miscen...AGAIN!?",
+            description: `# [Miscen...AGAIN!?](https://ldjam.com/events/ludum-dare/46/miscen-again)
+            [coverimg](https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg)
+            ## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/46/games).
+
+            # You've just found Miscen! But...there she goes again...
+
+            - Why is your charger missing? Your laptop just died because of it! :angry: 
+            - Who stole your watering can? Your plants died from having nothing to drink! :sob:
+
+            -----
+            -----
+
+            **Miscen** keeps taking your belongings, can you get them back?
+            Solve these riddles and find **Miscen** before something goes *horribly wrong*!
+
+            *****
+
+            # Controls:
+
+            - **[WASD/Arrows]:** Move
+            - **[E]:** Interact/Search
+            - **[M]:** Show/Hide Riddle Sheet
+
+            -----
+            -----
+
+            ## Made for Ludum Dare 46
+            -----
+            # Credits:
+            **Programming-** [@danidre](/u/danidre)
+            **Design-** [@TMG](/u/TeaEhmGee)
+            **Art-** [@rbatistadelima](https://ldjam.com/users/rbatistadelima/)
+            **Audio/Composer-** [@JasmineCooper](https://ldjam.com/users/jasmine-cooper/)`,
+            minidesc: `Why does everything seem to go missing? You've just found Miscen! But…there she goes again…`,
+            image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
+            url: "/games/miscen_again"
         }
     }
     return gameLibrary[gameName];
