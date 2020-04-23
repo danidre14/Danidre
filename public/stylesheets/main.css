@@ -226,8 +226,8 @@ section.posts {
 
 section .posts-img {
   width: 150px;
-  height: 150px;
-  max-width: fit-content;
+  /* height: 150px;
+  max-width: fit-content; */
 }
 
 section div[data-p-newspost] {
