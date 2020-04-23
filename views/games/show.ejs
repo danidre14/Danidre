@@ -7,15 +7,14 @@
         </div>
     </article>
     <article>
-        <div style="border-top-left-radius:var(--panel-border-radius);border-top-right-radius:var(--panel-border-radius);" class="gameName">Description</div>  
+        <div style="border-top-left-radius:var(--panel-border-radius);border-top-right-radius:var(--panel-border-radius);"
+            class="gameName">Description</div>
         <div style="text-align:left;border-top-left-radius:0;border-top-right-radius:0;" class="encapsulated-box">
-            <!-- <img class="game-img-big" src="<%= game.image %>" onerror="this.src = '../../images/GamesIcon.png';"> -->
             <div class="the_markdown light_text" style="padding-left:1.2rem;width:100%;color:var(--color-text-light);">
-                <p><%=// game.title %></p>
                 <% if(game.description) { %>
-                    <%- MarkDownToUp(game.description) %>
+                <%- MarkDownToUp(game.description) %>
                 <% } else { %>
-                    <p>This game does not have any description.</p>
+                <p>This game does not have any description.</p>
                 <% } %>
             </div>
         </div>
@@ -46,14 +45,14 @@
 <script defer src="/games/engine/HighscoreAPI.js"></script>
 
 <% game.scripts.forEach(script => { %>
-    <script defer src="<%= script %>"></script>
+<script defer src="<%= script %>"></script>
 <% }); %>
 
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-2781990552887713",
-    enable_page_level_ads: true
-});
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2781990552887713",
+        enable_page_level_ads: true
+    });
 </script>

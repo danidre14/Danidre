@@ -1,27 +1,29 @@
-<% var description; %>
-<% var title; %>
 <% let hasGames = false; %>
-<h2><%= title || "Game" %></h2>
+<h2>Games</h2>
 <section class="games">
     <article>
-        <% games.forEach(game => { %>
-            <a href="<%= game.url %>" class="description encapsulated-box"
-                style="text-decoration:none;margin-bottom:1rem;">
-                <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
-                    onerror="this.src = '../images/GamesIcon.png';">
-                <div style="padding-left:1.2rem;width:100%;">
-                    <p><%= game.title %></p>
+        <div class="games-div">
+            <% games.forEach(game => { %>
+            <a href="<%= game.url %>" style="color:white;text-decoration:none;margin-bottom:1rem;">
+                <div class="game-div">
+                    <div class="img-div">
+                        <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
+                            onerror="this.src = '../images/GamesIcon.png';">
+                    </div>
+                    <span class="title"><%= game.title %></span>
                     <% if(game.minidesc) { %>
-                    <pre><%= game.minidesc %></pre>
+                    <span class="desc">
+                        <pre><%= game.minidesc %></pre></span>
                     <% } else { %>
-                    <span>Play <%= game.title %></span>
+                    <span class="desc">Play <%= game.title %></span>
                     <% } %>
                 </div>
             </a>
-        <% if(!hasGames) { %>
-        <% hasGames = true; %>
-        <% } %>
-        <% }); %>
+            <% if(!hasGames) { %>
+            <% hasGames = true; %>
+            <% } %>
+            <% }); %>
+        </div>
         <% if(!hasGames) { %>
         <p>No games yet. Stay tuned.</a></p>
         <% } %>

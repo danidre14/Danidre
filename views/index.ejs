@@ -1,10 +1,43 @@
-<% let hasPosts = false; %>
+<% let hasPosts = false;
+let hasGames = false; %>
 <h2>Home Page</h2>
 <section class="home">
     <article>
         <p>I'm <a href="/about">Danidre</a>, a game programmer, web developer, and software engineer!</p>
     </article>
     <%- include('./partials/_twitch_emb.ejs') %>
+    <article>
+        <h3>Latest Games</h3>
+        <div>
+            <div class="games-div">
+                <% games.forEach(game => { %>
+                <a href="<%= game.url %>" style="color:white;text-decoration:none;margin-bottom:1rem;">
+                    <div class="game-div">
+                        <div class="img-div">
+                            <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
+                                onerror="this.src = '../images/GamesIcon.png';">
+                        </div>
+                        <span class="title"><%= game.title %></span>
+                        <% if(game.minidesc) { %>
+                        <span class="desc">
+                            <pre><%= game.minidesc %></pre></span>
+                        <% } else { %>
+                        <span class="desc">Play <%= game.title %></span>
+                        <% } %>
+                    </div>
+                </a>
+                <% if(!hasGames) { %>
+                <% hasGames = true; %>
+                <% } %>
+                <% }); %>
+            </div>
+            <% if(!hasGames) { %>
+            <p>No <a href="/games">games</a> yet. Stay tuned.</p>
+            <% } else { %>
+            <div style="text-align:right;"><a href="/games"><i>More games</i></a></div>
+            <% } %>
+        </div>
+    </article>
     <article>
         <h3>Recent News</h3>
         <div>
