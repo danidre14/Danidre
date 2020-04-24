@@ -129,6 +129,13 @@ const gamesInformation = function (gameName) {
             Solve these riddles and find **Miscen** before something goes *horribly wrong*!
 
             *****
+            
+            # How to Play:
+            The riddles show you where Miscen is hiding. Press E on an object to make a guess/search for Miscen there. After you find Miscen, return the item to win!
+            
+            If you guess incorrectly, you lose 10 seconds! Solve the riddles, find Miscen, and return the items before time runs out. 
+            
+            -----
 
             # Controls:
 
