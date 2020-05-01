@@ -37,6 +37,12 @@ const gamesList = function () {
             url: "/games/bob_the_brawler"
         },
         {
+            title: "BtBIO PBE",
+            minidesc: "Public Beta Environment for Bob the Brawler Multiplayer Game",
+            image: "/games/thumbnails/btbio_thumbnail.png",
+            url: "https://btbiopbe.danidre.com"
+        },
+        {
             title: "Quiz Game",
             minidesc: "Test your intellect with 10 simple questions.",
             image: "https://cdn.pixabay.com/photo/2018/08/31/11/17/quiz-3644414_960_720.png",
@@ -45,7 +51,7 @@ const gamesList = function () {
         {
             title: "Newgrounds Games",
             minidesc: "Play my other games at Newgrounds.",
-            image: "/games/newgroundsimg.png", // /games/[src.png]
+            image: "/games/thumbnails/newgrounds_thumbnail.png", // /games/[src.png]
             url: "https://danidre14.newgrounds.com/games"
         }
     ]
