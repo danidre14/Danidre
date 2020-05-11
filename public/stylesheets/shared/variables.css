@@ -27,6 +27,7 @@
   --color-input: hsl(var(--color-base-hue), var(--color-base-saturation), 85%);
   --color-input-border: hsl( var(--color-base-hue), var(--color-base-saturation), 53%);
   --color-input-border-focus: hsl( var(--color-base-hue), var(--color-base-saturation), 63%);
+  --color-game-icon: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
   --footer-size: 2.3rem;
   --header-bar-size: 1.8rem;
   --usernav-bar-size: 2.3rem;

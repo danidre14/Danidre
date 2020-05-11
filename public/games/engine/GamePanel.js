@@ -1,28 +1,28 @@
-const GamePanel = function(gameAreaId, options) {
-    let defaultCW = options? options.dimensions? options.dimensions.width || 400 : 400 : 400;
-    let defaultCH = options? options.dimensions? options.dimensions.height || 400  : 400 : 400;
+const GamePanel = function (gameAreaId, options) {
+    let defaultCW = options ? options.dimensions ? options.dimensions.width || 400 : 400 : 400;
+    let defaultCH = options ? options.dimensions ? options.dimensions.height || 400 : 400 : 400;
     let WIDTH = defaultCW;
     let HEIGHT = defaultCH;
     let PAD = 40;
     const LOCKSIZE = options ? options.dimensions ? options.dimensions.lock !== undefined ? options.dimensions.lock : true : true : true;
-    const index = options? options.index? options.index || 0 : 0 : 0;
-    const showLogs = options? options.showLogs !== undefined ? options.showLogs : true : true;
-    const gameName = options? options.name? options.name || "Game" : "Game" : "Game";
-    const safeRender = options? options.safeRender !== undefined ? options.safeRender : true : true;
-    const renderOnMouse = options? options.renderOn !== undefined ? options.renderOn.mouse : false : false;
-    const startEmpty = options? options.startEmpty !== undefined ? options.startEmpty : false : false;
-    let renderCallBack = options? options.renderMethod? options.renderMethod || 'render' : 'render' : 'render';
+    const index = options ? options.index ? options.index || 0 : 0 : 0;
+    const showLogs = options ? options.showLogs !== undefined ? options.showLogs : true : true;
+    const gameName = options ? options.name ? options.name || "Game" : "Game" : "Game";
+    const safeRender = options ? options.safeRender !== undefined ? options.safeRender : true : true;
+    const renderOnMouse = options ? options.renderOn !== undefined ? options.renderOn.mouse : false : false;
+    const startEmpty = options ? options.startEmpty !== undefined ? options.startEmpty : false : false;
+    let renderCallBack = options ? options.renderMethod ? options.renderMethod || 'render' : 'render' : 'render';
 
     let mouseX = 0;
     let mouseY = 0;
 
-    const getCanvas = function() {
+    const getCanvas = function () {
         return gameCanvas;
     }
-    const getCanvasWidth = function() {
+    const getCanvasWidth = function () {
         return gameCanvas.width;
     }
-    const getCanvasHeight = function() {
+    const getCanvasHeight = function () {
         return gameCanvas.height;
     }
     const getWidth = function () {
@@ -31,46 +31,46 @@ const GamePanel = function(gameAreaId, options) {
     const getHeight = function () {
         return gamePanel.clientHeight || gamePanel.offsetHeight || gamePanel.style.height || defaultCH;
     }
-    const setDimension = function(width, height) {
+    const setDimension = function (width, height) {
         setWidth(width);
         setHeight(height);
     }
-    const setWidth = function(width) {
+    const setWidth = function (width) {
         defaultCW = width || defaultCW;
         gameCanvasDiv.style.width = defaultCW + "px";
         WIDTH = getWidth();
         resizeCanvas();
     }
-    const setHeight = function(height) {
+    const setHeight = function (height) {
         defaultCH = height || defaultCH;
         gameCanvasDiv.style.height = defaultCH + "px";
         HEIGHT = getHeight();
         resizeCanvas();
     }
-    const resetCanvas = function() {
+    const resetCanvas = function () {
         stage.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     }
 
-    const getMouseX = function() {
+    const getMouseX = function () {
         return mouseX;
     }
-    const getMouseY = function() {
+    const getMouseY = function () {
         return mouseY;
     }
-    const getMouse = function() {
-        return {x: mouseX, y: mouseY};
+    const getMouse = function () {
+        return { x: mouseX, y: mouseY };
     }
     function getViewportSize() {
         var w = document.documentElement.clientWidth || window.innerWidth || 0;
         var h = document.documentElement.clientHeight || window.innerHeight || 0;
-        return {w : w, h: h}
+        return { w: w, h: h }
     }
     function resizeCanvas(dontRender) {
-        if(!isFullScreen()) {
+        if (!isFullScreen()) {
             getPadded();
             const vp = getViewportSize();
             const pad = parseInt(window.getComputedStyle(document.getElementById('main'), null).getPropertyValue('padding-left')) * 2;
-            if(vp.w - pad < WIDTH) {
+            if (vp.w - pad < WIDTH) {
                 const newW = vp.w - PAD;
                 const newH = defaultCW / defaultCH;
                 gameCanvasDiv.style.width = (newW) + 'px';
@@ -84,11 +84,11 @@ const GamePanel = function(gameAreaId, options) {
             gameCanvas.style.left = "0px";
             gameCanvas.style.top = "0px";
         } else {
-            if(LOCKSIZE) {
+            if (LOCKSIZE) {
                 const vp = getViewportSize();
                 const canvRatio = defaultCW / defaultCH;
                 const viewRatio = vp.w / vp.h;
-                if(viewRatio < canvRatio) {
+                if (viewRatio < canvRatio) {
                     const heightRatio = defaultCW / defaultCH;
                     const newW = vp.w;
                     const newH = vp.w / heightRatio;
@@ -96,7 +96,7 @@ const GamePanel = function(gameAreaId, options) {
                     gameCanvas.height = newH;
                     gameCanvas.style.left = "0px";
                     gameCanvas.style.top = ((vp.h - newH) / 2) + "px";
-                } else if(viewRatio > canvRatio) {
+                } else if (viewRatio > canvRatio) {
                     const widthRatio = defaultCH / defaultCW;
                     const newW = vp.h / widthRatio;
                     const newH = vp.h;
@@ -117,11 +117,11 @@ const GamePanel = function(gameAreaId, options) {
                 gameCanvas.style.top = "0px";
             }
         }
-        if(dontRender === "true") return;
-        render(); 
+        if (dontRender === "true") return;
+        render();
     }
 
-    const clearCanvas = function() {
+    const clearCanvas = function () {
         stage.fillStyle = "white";
         stage.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
     };
@@ -133,42 +133,42 @@ const GamePanel = function(gameAreaId, options) {
         stage.fillText("No render method found.", 0, gameCanvas.height);
     };
     function renderError(message) {
-        if(message)
+        if (message)
             console.error("Render error: ", message)
 
         stage.fillStyle = "white";
         stage.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         stage.fillStyle = "black";
         stage.font = '20px Arial';
-        stage.fillText(`Check Logs> Render error${message? ': ' + message + '!' : '!'}`.toUpperCase(), 0, 20);
-        stage.fillText(`Check Logs> Render error${message? ': ' + message + '!' : '!'}`.toUpperCase(), 0, gameCanvas.height);
-    };                                 
+        stage.fillText(`Check Logs> Render error${message ? ': ' + message + '!' : '!'}`.toUpperCase(), 0, 20);
+        stage.fillText(`Check Logs> Render error${message ? ': ' + message + '!' : '!'}`.toUpperCase(), 0, gameCanvas.height);
+    };
     function renderNothing() {
         stage.fillStyle = "white";
-        stage.fillRect(0, 0, gameCanvas.width/2, gameCanvas.height/2);
+        stage.fillRect(0, 0, gameCanvas.width / 2, gameCanvas.height / 2);
         stage.fillStyle = "grey";
-        stage.fillRect(gameCanvas.width/2, 0, gameCanvas.width/2, gameCanvas.height/2);
+        stage.fillRect(gameCanvas.width / 2, 0, gameCanvas.width / 2, gameCanvas.height / 2);
         stage.fillStyle = "grey";
-        stage.fillRect(0, gameCanvas.height/2, gameCanvas.width/2, gameCanvas.height/2);
+        stage.fillRect(0, gameCanvas.height / 2, gameCanvas.width / 2, gameCanvas.height / 2);
         stage.fillStyle = "white";
-        stage.fillRect(gameCanvas.width/2, gameCanvas.height/2, gameCanvas.width/2, gameCanvas.height/2);
+        stage.fillRect(gameCanvas.width / 2, gameCanvas.height / 2, gameCanvas.width / 2, gameCanvas.height / 2);
     };
 
     function getPadded() {
         PAD = (parseInt(window.getComputedStyle(gameCanvasDiv, null).getPropertyValue('margin-left')) +
-        parseInt(window.getComputedStyle(document.getElementById('main'), null).getPropertyValue('padding-left')) +
-        parseInt(window.getComputedStyle(gameCanvasDiv, null).getPropertyValue('border-left-width'))) * 2;
+            parseInt(window.getComputedStyle(document.getElementById('main'), null).getPropertyValue('padding-left')) +
+            parseInt(window.getComputedStyle(gameCanvasDiv, null).getPropertyValue('border-left-width'))) * 2;
     }
 
     function setMousePosition(event) {
         const rect = gameCanvas.getBoundingClientRect(),
             scaleX = gameCanvas.width / rect.width,
             scaleY = gameCanvas.height / rect.height;
-      
+
         mouseX = parseInt((event.clientX - rect.left) * scaleX);
         mouseY = parseInt((event.clientY - rect.top) * scaleY);
 
-        if(LOCKSIZE) {
+        if (LOCKSIZE) {
             const scale = defaultCW / getCanvasWidth();
             mouseX *= scale;
             mouseY *= scale;
@@ -176,61 +176,61 @@ const GamePanel = function(gameAreaId, options) {
             mouseX = parseInt(mouseX);
             mouseY = parseInt(mouseY);
         }
-        
-        if(renderOnMouse)
+
+        if (renderOnMouse)
             render();
     }
 
-    const paint = function(method, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
+    const paint = function (method, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
         stage[method](a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
     }
-    const prop = function(prop, val) {
+    const prop = function (prop, val) {
         stage[prop] = val;
     }
 
-    const renderMethod = function(renderMethod) {
+    const renderMethod = function (renderMethod) {
         renderCallBack = renderMethod;
     }
     let remMem = [];
-    const render = function() {
-        if(safeRender)
+    const render = function () {
+        if (safeRender)
             renderNothing();
         try {
-            if(typeof renderCallBack === 'string')
+            if (typeof renderCallBack === 'string')
                 window[renderCallBack]();
             else
                 renderCallBack();
         } catch (e) {
-            if(showLogs) console.error('Render attempt failed: ', e.message);
+            if (showLogs) console.error('Render attempt failed: ', e.message);
             renderMethod(renderError);
             return renderError(e.message);
         }
-        if(arguments.length > 0) {
+        if (arguments.length > 0) {
             remMem = [];
-            for(const i in arguments) {
+            for (const i in arguments) {
                 try {
-                    if(typeof arguments[i] === 'string') {
+                    if (typeof arguments[i] === 'string') {
                         window[arguments[i]]();
                     } else {
                         arguments[i]();
                     }
                     remMem.push(arguments[i]);
                 } catch (e) {
-                    if(showLogs) console.error('Render attempt failed: ', e.message);
+                    if (showLogs) console.error('Render attempt failed: ', e.message);
                     renderMethod(renderError);
                     return renderError(e.message);
                 }
             }
         } else {
-            for(const i in remMem) {
+            for (const i in remMem) {
                 try {
-                    if(typeof remMem[i] === 'string') {
+                    if (typeof remMem[i] === 'string') {
                         window[remMem[i]]();
                     } else {
                         remMem[i]();
                     }
                 } catch (e) {
-                    if(showLogs) console.error('Render attempt failed: ', e.message);
+                    if (showLogs) console.error('Render attempt failed: ', e.message);
                     renderMethod(renderError);
                     return renderError(e.message);
                 }
@@ -238,16 +238,16 @@ const GamePanel = function(gameAreaId, options) {
         }
     }
 
-    const exitHandler = function() {
+    const exitHandler = function () {
         if (!isFullScreen()) {
             gamePanel.scrollIntoView();
         }
     }
 
-    const isFullScreen = function() {
+    const isFullScreen = function () {
         const fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-        
-        if(!fullscreenElement) return false;
+
+        if (!fullscreenElement) return false;
         return true;
     }
     const gameArea = document.getElementById(gameAreaId);
@@ -273,7 +273,7 @@ const GamePanel = function(gameAreaId, options) {
     document.getElementById('fsBtn').onclick = openFullscreen;
     document.getElementById('fsBtn').removeAttribute('id');
 
-    document.getElementById('shBtn').onclick = () => {alert("Share link of game: " + window.location.href);};
+    document.getElementById('shBtn').onclick = () => { alert("Share link of game: " + window.location.href); };
     document.getElementById('shBtn').removeAttribute('id');
 
     const gameCanvasDiv = document.getElementById('gameCanvasDiv');
@@ -312,7 +312,7 @@ const GamePanel = function(gameAreaId, options) {
     }
 
     function toggleFullScreen() {
-        if(isFullScreen()) {
+        if (isFullScreen()) {
             closeFullscreen();
         } else {
             openFullscreen();
@@ -327,7 +327,7 @@ const GamePanel = function(gameAreaId, options) {
     gameCanvas.addEventListener('mousemove', setMousePosition, false);
 
     resizeCanvas('true');
-    if(!startEmpty)
+    if (!startEmpty)
         renderNothing();
 
     return {

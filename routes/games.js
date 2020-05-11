@@ -36,6 +36,8 @@ router.get('/:gameName', async (req, res) => {
         vars.blCode = "game_not_found";
         res.render('misc/blank', vars);
     } else {
+        vars.games = Game.find({ random: true }).filter(otherGame => otherGame.title !== game.title);
+        vars.games.splice(5);
         vars.game = game;
         vars.title = game.title;
         res.render('games/show', vars);

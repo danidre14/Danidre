@@ -1,3 +1,4 @@
+<% let hasGames = false; %>
 <h2><%= game.title || "Game" %></h2>
 <section class="games">
     <article>
@@ -6,6 +7,39 @@
         <div id="highscoreArea">
         </div>
     </article>
+    <div>
+        <div style="border-top-left-radius:var(--panel-border-radius);border-top-right-radius:var(--panel-border-radius);"
+            class="gameName">More Games</div>
+        <div style="text-align:left;border-top-left-radius:0;border-top-right-radius:0;" class="encapsulated-box">
+
+            <div class="games-div small">
+                <% games.forEach(game => { %>
+                <% if(game.newTab) { %>
+                <a href="<%= game.url %>" style="color:white;text-decoration:none;line-height: 0;"
+                    title="<%= game.title %>" target="_blank" rel="noreferrer">
+                    <% }else{ %>
+                    <a href="<%= game.url %>" style="color:white;text-decoration:none;line-height: 0;"
+                        title="<%= game.title %>">
+                        <% } %>
+                        <div class="game-div small">
+                            <div class="img-div">
+                                <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
+                                    onerror="this.src = '../images/GamesIcon.png';">
+                            </div>
+                            <span class="title"><%= game.title %></span>
+                        </div>
+                    </a>
+                    <% if(!hasGames) { %>
+                    <% hasGames = true; %>
+                    <% } %>
+                    <% }); %>
+            </div>
+            <% if(!hasGames) { %>
+            <p>No games yet. Stay tuned.</a></p>
+            <% } %>
+        </div>
+
+    </div>
     <article>
         <div style="border-top-left-radius:var(--panel-border-radius);border-top-right-radius:var(--panel-border-radius);"
             class="gameName">Description</div>

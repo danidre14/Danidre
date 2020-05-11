@@ -4,25 +4,31 @@
     <article>
         <div class="games-div">
             <% games.forEach(game => { %>
-            <a href="<%= game.url %>" style="color:white;text-decoration:none;margin-bottom:1rem;">
-                <div class="game-div">
-                    <div class="img-div">
-                        <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
-                            onerror="this.src = '../images/GamesIcon.png';">
-                    </div>
-                    <span class="title"><%= game.title %></span>
-                    <% if(game.minidesc) { %>
-                    <span class="desc">
-                        <pre><%= game.minidesc %></pre></span>
-                    <% } else { %>
-                    <span class="desc">Play <%= game.title %></span>
+            <% if(game.newTab) { %>
+            <a href="<%= game.url %>" style="color:white;text-decoration:none;margin-bottom:1rem;"
+                title="<%= game.title %>" target="_blank" rel="noreferrer">
+                <% }else{ %>
+                <a href="<%= game.url %>" style="color:white;text-decoration:none;margin-bottom:1rem;"
+                    title="<%= game.title %>">
                     <% } %>
-                </div>
-            </a>
-            <% if(!hasGames) { %>
-            <% hasGames = true; %>
-            <% } %>
-            <% }); %>
+                    <div class="game-div">
+                        <div class="img-div">
+                            <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
+                                onerror="this.src = '../images/GamesIcon.png';">
+                        </div>
+                        <span class="title"><%= game.title %></span>
+                        <% if(game.minidesc) { 809%>
+                        <span class="desc">
+                            <pre><%= game.minidesc %></pre></span>
+                        <% } else { %>
+                        <span class="desc">Play <%= game.title %></span>
+                        <% } %>
+                    </div>
+                </a>
+                <% if(!hasGames) { %>
+                <% hasGames = true; %>
+                <% } %>
+                <% }); %>
         </div>
         <% if(!hasGames) { %>
         <p>No games yet. Stay tuned.</a></p>

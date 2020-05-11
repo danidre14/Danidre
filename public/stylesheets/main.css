@@ -126,17 +126,44 @@ section.games .description {
 .games-div {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.games-div.small {
+  flex-wrap: nowrap;
+  justify-content: start;
+  overflow: hidden;
 }
 
 .game-div {
   position: relative;
   display: inline-block;
   overflow: hidden;
-  width: 307px;
-  height: 230px;
-  margin: 0 var(--default-spacing-x);
+  width: 280px;
+  height: 210px;
+  margin: 0 var(--small-spacing);
+  font-size: 1rem;
   border-radius: 0.5rem;
+}
+
+.game-div.small {
+  width: 175px;
+  height: 131px;
+  margin: 0;
+  margin-right: var(--small-spacing);
+  font-size: .7rem;
+  border-radius: 0.2rem;
+}
+
+.games-div.small:after {
+  content: '';
+  width: 120px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: linear-gradient(to right, transparent, var(--color-footer) 60%);
+  border-bottom-right-radius: var(--panel-border-radius);
 }
 
 .game-div>.img-div {
@@ -144,6 +171,7 @@ section.games .description {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--color-game-icon);
 }
 
 .game-div .game-img {
@@ -154,8 +182,8 @@ section.games .description {
 
 .game-div>span {
   background-color: var(--color-game-default);
-  font-size: 0.8rem;
-  line-height: 0.9rem;
+  font-size: 1em;
+  line-height: 1em;
   color: white;
   position: absolute;
   transition: 0.7s ease-in-out;
@@ -171,8 +199,8 @@ section.games .description {
   bottom: 0;
   border-radius: 15px 0 0 0;
   width: 95%;
-  font-size: 0.7rem;
-  line-height: 1rem;
+  font-size: 0.7em;
+  line-height: 1em;
 }
 
 .game-div>span.title {
@@ -182,7 +210,7 @@ section.games .description {
   left: 0;
   transform: scale(1);
   border-radius: 0 0 15px 0;
-  width: 80%;
+  width: 90%;
 }
 
 .game-div:hover .game-img {
@@ -203,8 +231,6 @@ section.games .description {
   transition: 0.2s ease-in-out;
   width: 100%;
   border-radius: 0;
-  font-size: 0.9rem;
-  line-height: 1.1rem;
 }
 
 /* About Page Specifics */
@@ -669,6 +695,7 @@ table td#all_subjects, table td#your_subjects {
   .game-div {
     width: 256px;
     height: 192px;
+    font-size: 0.8rem;
   }
 }
 
