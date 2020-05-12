@@ -19,38 +19,42 @@ if(user !== undefined) {
         <form id="regForm" class="contact-me signings" action="/contact" method="POST">
             <div>
                 <label for="name">Name</label>
-                <input class="input" type="text" id="name" name="name" autocomplete="off" value="<%= userFullName %>" placeholder="Required" required>
+                <input class="input" type="text" id="name" name="name" autocomplete="off" value="<%= userFullName %>"
+                    placeholder="Required" required>
                 <div>
                     <% if (formName) { %>
-                        <pre id="formName" style="display:block;"><%= formName %></pre>
+                    <pre id="formName" style="display:block;"><%= formName %></pre>
                     <% } else { %>
-                        <pre id="formName" style="display:none;"></pre>
+                    <pre id="formName" style="display:none;"></pre>
                     <% } %>
                 </div>
             </div>
             <div>
                 <label for="email">Email Address</label>
-                <input class="input" type="email" id="email" name="email" autocomplete="off" value="<%= userEmail %>" placeholder="For reply">
+                <input class="input" type="email" id="email" name="email" autocomplete="off" value="<%= userEmail %>"
+                    placeholder="For reply">
             </div>
             <div>
                 <label for="subject">Subject</label>
-                <input class="input" type="text" id="subject" name="subject" autocomplete="off" placeholder="Required" value="<%= userSubject %>" required>
+                <input class="input" type="text" id="subject" name="subject" autocomplete="off" placeholder="Required"
+                    value="<%= userSubject %>" required>
                 <div>
                     <% if (formSubject) { %>
-                        <pre id="formSubject" style="display:block;"><%= formSubject %></pre>
+                    <pre id="formSubject" style="display:block;"><%= formSubject %></pre>
                     <% } else { %>
-                        <pre id="formSubject" style="display:none;"></pre>
+                    <pre id="formSubject" style="display:none;"></pre>
                     <% } %>
                 </div>
             </div>
             <div>
                 <label for="message">Message</label>
-                <textarea class="textarea" type="text" id="message" name="message" autocomplete="off"  rows="10" placeholder="Your message" required><%= userMessage %></textarea>
+                <textarea class="textarea" type="text" id="message" name="message" autocomplete="off" rows="10"
+                    placeholder="Your message" required><%= userMessage %></textarea>
                 <div>
                     <% if (formMessage) { %>
-                        <pre id="formMessage" style="display:block;"><%= formMessage %></pre>
+                    <pre id="formMessage" style="display:block;"><%= formMessage %></pre>
                     <% } else { %>
-                        <pre id="formMessage" style="display:none;"></pre>
+                    <pre id="formMessage" style="display:none;"></pre>
                     <% } %>
                 </div>
             </div>
@@ -64,31 +68,26 @@ if(user !== undefined) {
         <h3>Find me on:</h3>
         <ul>
             <li><a class="btn btn-primary btn-large" href="https://twitter.com/danidre">
-                <div class="div-space-around">
-                    <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Twitter</span>
-                </div>
-            </a></li>
+                    <div class="div-space-around">
+                        <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);"
+                            src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Twitter</span>
+                    </div>
+                </a></li>
             <li><a class="btn btn-primary btn-large" href="https://discord.gg/HR2UsPE">
-                <div class="div-space-around">
-                    <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/DiscordLogo2.png" alt=""> <span class="div-space-around">Discord</span>
-                </div>
-            </a></li>
+                    <div class="div-space-around">
+                        <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);"
+                            src="images/DiscordLogo2.png" alt=""> <span class="div-space-around">Discord</span>
+                    </div>
+                </a></li>
             <li><a class="btn btn-primary btn-large" href="https://www.youtube.com/c/Danidre15Dev">
-                <div class="div-space-around">
-                    <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);" src="images/YoutubeLogo2.png" alt=""> <span class="div-space-around">Youtube</span>
-                </div>
-            </a></li>
+                    <div class="div-space-around">
+                        <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);"
+                            src="images/YoutubeLogo2.png" alt=""> <span class="div-space-around">Youtube</span>
+                    </div>
+                </a></li>
         </ul>
     </article>
 </section>
 <meta name="description" content="Contact Danidre via social media, or leave a message.">
 
 <script defer src="/javascripts/contactmeValidation.js"></script>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-2781990552887713",
-    enable_page_level_ads: true
-});
-</script>

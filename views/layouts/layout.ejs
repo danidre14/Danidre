@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150828665-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-150828665-1');
+    </script>
+
     <meta charset="UTF-8">
     <% var title; %>
     <% title = title? ` | ${title}` : '';%>
@@ -16,6 +27,7 @@
     <%- style %>
     <%- script %>
 </head>
+
 <body>
     <div class="container">
         <%- include('../partials/usernavauth.ejs') %>
@@ -27,4 +39,5 @@
         <%- include('../partials/footer.ejs') %>
     </div>
 </body>
+
 </html>

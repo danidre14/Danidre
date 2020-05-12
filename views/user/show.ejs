@@ -6,7 +6,8 @@ let fullName = (profile.firstName || "") + " " + (profile.lastName || ""); %>
     <article>
         <div class="profile-main">
             <div>
-                <img class="profile-img-big" src="<%= profile.profileImagePath %>" onerror="this.src = '../../images/UsersIcon.png';">
+                <img class="profile-img-big" src="<%= profile.profileImagePath %>"
+                    onerror="this.src = '../../images/UsersIcon.png';">
             </div>
             <div class="profile-main-det">
                 <div>
@@ -18,46 +19,52 @@ let fullName = (profile.firstName || "") + " " + (profile.lastName || ""); %>
                 <div style="position:absolute;bottom:0;">
                     <div style="line-height:.8rem;">
                         <% if(profile.roles.length > 0) { %>
-                            Roles: <i><%= extractAttribute(profile.roles, 'name').join(', ') %></i>
+                        Roles: <i><%= extractAttribute(profile.roles, 'name').join(', ') %></i>
                         <% } %>
                     </div>
                     <% distanceToNow = checkLastOnline(profile.lastSeen); %>
                     <% if(distanceToNow === 'Online') { %>
-                        <div class="bounded" style="color:var(--user-status-color-now);font-weight:500;font-size:.7rem;">⬤ <%= distanceToNow %> </div>
+                    <div class="bounded" style="color:var(--user-status-color-now);font-weight:500;font-size:.7rem;">⬤
+                        <%= distanceToNow %> </div>
                     <% } else if(distanceToNow === 'never') { %>
-                        <% distanceToNow = checkLastOnline(profile.updatedAt, true); %>
-                        <% if(distanceToNow === 'never') { %>
-                            <div class="bounded" style="color:var(--user-status-color-error);font-weight:500;">⬤ Last seen: <%= distanceToNow %> </div>
-                        <% } else { %>
-                            <div class="bounded" style="color:var(--user-status-color-never);font-weight:500;">⬤ Last seen: <%= distanceToNow %> </div>
-                        <% } %>
+                    <% distanceToNow = checkLastOnline(profile.updatedAt, true); %>
+                    <% if(distanceToNow === 'never') { %>
+                    <div class="bounded" style="color:var(--user-status-color-error);font-weight:500;">⬤ Last seen:
+                        <%= distanceToNow %> </div>
                     <% } else { %>
-                        <div class="bounded" style="color:var(--user-status-color-then);font-weight:500;font-size:.7rem;">⬤ Last seen: <%= distanceToNow %> </div>
+                    <div class="bounded" style="color:var(--user-status-color-never);font-weight:500;">⬤ Last seen:
+                        <%= distanceToNow %> </div>
+                    <% } %>
+                    <% } else { %>
+                    <div class="bounded" style="color:var(--user-status-color-then);font-weight:500;font-size:.7rem;">⬤
+                        Last seen: <%= distanceToNow %> </div>
                     <% } %>
                 </div>
             </div>
         </div>
-        <br/>
+        <br />
         <% if(profile.bio.trim() !== "") { %>
-            <div class="encapsulated-box">
-                <div style="background-color:var(--color-footer);width:1rem;height:1rem;position:absolute;top:-.4rem;left:.5rem;transform:rotate(45deg);"></div>
-                <pre><%= profile.bio %></pre>
+        <div class="encapsulated-box">
+            <div
+                style="background-color:var(--color-footer);width:1rem;height:1rem;position:absolute;top:-.4rem;left:.5rem;transform:rotate(45deg);">
             </div>
-            <br/>
+            <pre><%= profile.bio %></pre>
+        </div>
+        <br />
         <% } %>
         <%=//<desc>Created At:</desc><p> profile.createdAt.toLocaleString() </p>%>
         <%=//<desc>Updated At:</desc><p> profile.updatedAt.toLocaleString()</p>%>
 
         <% if(user !== undefined && user.username == profile.username) { %>
-            <div class="div-space-between">
-                <a class="btn btn-primary" href="/u/">Other Users</a>
-                <a class="btn btn-primary" href="/u/<%= user.username %>/edit">Edit Profile</a>
-            </div>
+        <div class="div-space-between">
+            <a class="btn btn-primary" href="/u/">Other Users</a>
+            <a class="btn btn-primary" href="/u/<%= user.username %>/edit">Edit Profile</a>
+        </div>
         <% } else if(user !== undefined) { %>
-            <div class="div-space-between">
-                <a class="btn btn-primary" href="/u/">Other Users</a>
-                <a class="btn btn-primary" href="/u/<%= user.username %>/#navMenu">Your Profile</a>
-            </div>
+        <div class="div-space-between">
+            <a class="btn btn-primary" href="/u/">Other Users</a>
+            <a class="btn btn-primary" href="/u/<%= user.username %>/#navMenu">Your Profile</a>
+        </div>
         <% } %>
     </article>
 </section>
@@ -72,12 +79,3 @@ let fullName = (profile.firstName || "") + " " + (profile.lastName || ""); %>
 <meta property="og:image:alt" content="Profile image for <%= profile.username %>" />
 <meta property="og:url" content="<%= profile.url %>">
 <meta name="twitter:card" content="summary">
-
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-2781990552887713",
-    enable_page_level_ads: true
-});
-</script>

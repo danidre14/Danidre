@@ -9,7 +9,7 @@
         <div class="ttcont">
             <div class="middle">
                 <span class="big">Your Surveys</span>
-            </div>  
+            </div>
             <div id="ttlist"></div>
         </div>
     </article>
@@ -19,7 +19,7 @@
                 <div id='CF' class="big"></div>
                 <button id="devM" class="big button" onclick="toggleMode('dev')">Editor Mode: On</button>
             </div>
-            <div>            
+            <div>
                 <div id="ttbody"></div>
                 <div class="sticky">
                     <button class="normal accept button" onclick="saveProgress()">Save</button>
@@ -31,9 +31,9 @@
     <article>
         <p>Found a bug? <a class="btn btn-primary" href="/contact">Report it here</a></p>
     </article>
-<link rel="stylesheet" href="/stylesheets/secret/surveyMaker.css">
-<script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script defer src="/javascripts/secret/surveyMaker.js"></script>
+    <link rel="stylesheet" href="/stylesheets/secret/surveyMaker.css">
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer src="/javascripts/secret/surveyMaker.js"></script>
     <% } else { %>
     <article>
         <p><a class="btn btn-primary" href="/signin">Sign in</a> to create your survey.</p>
@@ -42,11 +42,11 @@
 </section>
 
 <% if(user !== undefined) {%>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({
         google_ad_client: "ca-pub-2781990552887713",
         enable_page_level_ads: true
     });
-    </script>
+    </script> -->
 <% } %>
