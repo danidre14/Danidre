@@ -300,7 +300,13 @@ section.posts .posts-grid>* {
   padding: 5px;
 }
 
+.fcn {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 section .the_markdown * {
+  font-size: inherit;
+  line-height: 1.25em;
   color: var(--color-text-dark);
   margin: 0;
   font-weight: normal;
@@ -308,38 +314,39 @@ section .the_markdown * {
   text-decoration: none;
   font-family: var(--global-fonts);
   margin-bottom: 0.5rem;
+  text-align: left;
+  padding: 0;
 }
 
-section .the_markdown>* {
-  font-size: 1rem;
-  line-height: 1rem;
-}
-
-section .the_markdown h4 {
-  font-size: 1.6rem;
-  line-height: 1.7rem;
-  margin: 0.9rem 0;
+section .the_markdown h1 {
+  font-size: 2.2rem;
+  line-height: 1.1em;
+  margin: 0.8em 0 0.7em 0;
   font-weight: 500;
 }
 
-section .the_markdown h5 {
-  font-size: 1.3rem;
-  line-height: 1.4rem;
-  margin: 0.8rem 0;
+section .the_markdown h2 {
+  font-size: 1.85rem;
+  line-height: 1.1em;
+  margin: 0.8em 0 0.7em 0;
   font-weight: 500;
 }
 
-section .the_markdown h6 {
-  font-size: 1.2rem;
-  line-height: 1.3rem;
-  margin: 0.7rem 0;
+section .the_markdown h3 {
+  font-size: 1.5rem;
+  line-height: 1.1em;
+  margin: 0.8em 0 0.7em 0;
   font-weight: 500;
 }
 
 section .the_markdown p {
   font-size: 1rem;
-  line-height: 1.25rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.6em;
+}
+
+section .the_markdown img {
+  display: block;
+  margin: 1em auto;
 }
 
 section .the_markdown div.hr {

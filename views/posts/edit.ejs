@@ -9,24 +9,30 @@
         <button class="btn btn-primary" onclick="previewThePost()">Preview</button>
         <button class="btn btn-primary" onclick="editThePost()">Edit</button>
         <div id="Edits">
-           <input class="input lock" id="title" type="text" autocomplete="off" value="<%= post.title %>" placeholder="title">
-            <textarea class="textarea lock" name="content" id="content" rows="15"  autocomplete="off" placeholder="Post Content"><%= post.content %></textarea>
-            <textarea class="textarea lock" name="content" id="summary" rows="3"  autocomplete="off" placeholder="Summary"><%= post.summary %></textarea>
-            
+            <input class="input fcn lock" id="title" type="text" autocomplete="off" value="<%= post.title %>"
+                placeholder="title">
+            <textarea class="textarea fcn lock" name="content" id="content" rows="15" autocomplete="off"
+                placeholder="Post Content"><%= post.content %></textarea>
+            <textarea class="textarea fcn lock" name="content" id="summary" rows="3" autocomplete="off"
+                placeholder="Summary"><%= post.summary %></textarea>
+
             <div style="display:grid;grid-template-columns: 50% 30% auto;">
-                <input class="input lock" id="image" type="text" autocomplete="off" value="<%= post.image %>" placeholder="image src">
-                <input class="input lock" readonly disabled type="text" autocomplete="off" value="<%= post.name %>">
-                <input class="input lock" readonly disabled type="text" autocomplete="off" value="<%= post.code %>">
+                <input class="input fcn lock" id="image" type="text" autocomplete="off" value="<%= post.image %>"
+                    placeholder="image src">
+                <input class="input fcn lock" readonly disabled type="text" autocomplete="off" value="<%= post.name %>">
+                <input class="input fcn lock" readonly disabled type="text" autocomplete="off" value="<%= post.code %>">
             </div>
             <div style="display:none">
-                <input class="input lock" style="display:none" id="name" readonly disabled type="password" autocomplete="off" value="<%= post.name %>">
-                <input class="input lock" style="display:none" id="code" readonly disabled type="password" autocomplete="off" value="<%= post.code %>">
+                <input class="input lock" style="display:none" id="name" readonly disabled type="password"
+                    autocomplete="off" value="<%= post.name %>">
+                <input class="input lock" style="display:none" id="code" readonly disabled type="password"
+                    autocomplete="off" value="<%= post.code %>">
             </div>
         </div>
         <div class="the_markdown" id="Previews" style="display:none;"></div>
     </article>
 </section>
-<meta name="robots" content="none"/>
+<meta name="robots" content="none" />
 <link rel="stylesheet" href="/utility/DialogBoxes.css">
 
 <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>

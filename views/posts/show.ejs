@@ -1,8 +1,8 @@
 <% var user; %>
 <h2><%= post.title || "Game" %></h2>
 <section class="posts">
-    <article class="the_markdown">
-        <div style="text-align:left;">
+    <article>
+        <div class="the_markdown" style="text-align:left;">
             <%- MarkDownToUp(post.content) %>
         </div>
         <div class="div-space-between">
