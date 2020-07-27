@@ -28,7 +28,7 @@
   --color-input-border: hsl( var(--color-base-hue), var(--color-base-saturation), 53%);
   --color-input-border-focus: hsl( var(--color-base-hue), var(--color-base-saturation), 63%);
   --color-game-icon: hsl(var(--color-base-hue), var(--color-base-saturation), 43%);
-  --footer-size: 2.3rem;
+  --footer-size: 8rem;
   --header-bar-size: 1.8rem;
   --usernav-bar-size: 2.3rem;
   --default-spacing: 1rem;
@@ -46,7 +46,8 @@
   --btn-border-radius: 1rem;
   --panel-border-radius: 0.4rem;
   --btn-border-radius-large: 1rem;
-  --footer-image-size: calc(var(--footer-size) / (10 / 8));
+  --footer-image-size: 3em;
+  /*calc(var(--footer-size) / (10 / 8));*/
   --usernav-bar-image-size: calc(var(--usernav-bar-size) / (10 / 8));
   --users-image-size: 2rem;
   --container-width: 100vw;

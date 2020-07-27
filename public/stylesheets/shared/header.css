@@ -14,14 +14,13 @@ header {
     top: 0;
     z-index: 10;
     width: 100%;
-    height: var(--usernav-bar-size);			/* Height of the bar */
+    height: var(--usernav-bar-size);
+    /* Height of the bar */
     background: var(--color-usernavauth);
-
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-around;
-
     padding: 0 var(--default-spacing-x);
 }
 
@@ -30,14 +29,14 @@ header {
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-around;
-
     height: var(--usernav-bar-size);
 }
 
 .usernavauth nav .header-username {
     display: inline-block;
     font-size: 1.4rem;
-    height: 1.3rem; /*usually one more*/
+    height: 1.3rem;
+    /*usually one more*/
     line-height: 1.4rem;
 }
 
@@ -50,7 +49,7 @@ header {
 }
 
 .usernavauth nav a img.userIcon {
-    margin:auto !important;
+    margin: auto !important;
     border-radius: var(--default-border-radius);
     width: var(--usernav-bar-image-size);
     height: var(--usernav-bar-image-size);
@@ -110,31 +109,26 @@ header {
 }
 
 .signinupnav-ul li {
+    background: var(--color-button-default);
     display: flex;
     width: 100%;
 }
 
 .signinupnav-ul li a {
-    background:  var(--color-button-default);
-    border-right: solid 1px var(--color-section);
+    background: var(--color-button-default);
     flex: 1 1 0;
     width: inherit;
     height: var(--header-bar-size);
-    
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
-    
+    transition: background 0.5s;
     font-weight: 500;
 }
 
-.signinupnav-ul li:first-child a {
+.signinupnav-ul li:first-child a, .signinupnav-ul li:first-child {
     border-bottom-left-radius: 1rem;
-}
-
-.signinupnav-ul li:last-child a {
-    border: none;
 }
 
 .signinupnav-ul li a:hover {
@@ -174,27 +168,22 @@ header {
 }
 
 .header-ul li {
+    background: var(--color-button-default);
     display: flex;
     width: 100%;
 }
 
 .header-ul li a {
-    background:  var(--color-button-default);
-    border-right: solid 1px var(--color-section);
+    background: var(--color-button-default);
     flex: 1 1 0;
     width: inherit;
     height: var(--header-bar-size);
-    
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
-    
+    transition: background 0.5s;
     font-weight: 500;
-}
-
-.header-ul li:last-child a {
-    border: none;
 }
 
 .header-ul li a:hover {
@@ -222,7 +211,6 @@ header {
         display: none;
     }
 }
-
 
 @media screen and (max-width: 800px) {
     .header-ul li.games-btn {

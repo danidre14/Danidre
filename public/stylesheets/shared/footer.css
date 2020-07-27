@@ -1,111 +1,95 @@
+.icon {
+    filter: hue-rotate(calc(var(--color-base-hue) * 1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-dark));
+}
+
+.icon:hover {
+    filter: hue-rotate(calc(var(--color-base-hue) * 1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-light));
+}
+
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: var(--footer-size);			/* Height of the footer */
+    height: var(--footer-size);
+    /* Height of the footer */
     background: var(--color-footer);
-
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-content: space-around;
-
     padding: 0 var(--default-spacing-x);
 }
 
 .footer nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-content: space-around;
+    margin: 0 auto;
 }
 
 .footer nav.copyright {
     display: inherit;
 }
 
-.footer nav a {
+.footer nav.copyright p {
+    color: #1118;
     font-weight: 500;
-    color: var(--color-link-light);
+    font-size: .65rem;
+}
 
-}    
+.footer nav a {
+    font-weight: 600;
+    color: #eee8;
+}
 
-.footer nav a.discord {
-    background-image: url("../../images/DiscordLogo3.png");
+.footer nav a.icon {
+    background-image: var(--color-button-default);
     background-repeat: no-repeat;
     background-size: 100%;
     width: var(--footer-image-size);
     height: var(--footer-image-size);
     display: inline-block;
     position: relative;
+}
+
+.footer nav a.discord {
+    background-image: url("../../images/DiscordLogo3.png");
 }
 
 .footer nav a.twitter {
     background-image: url("../../images/TwitterLogo3.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
-    display: inline-block;
-    position: relative;
 }
 
 .footer nav a.youtube {
     background-image: url("../../images/YoutubeLogo3.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
-    display: inline-block;
-    position: relative;
 }
 
 .footer nav a.twitch {
     background-image: url("../../images/TwitchLogo3.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
-    display: inline-block;
-    position: relative;
 }
 
 .footer nav a.newgrounds {
     background-image: url("../../images/NewgroundsLogo3.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
-    display: inline-block;
-    position: relative;
 }
 
 .footer nav a.email {
     background-image: url("../../images/EmailLogo3.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: var(--footer-image-size);
-    height: var(--footer-image-size);
-    display: inline-block;
-    position: relative;
 }
 
 /* Responsivity */
-@media screen and (max-width: 500px) {
+
+/* @media screen and (max-width: 500px) {
     .footer {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
         align-content: space-around;
     }
-    
     .footer nav.copyright {
         display: none;
     }
     :root {
         --footer-size: 60px;
     }
-}
+} */
 
 /* @media screen and (min-width: 1000px) {
     :root {

@@ -28,6 +28,13 @@ const gamesList = function () {
             url: "/games/my_first_game"
         },*/
         {
+            title: "Fields of Sagebrushes",
+            minidesc: "Journey through the Unstable Lands",
+            image: "https://i.imgur.com/KbpItx1.png",
+            url: "/games/fields_of_sagebrushes",
+            newTab: false
+        },
+        {
             title: "Miscen...AGAIN!?",
             minidesc: "Why does everything seem to go missing? You've just found Miscen! But…there she goes again…",
             image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
@@ -102,7 +109,8 @@ const gamesInformation = function (gameName) {
             description: `The first game ever in a world of time and space with a humanitarian face Lorem Ipsum Diplum BloopDomTomLum A Dumbamom.
             Hope you enhoy.`,
             minidesc: `The first game of mines.`,
-            image: "FirstGame/Icon_Rakan.png" // /games/[src.png]
+            image: "FirstGame/Icon_Rakan.png", // /games/[src.png]
+            utl: "/games/my_first_game"
         }*/
         osuldorb: {
             scripts: ["/games/FlashGames/osuldorb.js"],
@@ -368,7 +376,59 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             minidesc: `Why does everything seem to go missing? You've just found Miscen! But…there she goes again…`,
             image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
             url: "/games/miscen_again"
-        }
+        },
+        fields_of_sagebrushes: {
+            scripts: ["/games/FieldsOfSagebrushes/script.js"],
+            title: "Fields of Sagebrushes",
+            description: `# [Fields of Sagebrushes](https://www.newgrounds.com/portal/view/760888)
+            Journey through the Unstable Lands
+            [thumbnail](https://img.itch.zone/aW1nLzM5MTI3MzYucG5n/original/%2BthE8C.png)
+            
+            'Fields of Sagebrushes' is a visual-novel-based point-and-click game made in 48 hours for the Geta Game Jam 12. Accompany Viktor and Iosif through some strange encounters; on their road trip through an unstable world right before it's collapse.
+            
+            [iosif and viktor](https://img.itch.zone/aW1nLzM5MTI3NTgucG5n/original/5jSFOC.png)
+            
+            Hope you enjoy this apocalyptic road trip through an Unstable World!
+            
+            ## How to Play
+            
+            ### Manage 4 stats:
+            - Fuel
+            - Food
+            - Morale
+            - Wellbeing
+            **Game Over** occurs if you let one stat reach 0.
+            
+            ### Each journey has 3 phases:
+            - Preparation
+            - Trip
+            - Aftermath
+            
+            ### Preparation:
+            Prepare for the next trip. Buying things with money is reliable but you can also try to risk it and look for work or chat with the locals.
+            
+            ### Trip:
+            Numerous random events occur, based on the region. Choose who will deal with each situation and what choices they will make. Figure out who is best at each task!
+            
+            ### Aftermath:
+            Observe how your actions impacted your stats.
+            
+            ### Character Info:
+            **Iosif:** Good with cars; Has a short temper;
+            **Victor:** Previously a doctor; Easy to get along with; Terrible management skills;
+            
+            ### Have Fun!
+            
+            ## Credits
+            
+            - Made for [Geta Game Jam 12](https://itch.io/jam/geta-game-jam-12)
+            - Art and Game Design: [Yaga](https://twitter.com/a_bog_hag)
+            - Music and Sound Design: [Shirou](https://shiro808.itch.io/)
+            - Programming: [Danidre](https://danidre.herokuapp.com/)`,
+            minidesc: `Journey through the Unstable Lands`,
+            image: "https://i.imgur.com/KbpItx1.png",
+            url: "/games/fields_of_sagebrushes"
+        },
     }
     return gameLibrary[gameName];
 }

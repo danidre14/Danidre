@@ -94,18 +94,29 @@ pre {
   resize: none;
 }
 
-.icon {
-  filter: hue-rotate(calc(var(--color-base-hue) * 1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-dark));
-}
-
-.icon:hover {
-  filter: hue-rotate(calc(var(--color-base-hue) * 1deg)) saturate(var(--color-base-saturation)) brightness(var(--color-base-brightness-light));
-}
-
 /* Home Page Specifics */
 
 section.home {
   text-align: center;
+}
+
+/* Legal Page Specifics */
+
+section.legal * {
+  text-align: left;
+  font-size: .8rem;
+  font-weight: 500;
+  line-height: 1.3em;
+}
+
+section.legal h5 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: .8em 0;
+}
+
+section.legal ol, section.legal ul {
+  padding-inline-start: 4em;
 }
 
 /* Game Page Specifics */

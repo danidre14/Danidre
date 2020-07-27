@@ -44,7 +44,8 @@
         <div style="border-top-left-radius:var(--panel-border-radius);border-top-right-radius:var(--panel-border-radius);"
             class="gameName">Description</div>
         <div style="text-align:left;border-top-left-radius:0;border-top-right-radius:0;" class="encapsulated-box">
-            <div class="the_markdown light_text" style="padding-left:1.2rem;width:100%;color:var(--color-text-light);">
+            <div class="the_markdown light_text"
+                style="padding-left:1.2em;padding-right:1.2em;width:100%;color:var(--color-text-light);">
                 <% if(game.description) { %>
                 <%- MarkDownToUp(game.description) %>
                 <% } else { %>

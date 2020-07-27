@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
     console.log('Check Sticky Notes/Trello For Todo');
 }
@@ -22,6 +22,7 @@ const stayAwakeDyno = require('./utils/stayAwakeDyno');
 const globalChecks = require('./routes/globalChecks')
 const indexRouter = require('./routes/index');
 const gamesRouter = require('./routes/games');
+const legalRouter = require('./routes/legal');
 const aboutRouter = require('./routes/about');
 const postsRouter = require('./routes/posts');
 const contactRouter = require('./routes/contact');
@@ -47,7 +48,7 @@ app.use(expressLayouts);
 app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.static('public')); //where most server files will be
-app.use(express.urlencoded({limit: '10mb', extended: false}));
+app.use(express.urlencoded({ limit: '10mb', extended: false }));
 app.use(flash());
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -59,7 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true  });
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
@@ -67,6 +68,7 @@ db.once('open', () => console.log('Connected to Mongoose'));
 app.use(globalChecks);
 app.use('/', indexRouter);
 app.use('/games', gamesRouter);
+app.use('/legal', legalRouter);
 app.use('/about', aboutRouter);
 app.use('/posts', postsRouter);
 app.use('/contact', contactRouter);
@@ -87,41 +89,41 @@ app.use(error404Router); //make sure to put this after all routes
 
 
 //global views functions
-app.locals.formatDistanceToNow = function(date) {
+app.locals.formatDistanceToNow = function (date) {
     let lastSeen = `${formatDistanceToNow(date)} ago`;
     return lastSeen.replace("about", "");
 }
-app.locals.checkLastOnline = function(date, old) {
+app.locals.checkLastOnline = function (date, old) {
     const considerOnline = ["less than a minute ago", "1 minute ago", "2 minutes ago"];
-    if(!date) {
+    if (!date) {
         return 'never';
     }
     let lastSeen = `${formatDistanceToNow(date)} ago`;
-    if(considerOnline.includes(lastSeen) && !old) lastSeen = "Online";
+    if (considerOnline.includes(lastSeen) && !old) lastSeen = "Online";
     return lastSeen.replace("about", "");
 }
-app.locals.MarkDownToUp = function(string) {
+app.locals.MarkDownToUp = function (string) {
     return MarkDownToUp.convert(string);
 }
-app.locals.stringify = function(obj) {
+app.locals.stringify = function (obj) {
     var str = [];
     for (var p in obj)
         if (obj.hasOwnProperty(p)) {
-            if(obj[p] != '')
+            if (obj[p] != '')
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         }
     return str.join("&");
 }
-app.locals.isAdmin = function(username) {
+app.locals.isAdmin = function (username) {
     return username.toLowerCase() === process.env.ADMIN_NAME;
 }
-app.locals.extractAttribute = function (obj, attr){
+app.locals.extractAttribute = function (obj, attr) {
     const out = [];
-  
-    for (const i in obj){
+
+    for (const i in obj) {
         out.push(obj[i][attr]);
     }
-  
+
     return out;
 }
 

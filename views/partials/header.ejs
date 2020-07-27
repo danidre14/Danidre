@@ -3,11 +3,11 @@
 <header>
     <nav class="signinupnav">
         <% if(user === undefined) {%>
-            <ul class="signinupnav-ul">
-                <li class="<%=cPage==='signin'? 'current-page':''%>"><a href="/signin">Sign In</a></li>
-                <li class="<%=cPage==='signup'? 'current-page':''%>"><a href="/signup">Sign Up</a></li>
-                <!-- <% // <li class=" %><%=//cPage==='u'? 'current-page':''%><%//"><a href="/u">Users</a></li> %> -->
-            </ul>
+        <ul class="signinupnav-ul">
+            <li class="<%=cPage==='signin'? 'current-page':''%>"><a href="/signin">Sign In</a></li>
+            <li class="<%=cPage==='signup'? 'current-page':''%>"><a href="/signup">Sign Up</a></li>
+            <!-- <% // <li class=" %><%=//cPage==='u'? 'current-page':''%><%//"><a href="/u">Users</a></li> %> -->
+        </ul>
         <% } %>
     </nav>
     <nav class="header-title">
@@ -19,7 +19,6 @@
             <li class="<%=cPage==='games'? 'current-page':''%> games-btn"><a href="/games">Games</a></li>
             <li class="<%=cPage==='about'? 'current-page':''%>"><a href="/about">About</a></li>
             <li class="<%=cPage==='posts'? 'current-page':''%>"><a href="/posts">Posts</a></li>
-            <li class="<%=cPage==='contact'? 'current-page':''%>"><a href="/contact">Contact</a></li>
         </ul>
     </nav>
 </header>
