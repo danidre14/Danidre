@@ -10,24 +10,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^6.4.0",
-    "bcrypt": "^3.0.6",
-    "blueimp-md5": "^2.12.0",
+    "@sendgrid/mail": "^6.5.5",
+    "bcrypt": "^3.0.8",
+    "blueimp-md5": "^2.17.0",
     "crypto": "^1.0.1",
-    "date-fns": "^2.2.1",
-    "ejs": "^2.6.2",
+    "date-fns": "^2.15.0",
+    "ejs": "^2.7.4",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-flash": "0.0.2",
-    "express-session": "^1.16.2",
+    "express-session": "^1.17.1",
     "method-override": "^3.0.0",
-    "mongoose": "^5.7.7",
+    "mongoose": "^5.9.27",
     "node-fetch": "^2.6.0",
-    "passport": "^0.4.0",
+    "passport": "^0.4.1",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "dotenv": "^8.1.0",
-    "nodemon": "^1.19.1"
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
   }
 }
