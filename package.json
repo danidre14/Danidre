@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^6.5.5",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "blueimp-md5": "^2.17.0",
     "crypto": "^1.0.1",
     "date-fns": "^2.15.0",
