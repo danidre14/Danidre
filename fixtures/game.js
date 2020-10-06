@@ -28,6 +28,13 @@ const gamesList = function () {
             url: "/games/my_first_game"
         },*/
         {
+            title: "Rogot Slide",
+            minidesc: `Help Rogot get to the battery station.`,
+            image: "https://i.imgur.com/4djUUr3.png",
+            url: "/games/rogot_slide",
+            newTab: false
+        },
+        {
             title: "Fields of Sagebrushes",
             minidesc: "Journey through the Unstable Lands",
             image: "https://i.imgur.com/KbpItx1.png",
@@ -428,6 +435,31 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             minidesc: `Journey through the Unstable Lands`,
             image: "https://i.imgur.com/KbpItx1.png",
             url: "/games/fields_of_sagebrushes"
+        },
+        rogot_slide: {
+            scripts: ["/games/RogotSlide/script.js"],
+            title: "Rogot Slide",
+            description: `Rogot Slide is a prototype puzzle game made for LD47.
+
+            Help Rogot reach the battery station before it malfunctions.
+            
+            ## Controls:
+            
+            **X**: Rotate.
+            
+            **R**: Restart.
+            
+            **B**: Back to level select.
+            
+            **M**: Menu.
+            
+            
+            Try to be as efficient as possible and get all stars. What're your highscores per level?
+            
+            *We decided to leave it as a prototype since we started late, and did not get an artist to create the desired GUIs for it, but the gameloop is basically complete.*`,
+            minidesc: `Help Rogot get to the battery station.`,
+            image: "https://i.imgur.com/4djUUr3.png",
+            url: "/games/rogot_slide"
         },
     }
     return gameLibrary[gameName];
