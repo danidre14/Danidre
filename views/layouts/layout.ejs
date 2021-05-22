@@ -3,40 +3,43 @@
 
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150828665-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F70XJCSP0"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-150828665-1');
+        gtag('config', 'G-7F70XJCSP0');
     </script>
 
     <meta charset="UTF-8">
     <% var title; %>
-    <% title = title? ` | ${title}` : '';%>
-    <title><%= `Danidre${title}`%></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.86, maximum-scale=3.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <%- meta %>
-    <link rel="stylesheet" href="/stylesheets/main.css">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <% /*<link rel="icon" href="/favicon.ico?v=1.1" type="image/x-icon">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"> */%>
-    <%- style %>
-    <%- script %>
+        <% title=title? ` | ${title}` : '' ;%>
+            <title>
+                <%= `Danidre${title}`%>
+            </title>
+            <meta name="viewport"
+                content="width=device-width, initial-scale=1.0, minimum-scale=0.86, maximum-scale=3.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <%- meta %>
+                <link rel="stylesheet" href="/stylesheets/main.css">
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+                <% /*<link rel="icon" href="/favicon.ico?v=1.1" type="image/x-icon">
+                    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+                    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"> */%>
+                    <%- style %>
+                        <%- script %>
 </head>
 
 <body>
     <div class="container">
         <%- include('../partials/usernavauth.ejs') %>
-        <%- include('../partials/header.ejs') %>
-        <%- include('../partials/message.ejs') %>
-        <main id="main" class="content">
-            <%- body %>
-        </main>
-        <%- include('../partials/footer.ejs') %>
+            <%- include('../partials/header.ejs') %>
+                <%- include('../partials/message.ejs') %>
+                    <main id="main" class="content">
+                        <%- body %>
+                    </main>
+                    <%- include('../partials/footer.ejs') %>
     </div>
 </body>
 
