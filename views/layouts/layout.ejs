@@ -38,9 +38,14 @@
                     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"> */%>
                     <%- style %>
                         <%- script %>
+                        <script>
+                            window.addEventListener("load", () => {
+                                document.querySelector('body').classList.remove('preload');
+                            })
+                            </script>
 </head>
 
-<body>
+<body class="preload">
     <div class="container">
         <%- include('../partials/usernavauth.ejs') %>
             <%- include('../partials/header.ejs') %>
