@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 
 
-router.use((req, res, next) => {    //redirecting
+router.use(/*(req, res, next) => {    //redirecting
     if(process.env.NODE_ENV === 'production') {
         const preferredSite = "Heroku"; //or Danidre
         const hosts = {"Heroku":"danidre.com","Danidre":"danidre.herokuapp.com"};
@@ -25,7 +25,7 @@ router.use((req, res, next) => {    //redirecting
         return next();
     }
     next();
-}, async (req, res, next) => {   //last seen updates
+}, */ async (req, res, next) => {   //last seen updates
     if(req.isAuthenticated()) {
         try {
             const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');
