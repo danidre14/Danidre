@@ -4,28 +4,7 @@ const User = require('../models/user');
 
 
 
-router.use(/*(req, res, next) => {    //redirecting
-    if(process.env.NODE_ENV === 'production') {
-        const preferredSite = "Heroku"; //or Danidre
-        const hosts = {"Heroku":"danidre.com","Danidre":"danidre.herokuapp.com"};
-        const redirects = {"Heroku":"https://danidre.herokuapp.com","Danidre":"http://danidre.com"}
-        // Don't allow user to hit Heroku now that we have a domain
-        const host = req.get('Host');
-        if (host === hosts[preferredSite]) {
-            return res.redirect(301, redirects[preferredSite] + req.originalUrl);
-        }
-        // if(preferredSite === "Heroku")
-        //     if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
-        //             // request was via http, so redirect to https
-        //             return res.redirect('https://' + hosts[preferredSite] + req.originalUrl);
-        //     } else {
-        //             // request was via https, so do no special handling
-        //             return next();
-        //     }
-        return next();
-    }
-    next();
-}, */ async (req, res, next) => {   //last seen updates
+router.use(async (req, res, next) => {   //last seen updates
     if(req.isAuthenticated()) {
         try {
             const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');

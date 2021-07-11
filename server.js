@@ -15,7 +15,6 @@ const methodOverride = require('method-override');
 const formatDistanceToNow = require('date-fns/formatDistanceToNow');
 const MarkDownToUpJS = require('./utils/MarkDownToUp');
 const MarkDownToUp = new MarkDownToUpJS();
-const stayAwakeDyno = require('./utils/stayAwakeDyno');
 
 
 //routes
@@ -129,5 +128,5 @@ app.locals.extractAttribute = function (obj, attr) {
 
 
 app.listen(process.env.PORT || 3000, () => {
-    stayAwakeDyno("https://danidre.herokuapp.com"); // will start once server starts
+    console.log("Server Started");
 });
