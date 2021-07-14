@@ -310,7 +310,7 @@ function getMailOptions(username = 'User', email, host, token) {
         Please verify your account by clicking the following link: \n${tokenLink}.\n`,
         html: `<body style="margin:0;padding:0;">
 	    <div style="padding:0;margin:0;text-align:center;font-size:1.4rem;color:#E3DBD8;padding:0;font-family:Helvetica;">
-            <h1 style="background-color:#989586;color:#E3DBD8;margin:0;padding:2rem 0;font-size:5rem;background-image:url('https://danidre.herokuapp.com/images/Danidrebackground.jpg');background-repeat: no-repeat;background-size: 100%;background-position: center;font-weight:bold;"><a style="text-decoration:none;color:#E3DBD8;" href="${siteLink}">Danidre</a></h1>
+            <h1 style="background-color:#989586;color:#E3DBD8;margin:0;padding:2rem 0;font-size:5rem;background-image:url('https://danidre.com/images/Danidrebackground.jpg');background-repeat: no-repeat;background-size: 100%;background-position: center;font-weight:bold;"><a style="text-decoration:none;color:#E3DBD8;" href="${siteLink}">Danidre</a></h1>
             <div style="background-color:#968176;margin:0;padding:.4rem;font-size:1.6rem;">EMAIL</div>
             <div style='background-color:#D2CBC5;color:#615755;margin:0;padding:0px 1rem;'>
                 <h2 style="font-size:2.5rem;color:#3C2E2D;margin:0;padding:1rem;">Hello ${username},</h2>

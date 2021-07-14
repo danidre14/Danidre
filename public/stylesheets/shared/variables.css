@@ -44,7 +44,7 @@
   --small-spacing: 0.6rem;
   --default-border-radius: 0.2rem;
   --btn-border-radius: 1rem;
-  --panel-border-radius: 0.4rem;
+  --panel-border-radius: 0.3rem;
   --btn-border-radius-large: 1rem;
   --footer-image-size: 3em;
   /*calc(var(--footer-size) / (10 / 8));*/
@@ -57,5 +57,5 @@
   --user-status-color-never: #d8d6d5;
   --user-status-color-error: #d32929;
   --signinupnav-width: 50%;
-  --global-fonts: "Gotham Rounded", Helvetica;
+  --global-fonts: "Font Default", Helvetica;
 }

@@ -5,62 +5,62 @@
 
 
     <url>
-        <loc>https://danidre.herokuapp.com/</loc>
+        <loc>https://danidre.com/</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>1.00</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/signin</loc>
+        <loc>https://danidre.com/signin</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/signup</loc>
+        <loc>https://danidre.com/signup</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/games/</loc>
+        <loc>https://danidre.com/games/</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/about</loc>
+        <loc>https://danidre.com/about</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/posts</loc>
+        <loc>https://danidre.com/posts</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/contact</loc>
+        <loc>https://danidre.com/contact</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/posts/view/ludum_dare_45</loc>
+        <loc>https://danidre.com/posts/view/ludum_dare_45</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/games/bob_the_brawler</loc>
+        <loc>https://danidre.com/games/bob_the_brawler</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.64</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/games/quiz_game</loc>
+        <loc>https://danidre.com/games/quiz_game</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.64</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/u/danidre</loc>
+        <loc>https://danidre.com/u/danidre</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.51</priority>
     </url>
     <url>
-        <loc>https://danidre.herokuapp.com/u/AXLplosion</loc>
+        <loc>https://danidre.com/u/AXLplosion</loc>
         <lastmod>2019-10-20T21:19:43+00:00</lastmod>
         <priority>0.51</priority>
     </url>

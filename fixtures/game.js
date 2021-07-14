@@ -431,7 +431,7 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             - Made for [Geta Game Jam 12](https://itch.io/jam/geta-game-jam-12)
             - Art and Game Design: [Yaga](https://twitter.com/a_bog_hag)
             - Music and Sound Design: [Shirou](https://shiro808.itch.io/)
-            - Programming: [Danidre](https://danidre.herokuapp.com/)`,
+            - Programming: [Danidre](https://danidre.com/)`,
             minidesc: `Journey through the Unstable Lands`,
             image: "https://i.imgur.com/KbpItx1.png",
             url: "/games/fields_of_sagebrushes"

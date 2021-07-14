@@ -162,7 +162,7 @@ section.games .description {
   height: 210px;
   margin: 0 var(--small-spacing);
   font-size: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
 }
 
 .game-div.small {
