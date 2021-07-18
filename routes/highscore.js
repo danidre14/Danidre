@@ -8,7 +8,6 @@ const arrayFunc = require('../utils/arrayFunc');
 
 //get highscore
 router.get('/highscores_list', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
-    console.log("got here in highscores")
     try {
         const highscores = await Highscore.find({}, 'name key order');
 

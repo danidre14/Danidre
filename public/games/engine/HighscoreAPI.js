@@ -43,7 +43,7 @@ const HighscoreAPI = function (key, options) {
                 data: {key: KEY}
             });
 
-            const request2OK = request2 && request2.status === 200 && request2.statusText === 'OK';
+            const request2OK = request2 && request2.status === 200;
             if (request2OK) {
                 const data2 = await request2.data;
 

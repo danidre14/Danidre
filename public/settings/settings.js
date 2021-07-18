@@ -22,7 +22,7 @@ const loadHighScoreList = async function() {
         const request = await axios('/api/games/highscores/highscores_list');
         const requestOK = request && request.status === 200;
         if(!requestOK) {
-            return console.log("Can't get highscore list", request.status, request.statusText); //error occurred
+            return console.log("Can't get highscore list", request.status); //error occurred
         }
         const data = await request.data;
         if(data === null || data === undefined) return console.log("Can't get list"); //error occurred
@@ -190,7 +190,7 @@ const loadRoleList = async function() {
         const request = await axios('/settings/roles_List');
         const requestOK = request && request.status === 200;
         if(!requestOK) {
-            return console.log("Can't get roles list", request.status, request.statusText); //error occurred
+            return console.log("Can't get roles list", request.status); //error occurred
         }
         const data = await request.data;
         if(data === null || data === undefined) return console.log("Can't get list"); //error occurred

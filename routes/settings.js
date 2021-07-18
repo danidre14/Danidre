@@ -36,7 +36,6 @@ router.get('/', async (req, res, next) => {
 //get roles
 router.get('/roles_List', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
     const list = [];
-    console.log("got here in roles")
     try {
         const roles = await Role.find({}, 'name');
 

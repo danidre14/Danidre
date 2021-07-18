@@ -5,7 +5,6 @@ const User = require('../models/user');
 
 
 router.use(async (req, res, next) => {   //last seen updates
-    console.log(req.url)
     if(req.isAuthenticated()) {
         try {
             const user = await User.findOne({username: new RegExp("^" + req.user.username + "$", "i")}, 'username profileImage profileImageType');

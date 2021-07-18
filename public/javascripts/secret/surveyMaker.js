@@ -16,7 +16,7 @@ const postList = async function(config) {
             data: config
         });
 
-        let responseOK = response && response.status === 200 && response.statusText === 'OK';
+        let responseOK = response && response.status === 200;
         if (responseOK) {
             const data = await response.data;
             // do something with data
@@ -108,7 +108,7 @@ const removeFile = async function(fileName) {
             }
         });
 
-        let responseOK = response && response.status === 200 && response.statusText === 'OK';
+        let responseOK = response && response.status;
         if (responseOK) {
             const data = await response.data;
             // do something with data
