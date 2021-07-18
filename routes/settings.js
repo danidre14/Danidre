@@ -36,7 +36,7 @@ router.get('/', async (req, res, next) => {
 //get roles
 router.get('/roles_List', checkAuthenticatedAccess, checkIsAdmin, async (req, res) => {
     const list = [];
-
+    console.log("got here in roles")
     try {
         const roles = await Role.find({}, 'name');
 
@@ -47,7 +47,9 @@ router.get('/roles_List', checkAuthenticatedAccess, checkIsAdmin, async (req, re
             const users = await User.find({roles: roles[i]._id}, 'username');
             list.push({name: roles[i].name, users: users});
         }
-    } catch {}
+    } catch (e) {
+        console.warn("Roles list err:", e)
+    }
 
     res.send({roles: list});
 });

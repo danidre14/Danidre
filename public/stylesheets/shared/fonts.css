@@ -152,7 +152,7 @@
 @font-face {
 	font-family: "Font Default";
 	font-display: swap;
-	src: url('/fonts/Raleway/Raleway-RegularItalic.ttf') format('truetype');
+	src: url('/fonts/Raleway/Raleway-Italic.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
 }
