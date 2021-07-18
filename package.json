@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "devStart": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "publish": "git add . && git commit -m",
+    "postpublish": "git push && caprover deploy --default"
   },
   "author": "",
   "license": "ISC",

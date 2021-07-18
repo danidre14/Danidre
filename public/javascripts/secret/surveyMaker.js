@@ -1,7 +1,7 @@
 const postList = async function(config) {
     try {
         const request = await axios('/api/users/data_username');
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if(!requestOK) {
             console.log('Must be logged in')
 
@@ -60,7 +60,7 @@ window.addEventListener('beforeunload', function (e) {
 });
 const getList = async function() {
     const request = await axios('/api/users/data_secret');
-    const requestOK = request && request.status === 200 && request.statusText === 'OK';
+    const requestOK = request && request.status === 200;
     if(!requestOK) {
         console.log('Must be logged in')
 
@@ -90,7 +90,7 @@ const removeFile = async function(fileName) {
 
     try {
         const request = await axios('/api/users/data_username'); //fix this
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if(!requestOK) {
             console.log('Must be logged in')
 

@@ -20,7 +20,7 @@ const resizeDiv = function(divId) {
 const loadHighScoreList = async function() {
     try {
         const request = await axios('/api/games/highscores/highscores_list');
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if(!requestOK) {
             return console.log("Can't get highscore list", request.status, request.statusText); //error occurred
         }
@@ -64,7 +64,7 @@ async function addHighscore() {
                 data: {highscoreName: highscoreName}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -94,7 +94,7 @@ async function editHighscore(oldHighscoreName) {
                 data: {oldHighscoreName: oldHighscoreName, highscoreName: newHighscoreName}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -122,7 +122,7 @@ async function removeHighscore(highscoreName) {
                 data: {highscoreName: highscoreName, passkey: passkey}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -149,7 +149,7 @@ async function toggleHighscoreOrder(highscoreName) {
             data: {highscoreName: highscoreName}
         });
 
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if (requestOK) {
             const data = await request.data;
             // do something with data
@@ -172,7 +172,7 @@ const getHighscoreKey = function(highscoreKey) {
 const getImagePath = async function(username) {
     try {
         const request = await axios(`/api/uploads/avatars/${username}`);
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if (requestOK) {
             const data = await request.data;
             // do something with data
@@ -188,7 +188,7 @@ const getImagePath = async function(username) {
 const loadRoleList = async function() {
     try {
         const request = await axios('/settings/roles_List');
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if(!requestOK) {
             return console.log("Can't get roles list", request.status, request.statusText); //error occurred
         }
@@ -264,7 +264,7 @@ async function addRole() {
                 data: {roleName: roleName}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -294,7 +294,7 @@ async function editRole(oldRoleName) {
                 data: {oldRoleName: oldRoleName, roleName: newRoleName}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -322,7 +322,7 @@ async function removeRole(roleName) {
                 data: {roleName: roleName, passkey: passkey}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -350,7 +350,7 @@ async function updateLastSeen() {
                 data: {passkey: passkey}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -378,7 +378,7 @@ async function resetUserRoles() {
                 data: {passkey: passkey}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -405,7 +405,7 @@ async function addRoleToUser(roleName) {
             data: {roleName: roleName, userName: userName}
         });
 
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if (requestOK) {
             const data = await request.data;
             // do something with data
@@ -431,7 +431,7 @@ async function removeRoleFromUser(roleName, userName) {
             data: {roleName: roleName, userName: userName}
         });
 
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if (requestOK) {
             const data = await request.data;
             // do something with data
@@ -458,7 +458,7 @@ async function addRoleToAllUsers(roleName) {
                 data: {roleName: roleName, passkey: passkey}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data
@@ -486,7 +486,7 @@ async function removeRoleFromAllUsers(roleName) {
                 data: {roleName: roleName, passkey: passkey}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 // do something with data

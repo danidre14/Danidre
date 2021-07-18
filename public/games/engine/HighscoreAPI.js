@@ -31,7 +31,7 @@ const HighscoreAPI = function (key, options) {
         if(CONNECTED) return //console.log("Already connected to highscores.");
         try {
             const request = await axios(`${DOMAIN}/api/users/data_loggedIn`);
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if(requestOK) {
                 const data = await request.data;
                 LOGGEDIN = data.loggedId || false;
@@ -73,7 +73,7 @@ const HighscoreAPI = function (key, options) {
                 data: {key: KEY, userName: USERNAME, score: score}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
                 if(data.res === "Error")
@@ -96,7 +96,7 @@ const HighscoreAPI = function (key, options) {
                 data: {key: KEY, sort: optionalSort, nav: nav, page: PAGE}
             });
 
-            const requestOK = request && request.status === 200 && request.statusText === 'OK';
+            const requestOK = request && request.status === 200;
             if (requestOK) {
                 const data = await request.data;
 

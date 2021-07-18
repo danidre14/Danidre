@@ -13,7 +13,7 @@ const createPost = async function (title, content, name, code, summary, image) {
             }
         });
 
-        const requestOK = request && request.status === 200 && request.statusText === 'OK';
+        const requestOK = request && request.status === 200;
         if (requestOK) {
             const data = await request.data;
             // do something with data
