@@ -13,8 +13,8 @@
                     <% } %>
                     <div class="game-div">
                         <div class="img-div">
-                            <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
-                                onerror="this.src = '../images/GamesIcon.png';">
+                            <img class="game-img" src="<%= game.image %>" alt="<%= game.title%> game thumbnail"
+                                onerror="this.src = '../images/GamesIcon.png';" />
                         </div>
                         <span class="title"><%= game.title %></span>
                         <% if(game.minidesc) { 809%>

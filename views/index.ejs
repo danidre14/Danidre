@@ -20,8 +20,8 @@ let hasGames = false; %>
                         <% } %>
                         <div class="game-div">
                             <div class="img-div">
-                                <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
-                                    onerror="this.src = '../images/GamesIcon.png';">
+                                <img class="game-img" src="<%= game.image %>" alt="<%= game.title%> game thumbnail"
+                                    onerror="this.src = '../images/GamesIcon.png';" />
                             </div>
                             <span class="title"><%= game.title %></span>
                             <% if(game.minidesc) { %>
@@ -58,8 +58,8 @@ let hasGames = false; %>
             <div data-p-newspost>
                 <a href="/posts/view/<%= post.name %>" class="description encapsulated-box"
                     style="text-decoration:none;" data-p-newspost>
-                    <img class="posts-img" src="<%= post.image %>" alt="post image for <%= post.name%>"
-                        onerror="this.src = 'images/PostsIcon.png';">
+                    <img class="posts-img" src="<%= post.image %>" alt="<%= post.name%> post thumbnail"
+                        onerror="this.src = 'images/PostsIcon.png';" />
                     <div style="width:100%;margin-left:var(--small-spacing);">
                         <h4><strong><%= post.title %></strong></h4>
                         <% if(post.summary) { %>
@@ -133,19 +133,6 @@ let hasGames = false; %>
 <meta name="twitter:site" content="@danidre" />
 <meta name="google-site-verification" content="hQuGFfREIGQFquGo0G8SOPsJpXkJ-kyd1QniXoBDbXk" />
 <meta name="theme-color" content="#C2B4AB">
-
-
-
-
-<script>
-// window.addEventListener("load", () => {
-//     let spans = document.querySelectorAll(".game-div>span");
-
-//     for (let i = 0; i < spans.length; i++) {
-//         spans[i].style.transition = "0.7s ease-in-out";
-//     }
-// })
-</script>
 
 <script async src="https://platform.twitter.com/widgets.js"></script>
 

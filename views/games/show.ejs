@@ -23,8 +23,8 @@
                         <% } %>
                         <div class="game-div small">
                             <div class="img-div">
-                                <img class="game-img" src="<%= game.image %>" alt="game image for <%= game.title%>"
-                                    onerror="this.src = '../images/GamesIcon.png';">
+                                <img class="game-img" src="<%= game.image %>" alt="<%= game.title%> game thumbnail"
+                                    onerror="this.src = '../images/GamesIcon.png';" />
                             </div>
                             <span class="title"><%= game.title %></span>
                         </div>
@@ -65,7 +65,7 @@
 <meta property="og:image" content="<%= game.image %>">
 <meta property="og:image:width" content="150" />
 <meta property="og:image:height" content="150" />
-<meta property="og:image:alt" content="Game image for <%= game.title %>" />
+<meta property="og:image:alt" content="<%= game.title %>  game thumbnail" />
 <meta property="og:url" content="<%= game.url %>">
 <meta name="twitter:card" content="summary">
 

@@ -5,6 +5,7 @@ const Game = require('../fixtures/game');
 
 router.get('/', async (req, res) => {
     let vars = { cPage: "games", searchOptions: req.query };
+    vars.title = "Games";
     if (req.isAuthenticated()) {
         try {
             const user = await User.findOne({ username: new RegExp("^" + req.user.username + "$", "i") }, 'username profileImage profileImageType');
