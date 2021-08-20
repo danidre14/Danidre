@@ -7,7 +7,9 @@
     "devStart": "nodemon server.js",
     "start": "node server.js",
     "publish": "git add . && git commit -m",
-    "postpublish": "git push && caprover deploy --default"
+    "postpublish": "git push && caprover deploy --default",
+    "export": "git add . && git commit -m",
+    "postexport": "git push"
   },
   "author": "",
   "license": "ISC",
