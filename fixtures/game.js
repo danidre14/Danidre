@@ -285,7 +285,7 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             
             Each world has it's own instructions to follow.`,
             minidesc: `You are guaranteed to rage quit. All levels are possible to beat!`,
-            image: "https://danidre-flash-games.netlify.app/thumbnails/TWHGFM",
+            image: "https://danidre-flash-games.netlify.app/thumbnails/TWHGFM.png",
             url: "/games/twhgfm"
         },
         quiz_game: {
