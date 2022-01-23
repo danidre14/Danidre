@@ -126,7 +126,10 @@ app.locals.extractAttribute = function (obj, attr) {
     return out;
 }
 
-
-app.listen(process.env.PORT || 3000, () => {
+const server = require("./server-config");
+// app.listen(process.env.PORT || 3000, () => {
+//     console.log("Server Started");
+// });
+server(app).listen(process.env.PORT || 3000, () => {
     console.log("Server Started");
 });
