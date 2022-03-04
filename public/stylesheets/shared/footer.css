@@ -66,6 +66,10 @@
     background-image: url("../../images/TwitchLogo3.png");
 }
 
+.footer nav a.patreon {
+    background-image: url("../../images/PatreonLogo3.png");
+}
+
 .footer nav a.newgrounds {
     background-image: url("../../images/NewgroundsLogo3.png");
 }

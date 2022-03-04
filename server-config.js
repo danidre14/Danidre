@@ -3,8 +3,8 @@ const https = require("https");
 
 module.exports = function (app) {
     if (process.env.NODE_ENV !== "production") {
-        const localhostKeyPemPath = __dirname + "/ca_cert/cert.key";
-        const localhostPemPath = __dirname + "/ca_cert/cert.crt";
+        const localhostKeyPemPath = __dirname + "/local_ca_cert/cert.key";
+        const localhostPemPath = __dirname + "/local_ca_cert/cert.crt";
         try {
             if (fs.existsSync(localhostKeyPemPath) && fs.existsSync(localhostPemPath)) {
                 const key = fs.readFileSync(localhostKeyPemPath, "utf-8");
