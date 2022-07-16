@@ -24,7 +24,7 @@ const sessionConfig = {
     saveUninitialized: false, //dont save empty value in session if there is no value
     cookie: { secure: false }, //for https sites,
     store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL,
-        // ttl: 28 * 24 * 60 * 60 // = 28 days
+        ttl: 28 * 24 * 60 * 60 // = 28 days
      })
 }
 if (process.env.NODE_ENV === "production") {
