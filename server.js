@@ -10,12 +10,26 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('express-flash');
 const methodOverride = require('method-override');
+const MongoStore = require('connect-mongo');
 
 //functions/utils
 const formatDistanceToNow = require('date-fns/formatDistanceToNow');
 const MarkDownToUpJS = require('./utils/MarkDownToUp');
 const MarkDownToUp = new MarkDownToUpJS();
 
+
+const sessionConfig = {
+    secret: process.env.SESSION_SECRET,
+    resave: false, //dont save variables if nothing has changed
+    saveUninitialized: false, //dont save empty value in session if there is no value
+    cookie: {}, //for https sites,
+    store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL,
+        ttl: 28 * 24 * 60 * 60 // = 28 days
+     })
+}
+if (process.env.NODE_ENV === "production") {
+    sessionConfig.cookie.secure = true // serve secure cookies
+}
 
 //routes
 const globalChecks = require('./routes/globalChecks')
@@ -49,12 +63,8 @@ app.use(express.json());
 app.use(express.static('public')); //where most server files will be
 app.use(express.urlencoded({ limit: '10mb', extended: false }));
 app.use(flash());
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false, //dont save variables if nothing has changed
-    saveUninitialized: false //dont save empty value in session if there is no value
-    //, cookie: {secure: true} //for https sites
-}));
+app.use(session(sessionConfig));
+
 app.use(passport.initialize());
 app.use(passport.session());
 

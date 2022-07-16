@@ -1,3 +1,4 @@
 .env
 node_modules
 local_ca_cert
+.ejsbrc.json
