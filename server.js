@@ -22,12 +22,13 @@ const sessionConfig = {
     secret: process.env.SESSION_SECRET,
     resave: false, //dont save variables if nothing has changed
     saveUninitialized: false, //dont save empty value in session if there is no value
-    cookie: {}, //for https sites,
+    cookie: { secure: false }, //for https sites,
     store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL,
-        ttl: 28 * 24 * 60 * 60 // = 28 days
+        // ttl: 28 * 24 * 60 * 60 // = 28 days
      })
 }
 if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1) // trust first proxy
     sessionConfig.cookie.secure = true // serve secure cookies
 }
 
