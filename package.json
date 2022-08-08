@@ -26,7 +26,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
     "method-override": "^3.0.0",
-    "mongoose": "^5.9.27",
+    "mongoose": "^6.5.1",
     "node-fetch": "^3.1.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"

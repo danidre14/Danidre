@@ -191,7 +191,7 @@ router.post("/post_score", async (req, res) => {
 
                 highscore.scores = sortHighscores(highscore.scores, order);
 
-            highscore.markModified('scores');
+            // highscore.markModified('scores');
             await highscore.save();
             return res.send({res: 'Success', msg: `Score posted.`});
         } else {
@@ -203,7 +203,7 @@ router.post("/post_score", async (req, res) => {
 
                 highscore.scores = sortHighscores(highscore.scores, order);
 
-                highscore.markModified('scores');
+                // highscore.markModified('scores');
                 await highscore.save();
                 return res.send({res: 'Success', msg: `Score posted.`});
             }
@@ -218,7 +218,7 @@ router.post("/post_score", async (req, res) => {
 
                 highscore.scores = sortHighscores(highscore.scores, order);
 
-                highscore.markModified('scores');
+                // highscore.markModified('scores');
                 await highscore.save();
                 return res.send({res: 'Success', msg: `Score posted.`});
             }

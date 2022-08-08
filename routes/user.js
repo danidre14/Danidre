@@ -140,7 +140,7 @@ async (req, res) => {
         try {
             let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
             user.secret.surveyMaker[req.body.key] = req.body.value;
-            user.markModified('secret');
+            // user.markModified('secret');
             await user.save();
             res.send('Successful');
         } catch {
@@ -168,7 +168,7 @@ async (req, res) => {
         try {
             let user = await User.findOne({username: new RegExp("^" + req.params.name + "$", "i")}, 'username secret');
             user.secret.surveyMaker[req.body.key] = undefined;
-            user.markModified('secret');
+            // user.markModified('secret');
             await user.save();
             res.send('Successfully deleted.');
         } catch {

@@ -156,7 +156,7 @@ router.delete('/api/reset_user_roles', checkAuthenticatedAccess, checkIsAdmin, a
                 const users = await User.find({}, 'roles');
                 users.forEach(async user => {
                     user.roles = [];
-                    user.markModified('roles');
+                    // user.markModified('roles');
                     await user.save();
                 });
             }
@@ -186,7 +186,7 @@ router.post('/api/add_role_to_user', checkAuthenticatedAccess, checkIsAdmin, asy
 
         //add role now
         user.roles.push(role._id);
-        user.markModified('roles');
+        // user.markModified('roles');
         await user.save();
 
         res.send({res: 'Success', msg: `Added role ${roleName} to ${userName}.`});
@@ -220,7 +220,7 @@ router.delete('/api/remove_role_from_user', checkAuthenticatedAccess, checkIsAdm
         //remove role now
         const roleIndex = user.roles.indexOf(role._id);
         user.roles.splice(roleIndex, 1);
-        user.markModified('roles');
+        // user.markModified('roles');
         await user.save();
 
         res.send({res: 'Success', msg: `Added role ${roleName} to ${userName}.`});
@@ -244,7 +244,7 @@ router.post('/api/add_role_to_all_users', checkAuthenticatedAccess, checkIsAdmin
                 usersWithout.forEach(async user => {
                     //add role to each
                     user.roles.push(role._id);
-                    user.markModified('roles');
+                    // user.markModified('roles');
                     await user.save();
                 });
             }
@@ -275,7 +275,7 @@ router.delete('/api/remove_role_from_all_users', checkAuthenticatedAccess, check
                     //remove role from each
                     const roleIndex = user.roles.indexOf(role._id);
                     user.roles.splice(roleIndex, 1);
-                    user.markModified('roles');
+                    // user.markModified('roles');
                     await user.save();
                 });
             }
