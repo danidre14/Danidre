@@ -14,8 +14,8 @@ router.get('/', async (req, res) => {
     res.render('about/index', vars);
 });
 
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     res.redirect('/about');
-})
+});
 
 module.exports = router;

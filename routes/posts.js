@@ -219,7 +219,7 @@ router.get('/view/:postName/edit', async (req, res, next) => {
     }
 });
 
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     res.redirect('/posts');
 })
 

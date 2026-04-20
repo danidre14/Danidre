@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
 const Token = require('../models/token');
-
-const testEmail = false;
+const { sendEmail, testEmail } = require('../utils/sendEmail');
 
 router.get('/', checkNotAuthenticated, async (req, res) => {
     let vars = { cPage: "signup", searchOptions: req.query };
@@ -143,7 +141,9 @@ async function checkUserExists(req, res, next) {
             // Send the email for resend token
             const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
 
-            sendMail(mailOptions, user.email);
+            await sendEmail(mailOptions, user.email);
+
+            console.log(`A verification email has been sent to ${user.email}.`);
 
             req.flash('outsert', { message: `A token has been resent to ${user.email}. Check your email to verify your account.` });
             return res.redirect('/signup/v');
@@ -169,7 +169,9 @@ async function checkUserExists(req, res, next) {
             // Send the email for resend token
             const mailOptions = getMailOptions(user.username, user.email, req.headers.host, newToken.token);
 
-            sendMail(mailOptions, user.email);
+            await sendEmail(mailOptions, user.email);
+
+            console.log(`A verification email has been sent to ${user.email}.`);
 
             req.flash('outsert', { message: `A token has been sent to ${user.email}. Check your email to verify your account.` });
             return res.redirect('/signup/v');
@@ -207,7 +209,9 @@ async function createUser(req, res) {
         // Send the email
         const mailOptions = getMailOptions(user.username, user.email, req.headers.host, token.token);
 
-        sendMail(mailOptions, user.email);
+        await sendEmail(mailOptions, user.email);
+
+        console.log(`A verification email has been sent to ${user.email}.`);
 
         req.flash('outsert', { message: `A token has been sent to ${user.email}. Check your email to verify your account.` });
         res.redirect('/signup/v');
@@ -329,32 +333,14 @@ function getMailOptions(username = 'User', email, host, token) {
                     <p style="padding-bottom:1rem;margin-bottom:0;font-size:1.1rem;padding-top:.8rem;">Don't recognize this activity? You can ignore this e-mail. No further action is needed.</p>
                 </section>
             </div>
-            <div style="background-color:#968176;margin:0;padding:.4rem;font-size:1.6rem;"><a style="text-decoration:none;" href="${siteLink}"><span style="color:#3C2E2D;font-weight:bold;">Danidre</span> <span style="color:#E3DBD8;">2014-20</span></a></div>
+            <div style="background-color:#968176;margin:0;padding:.4rem;font-size:1.6rem;"><a style="text-decoration:none;" href="${siteLink}"><span style="color:#3C2E2D;font-weight:bold;">Danidre</span> <span style="color:#E3DBD8;">2014-${new Date().getFullYear()}</span></a></div>
         </div>
 	</body>`
     };
     return options;
 }
 
-
-
-function sendMail(mailOptions, email) {
-    if (process.env.NODE_ENV !== 'production' && !testEmail) {
-        //development environment
-        return console.log('Mail sent, make sure to actually send here');
-    }
-
-    //otherwise, send mail
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    sgMail.send(mailOptions, function (err) {
-        if (err) {
-            return console.log("Message:", err.message);
-        }
-        console.log('A verification email has been sent to ' + email + '.');
-    });
-}
-
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     res.redirect('/signup');
 })
 

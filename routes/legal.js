@@ -26,7 +26,7 @@ router.get('/tos', async (req, res) => {
     res.render('legal/tos', vars);
 });
 
-// router.use('/*', (req, res) => {
+// router.use(/(.*)/, (req, res) => {
 //     res.redirect('/legal');
 // });
 

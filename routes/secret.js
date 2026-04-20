@@ -39,7 +39,7 @@ router.get('/surveyMaker', async (req, res) => {
     res.render('misc/surveyMaker', vars);
 });
 
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     res.redirect('/');
 })
 

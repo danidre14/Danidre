@@ -293,7 +293,7 @@ router.delete('/api/remove_role_from_all_users', checkAuthenticatedAccess, check
 });
 
 
-// router.use('/*', (req, res) => {
+// router.use(/(.*)/, (req, res) => {
 //     res.redirect('/settings');
 // })
 

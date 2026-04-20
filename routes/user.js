@@ -177,7 +177,7 @@ async (req, res) => {
     }
 });
 
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     if(!req.isAuthenticated()) {
         return res.redirect('/');
     }

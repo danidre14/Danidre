@@ -371,7 +371,7 @@ const sortHighscores = function(array, order) {
 
 //=========================================================
 
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     res.redirect('/about');
 })
 

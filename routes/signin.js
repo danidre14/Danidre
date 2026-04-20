@@ -58,7 +58,7 @@ function checkNotAuthenticated(req, res, next) {
     next();
 }
 
-router.use('/*', (req, res) => {
+router.use(/(.*)/, (req, res) => {
     res.redirect('/signin');
 })
 

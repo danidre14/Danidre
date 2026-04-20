@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "devStart": "nodemon server.js",
+    "dev": "nodemon --trace-deprecation server.js",
     "start": "node server.js",
     "publish": "git add . && git commit -m",
     "postpublish": "git push && caprover deploy --default",
@@ -14,25 +14,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^6.5.5",
-    "bcrypt": "^5.0.1",
-    "blueimp-md5": "^2.17.0",
-    "connect-mongo": "^4.6.0",
-    "crypto": "^1.0.1",
-    "date-fns": "^2.15.0",
-    "ejs": "^3.1.7",
-    "express": "^4.17.1",
-    "express-ejs-layouts": "^2.5.0",
-    "express-flash": "0.0.2",
-    "express-session": "^1.17.1",
+    "@sendgrid/mail": "^8.1.6",
+    "bcrypt": "^6.0.0",
+    "blueimp-md5": "^2.19.0",
+    "connect-mongo": "^6.0.0",
+    "date-fns": "^4.1.0",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.19.0",
     "method-override": "^3.0.0",
-    "mongoose": "^6.5.1",
-    "node-fetch": "^3.1.1",
-    "passport": "^0.6.0",
+    "mongoose": "^9.4.1",
+    "nodemailer": "^8.0.5",
+    "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
-    "nodemon": "^2.0.4"
+    "dotenv": "^17.4.2",
+    "nodemon": "^3.1.14"
   }
 }

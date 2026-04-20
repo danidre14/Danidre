@@ -20,6 +20,6 @@ router.get('/', async (req, res) => {
     res.render('index', vars);
 });
 
-router.get('//*', (req, res) => res.redirect('/'));
+router.get(/^\/\/.*/, (req, res) => res.redirect(301, '/'));
 
 module.exports = router;

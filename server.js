@@ -10,10 +10,10 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('express-flash');
 const methodOverride = require('method-override');
-const MongoStore = require('connect-mongo');
+const { MongoStore } = require('connect-mongo');
 
 //functions/utils
-const formatDistanceToNow = require('date-fns/formatDistanceToNow');
+const { formatDistanceToNow } = require('date-fns');
 const MarkDownToUpJS = require('./utils/MarkDownToUp');
 const MarkDownToUp = new MarkDownToUpJS();
 
@@ -22,10 +22,14 @@ const sessionConfig = {
     secret: process.env.SESSION_SECRET,
     resave: false, //dont save variables if nothing has changed
     saveUninitialized: false, //dont save empty value in session if there is no value
-    cookie: { secure: false }, //for https sites,
-    store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL,
-        ttl: 28 * 24 * 60 * 60 // = 28 days
-     })
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Set to true in prod
+        maxAge: 28 * 24 * 60 * 60 * 1000 // 28 days in milliseconds
+    },
+    store: MongoStore.create({
+        mongoUrl: process.env.DATABASE_URL,
+        ttl: 28 * 24 * 60 * 60 // 28 days
+    })
 }
 if (process.env.NODE_ENV === "production") {
     app.set("trust proxy", 1) // trust first proxy
@@ -70,7 +74,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE_URL, { family:4 });
+mongoose.connect(process.env.DATABASE_URL, {});
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
