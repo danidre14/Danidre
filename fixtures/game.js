@@ -44,14 +44,14 @@ const gamesList = function () {
         {
             title: "Miscen...AGAIN!?",
             minidesc: "Why does everything seem to go missing? You've just found Miscen! But…there she goes again…",
-            image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
+            image: "/games/thumbnails/miscen_again_game_thumbnail.png",
             url: "/games/miscen_again",
             newTab: false
         },
         {
             title: "Bob The Brawler",
             minidesc: "Ski Mask Gang are out for you! Beat some baddies in this fast-paced brawler! (>:[=)",
-            image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
+            image: "/games/thumbnails/bob_the_brawler_game_thumbnail.png",
             url: "/games/bob_the_brawler",
             newTab: false
         },
@@ -302,7 +302,7 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             scripts: ["/games/BobTheBrawler/script.js"],
             title: "Bob The Brawler",
             description: `# [Bob the Brawler](https://ldjam.com/events/ludum-dare/45/bob-the-brawler)
-            [coverimg](https://static.jam.vg/raw/0fb/8/z/28772.jpg)
+            [coverimg](/games/thumbnails/bob_the_brawler_game_thumbnail.png)
             ## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/45/games).
 
             # Objective:
@@ -333,15 +333,15 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             **Programming/Design-** [@danidre](/u/danidre)
             **Art/Audio-** [@AXLplosion](/u/AXLplosion)`,
             minidesc: `Ski Mask Gang are out for you! Beat some baddies in this fast-paced brawler! (>:[=)`,
-            image: "https://static.jam.vg/raw/0fb/8/z/295ec.png",
+            image: "/games/thumbnails/bob_the_brawler_game_thumbnail.png",
             url: "/games/bob_the_brawler"
         },
         miscen_again: {
             scripts: ["/games/MiscenAgain/script.js"],
             title: "Miscen...AGAIN!?",
             description: `# [Miscen...AGAIN!?](https://ldjam.com/events/ludum-dare/46/miscen-again)
-            [coverimg](https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg)
-            ## Made for [Ludum Dare 45](https://ldjam.com/events/ludum-dare/46/games) and [Geta Game Jam 11](https://itch.io/jam/geta-game-jam-11)!
+            [coverimg](/games/thumbnails/miscen_again_game_thumbnail.png)
+            ## Made for [Ludum Dare 46](https://ldjam.com/events/ludum-dare/46/games) and [Geta Game Jam 11](https://itch.io/jam/geta-game-jam-11)!
 
             # You've just found Miscen! But...there she goes again...
 
@@ -381,7 +381,7 @@ You are meant to glitch through walls when you move incorrectly. You can also us
             - **Design-** [TMG](/u/TeaEhmGee)
             - **Programming-** [danidre](/u/danidre)`,
             minidesc: `Why does everything seem to go missing? You've just found Miscen! But…there she goes again…`,
-            image: "https://static.jam.vg/content/0fb/8/z/31170.png.480x384.fit.jpg",
+            image: "/games/thumbnails/miscen_again_game_thumbnail.png",
             url: "/games/miscen_again"
         },
         fields_of_sagebrushes: {
