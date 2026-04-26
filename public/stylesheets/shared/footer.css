@@ -74,6 +74,10 @@
     background-image: url("../../images/NewgroundsLogo3.png");
 }
 
+.footer nav a.itchio {
+    background-image: url("../../images/ItchioLogo3.png");
+}
+
 .footer nav a.email {
     background-image: url("../../images/EmailLogo3.png");
 }

@@ -1,0 +1,30 @@
+<h2>Upload Image</h2>
+<section class="admin-images-new">
+    <article>
+        <% if (outsert && outsert.length) { %>
+            <% outsert.forEach(function(o) { %>
+                <div><pre><%= (typeof o === 'string') ? o : (o.message || JSON.stringify(o)) %></pre></div>
+            <% }) %>
+        <% } %>
+        <form action="/admin/images" method="POST">
+            <div>
+                <label for="image">Select image</label>
+                <input id="image" name="image" type="file" accept="image/*" required class="filepond">
+            </div>
+            <div style="margin-top:1rem;">
+                <button class="btn btn-primary" type="submit">Upload</button>
+                <a class="btn" href="/admin/images">Back</a>
+            </div>
+        </form>
+    </article>
+</section>
+
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+<script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+
+<script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+<script defer src="/javascripts/fileUpload.js"></script>

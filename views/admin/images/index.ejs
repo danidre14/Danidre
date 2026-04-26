@@ -1,0 +1,102 @@
+<h2>Manage Images</h2>
+<section class="admin-images">
+    <article>
+        <a class="btn btn-primary" href="/admin/images/new">Upload New Image</a>
+        <% if (outsert && outsert.length) { %>
+            <% outsert.forEach(function(o) { %>
+                <div><pre><%= (typeof o === 'string') ? o : (o.message || JSON.stringify(o)) %></pre></div>
+            <% }) %>
+        <% } %>
+
+        <div class="images-div" style="margin-top:1rem;">
+            <% images.forEach(function(image) { %>
+                <div class="image-card" data-slug="<%= image.slug %>">
+                    <a href="/uploads/images/<%= image.slug %>" target="_blank" class="img-link">
+                        <div class="img-div">
+                            <img src="/uploads/images/<%= image.slug %>" alt="<%= image.filename %>" onerror="this.src='/images/UsersIcon.png'" />
+                        </div>
+                    </a>
+                    <span class="title"><%= image.filename %></span>
+                    <div class="overlay">
+                        <div class="overlay-actions">
+                            <button class="btn btn-primary" data-link="/uploads/images/<%= image.slug %>">Copy</button>
+                            <button class="btn btn-primary delete-btn" data-slug="<%= image.slug %>">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+            <!-- Delete modal -->
+            <div id="deleteModal" class="modal" style="display:none;">
+                <div class="modal-inner">
+                    <form id="deleteForm" action="/admin/images/delete" method="POST">
+                        <input type="hidden" name="slug" id="deleteSlug" value="">
+                        <label for="deletePass">Admin passkey</label>
+                        <input id="deletePass" name="passkey" type="password" required autocomplete="current-password" />
+                        <div style="margin-top:.6rem;display:flex;gap:.5rem;justify-content:flex-end;">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button type="button" class="btn btn-primary" id="deleteCancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </article>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function flash(msg) {
+        try { alert(msg); } catch(e) { console.log('Flash:', msg); }
+    }
+
+    // Copy link handler
+    document.querySelectorAll('.copy-btn').forEach(function(btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var link = btn.getAttribute('data-link');
+            if (!link) return;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(link).then(function() {
+                    var prev = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    setTimeout(function(){ btn.textContent = prev; }, 1500);
+                }).catch(function() {
+                    flash('Copy failed. Link: ' + link);
+                });
+            } else {
+                window.prompt('Copy link', link);
+            }
+        });
+    });
+
+        // Open modal delete form (safer than prompt)
+        var deleteModal = document.getElementById('deleteModal');
+        var deleteSlugInput = document.getElementById('deleteSlug');
+        var deletePassInput = document.getElementById('deletePass');
+        var deleteCancel = document.getElementById('deleteCancel');
+
+        document.querySelectorAll('.delete-btn').forEach(function(btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                var slug = btn.getAttribute('data-slug');
+                if (!slug) return;
+                deleteSlugInput.value = slug;
+                deletePassInput.value = '';
+                deleteModal.style.display = 'flex';
+                deletePassInput.focus();
+            });
+        });
+
+        deleteCancel.addEventListener('click', function() {
+            deleteModal.style.display = 'none';
+        });
+
+        // Close modal on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                deleteModal.style.display = 'none';
+            }
+        });
+});
+</script>

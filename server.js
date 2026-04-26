@@ -45,6 +45,10 @@ const aboutRouter = require('./routes/about');
 const postsRouter = require('./routes/posts');
 const contactRouter = require('./routes/contact');
 
+const adminImagesRouter = require('./routes/adminImages');
+const uploadsRouter = require('./routes/uploads');
+const imageCache = require('./utils/imageCache');
+
 const signupRouter = require('./routes/signup');
 const signinRouter = require('./routes/signin');
 const signoutRouter = require('./routes/signout');
@@ -77,7 +81,15 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL, {});
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
-db.once('open', () => console.log('Connected to Mongoose'));
+db.once('open', () => {
+    console.log('Connected to Mongoose');
+    // initialize the image cache in background
+    try {
+        imageCache.init().then(() => console.log('Image cache initialized')).catch(err => console.error('Image cache init error', err && err.message));
+    } catch (e) {
+        console.error('Image cache init threw', e && e.message);
+    }
+});
 
 app.use(globalChecks);
 app.use('/', indexRouter);
@@ -95,6 +107,11 @@ app.use('/secret', secretRouter);
 
 app.use('/api', apiRouter);
 app.use('/settings', settingsRouter);
+
+// Admin image management UI
+app.use('/admin/images', adminImagesRouter);
+// Public images endpoint (streams cached files when available)
+app.use('/uploads', uploadsRouter);
 
 app.get('/sitemap.xml', (req, res) => res.sendFile(__dirname + '/sitemap.xml'));
 

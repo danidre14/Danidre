@@ -252,6 +252,120 @@ section.games .description {
   border-radius: 0;
 }
 
+/* Admin images card grid (inspired by games thumbnails) */
+.images-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--small-spacing);
+  justify-content: flex-start;
+}
+
+.image-card {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 220px;
+  height: 170px;
+  margin: 0;
+  border-radius: 0.3rem;
+  background: var(--color-game-icon);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.image-card .img-div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-game-icon);
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.3s ease-out;
+}
+
+.image-card .title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 0.95rem;
+  transform: translateY(100%);
+  transition: transform 0.2s ease-in-out;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  pointer-events: none; /* allow clicks through overlay except for actionable children */
+  z-index: 2;
+}
+
+.image-card .overlay .overlay-actions {
+  position: absolute;
+  top: 10px; /* place actions above the filename bar */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: auto; /* enable interaction only on actions */
+  z-index: 4;
+}
+
+.image-card .overlay .btn {
+  opacity: 0.95;
+  padding: 0.28rem 0.6rem;
+  font-size: 0.95rem;
+  border-radius: 1.2rem;
+  min-width: 62px;
+}
+
+.image-card .title { z-index: 5; }
+
+.image-card:hover img { transform: scale(1.05); }
+.image-card:hover .overlay { opacity: 1; }
+.image-card:hover .title { transform: translateY(0); }
+
+/* Simple modal for admin delete */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  z-index: 9999;
+}
+
+.modal-inner {
+  background: var(--color-background);
+  padding: 1rem;
+  border-radius: 0.4rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  width: 360px;
+  max-width: calc(100% - 40px);
+}
+
+.modal-inner label { display:block; margin-bottom:.25rem; font-weight:500; }
+.modal-inner input[type="password"] { width:100%; padding:.45rem; box-sizing:border-box; }
+
 /* About Page Specifics */
 
 section.about .desc {
