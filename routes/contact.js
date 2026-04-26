@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const { sendEmail } = require('../utils/sendEmail');
+const { verifyRecaptcha } = require('../utils/recaptcha');
 
 router.get('/', async (req, res) => {
     let vars = { cPage: "contact", searchOptions: req.query };
+    vars.recaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY || '';
     vars.formName = req.flash('formName');
     vars.formSubject = req.flash('formSubject');
     vars.formMessage = req.flash('formMessage');
@@ -22,8 +24,44 @@ router.get('/', async (req, res) => {
     res.render('contact/index', vars);
 });
 
-router.post('/', validateInfomation, async (req, res) => {
+async function verifyRecaptchaMiddleware(req, res, next) {
     try {
+        const token = req.body['g-recaptcha-response'];
+        if (!token) {
+            req.flash('outsert', { message: 'Please complete the captcha.' });
+            req.flash('bodyName', req.body.name || '');
+            req.flash('bodyEmail', req.body.email || '');
+            req.flash('bodySubject', req.body.subject || '');
+            req.flash('bodyMessage', req.body.message || '');
+            return res.redirect('/contact');
+        }
+
+        const result = await verifyRecaptcha(token, req.ip);
+        if (!result || !result.success) {
+            req.flash('outsert', { message: 'Captcha verification failed. Please try again.' });
+            req.flash('bodyName', req.body.name || '');
+            req.flash('bodyEmail', req.body.email || '');
+            req.flash('bodySubject', req.body.subject || '');
+            req.flash('bodyMessage', req.body.message || '');
+            return res.redirect('/contact');
+        }
+
+        next();
+    } catch (e) {
+        console.log('Captcha verify error:', e.message);
+        req.flash('outsert', { message: 'Captcha verification error. Please try again.' });
+        return res.redirect('/contact');
+    }
+}
+
+router.post('/', verifyRecaptchaMiddleware, validateInfomation, async (req, res) => {
+    try {
+        // Honeypot field check - if filled, assume bot and silently drop
+        if (req.body.contact_time && req.body.contact_time.trim() !== '') {
+            console.log('Honeypot triggered for contact from', req.ip || req.connection.remoteAddress);
+            req.flash('outsert', { message: 'Your submission looks like spam.' });
+            return res.redirect('/contact');
+        }
         const name = req.body.name;
         const email = req.body.email;
         const subject = req.body.subject;

@@ -131,6 +131,7 @@ app.locals.stringify = function (obj) {
 app.locals.isAdmin = function (username) {
     return username.toLowerCase() === process.env.ADMIN_NAME;
 }
+app.locals.recaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY || '';
 app.locals.extractAttribute = function (obj, attr) {
     const out = [];
 

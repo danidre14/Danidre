@@ -1,59 +1,89 @@
+<%
+  const today = new Date();
+
+  // ---- Age ----
+  const birthDate = new Date(2000, 5, 10); // June 10, 2000
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) age--;
+
+  // ---- Programming experience ----
+  const startDate = new Date(2014, 0, 1); // Jan 1, 2014
+  let yearsProgramming = today.getFullYear() - startDate.getFullYear();
+
+  const hasHitAnniversaryThisYear =
+    today.getMonth() > startDate.getMonth() ||
+    (today.getMonth() === startDate.getMonth() && today.getDate() >= startDate.getDate());
+
+  if (!hasHitAnniversaryThisYear) yearsProgramming--;
+%>
+
 <h2>About Danidre</h2>
 <section class="about">
     <article>
-        <div class="desc">Name:</div>
+        <div class="desc">Name</div>
         <p>I'm Carlonn Rivers, but my online alias is Danidre, or Dani, which comes from my middle names
             An<strong>dre</strong> and <strong>Dani</strong>el.</p>
 
-        <div class="desc">Occupation:</div>
-        <p>Full Stack Web Developer. Author. Game Programmer. Software Engineer. Student.</p>
+        <div class="desc">Occupation</div>
+        <p>Full Stack Software Engineer. Author. Game Engine Programmer.<br/>Building across software systems, infrastructure, and application development.</p>
 
-        <div class="desc">Education:</div>
-        <p>Highschool graduate with subjects including Accounting, Entrepreneurship, Mathematics, and Information
-            Technology. University Student pursuing a BSc of Computer Science.</p>
+        <div class="desc">Education</div>
+        <p>Bachelor of Science in Computer Science with a minor in Accounting.<br/>Background also includes Entrepreneurship, Mathematics, and Information Technology.</p>
 
-        <div class="desc">Demographics:</div>
-        <p>I'm a 21-year-old <a href="https://goo.gl/maps/QRBxQa8BWqwyDdN46" target="_blank"
+        <div class="desc">Demographics</div>
+        <p>I'm a <%= age %>-year-old <a href="https://goo.gl/maps/QRBxQa8BWqwyDdN46" target="_blank"
                 rel="noreferrer">Trinidadian</a>.</p>
 
-        <div class="desc">Programming History:</div>
-        <p>I know HTML/CSS/Javascript, NodeJS, and am very beginner with Java/C++. I once made <a
-                href="https://danidre14.newgrounds.com/games" target="_blank" rel="noreferrer">games</a> in <a
-                href="https://www.youtube.com/watch?v=DuNYJ0KZWhk" target="_blank" rel="noreferrer">Adobe Flash</a>. My
-            main language was ActionScript 2. I've been programming for over 8 years now!</p>
-
-        <div class="desc">Current Stack:</div>
+        <div class="desc">Experience</div>
         <div>
-            <strong>Front-End:</strong> 
+            <strong>Website Stack</strong> 
             <ul style="padding-left: 2rem;">
-                <li>HTML</li>
-                <li>JavaScript</li>
-                <li>CSS</li>
+                <li><strong>Front-End:</strong> HTML | CSS | JavaScript</li>
+                <li><strong>Back-End:</strong> NodeJS (Express) | MongoDB (Mongoose)</li>
             </ul>
-        </div>
-        <div>
-            <strong>Back-End:</strong> 
-            <ul style="padding-left: 2rem;">
-                <li>NodeJS (Express)</li>
-                <li>MongoDB (Mongoose)</li>
-                <li>Postgresql (Knex)</li>
-            </ul>
-        </div>
-        <div>
-            <strong>Game Development:</strong> 
+            <strong>Game Development</strong> 
             <ul style="padding-left: 2rem;">
                 <li>FlevaR (<a href="https://www.npmjs.com/package/flevar">Game Engine</a> | <a href="https://flevar.com/">Game Editor</a>)</li>
                 <li>JavaScript</li>
             </ul>
-        </div>
-        <div>
-            <strong>Additional Skills:</strong> 
+            <strong>Additional Skills</strong> 
             <ul style="padding-left: 2rem;">
-                <li><strong>Frameworks:</strong> ReactJS (Basic), Tailwind (Basic)</li>
-                <li><strong>Version Control:</strong> Git (Basic)</li>
-                <li><strong>DevOps:</strong> Digital Ocean, Caprover</li>
+                <li><strong>Programming Languages:</strong> Python | C# | TypeScript</li>
+                <li><strong>Frameworks:</strong> FastAPI | .NET Core | React | Tailwind | Knex</li>
+                <li><strong>Backend Services:</strong> Supabase</li>
+                <li><strong>Databases:</strong> MSSQL | PostgreSQL</li>
+                <li><strong>DevOps / Infrastructure:</strong> DigitalOcean | CapRover | Linode | Azure | Netlify</li>
+                <li><strong>Version Control:</strong> Git | GitHub</li>
             </ul>
         </div>
+
+        
+
+        <div class="desc">Background</div>
+        <div>
+            <p>
+                I started programming around <strong>2014</strong>, beginning with ActionScript 2 and Java for <a
+                    href="https://danidre14.newgrounds.com/games" target="_blank" rel="noreferrer">game development</a>. I also experimented with game creation tools like <a href="https://www.youtube.com/watch?v=DuNYJ0KZWhk" target="_blank" rel="noreferrer">Adobe Flash</a>, which formed the foundation of my early development experience.
+            </p>
+            <p>
+                From there, I transitioned into web development using <strong>HTML, CSS, JavaScript</strong>, and <strong>NodeJS</strong>, gradually expanding into backend systems and full stack development. I've also explored languages such as <strong>Java</strong> and <strong>C++</strong> at a beginner level as part of broader systems programming interest.
+            </p>
+            <p>
+                Over time, my work expanded beyond application development into building tools and systems, including <strong>game engine development</strong> through projects like <a href="https://flevar.com/" target="_blank" rel="noreferrer">FlevaR</a> (game editor) and its <a href="https://www.npmjs.com/package/flevar" target="_blank" rel="noreferrer">engine core</a>.
+            </p>
+            <p>
+                Alongside personal projects, I've participated in game jams (<a href="https://danidre.itch.io/" target="_blank" rel="noreferrer">itch.io</a> | <a href="https://ldjam.com/users/itsdanidre" target="_blank" rel="noreferrer">Ludum Dare</a>), hackathons (<a href="https://blog.danidre.com/making-10-minute-endpoint" target="_blank" rel="noreferrer">10 Minute Endpoint</a>), coding competitions, freelance work, and programming tutorials.
+            </p>
+            <p>
+                I've been programming for <strong>over <%= yearsProgramming %> years</strong>, with experience spanning web applications, backend systems, game development, and software engineering across both professional and independent work.
+            </p>
+        </div>
+            
         <p>Re-designed my old <a href="https://danidre14.wixsite.com/danidre14" target="_blank"
                 rel="noreferrer">website</a>.</p>
     </article>

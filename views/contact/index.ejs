@@ -58,6 +58,12 @@ if(user !== undefined) {
                     <% } %>
                 </div>
             </div>
+            <div style="margin-top:1rem;">
+                <div class="g-recaptcha" data-sitekey="<%= recaptchaSiteKey %>"></div>
+            </div>
+            <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                <input id="contact_time" name="contact_time" type="text" autocomplete="off" />
+            </div>
             <div class="div-space-between">
                 <button class="btn btn-primary" id="sBtn" type="submit">Send Message</button>
                 <a href="mailto:mailto@danidre.com" class="btn btn-primary">Email Instead</a>
@@ -70,7 +76,7 @@ if(user !== undefined) {
             <li><a class="btn btn-primary btn-large" href="https://twitter.com/danidre">
                     <div class="div-space-around">
                         <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);"
-                            src="images/TwitterLogo2.png" alt=""> <span class="div-space-around">Twitter</span>
+                            src="images/XLogo2.png" alt=""> <span class="div-space-around">X (Twitter)</span>
                     </div>
                 </a></li>
             <li><a class="btn btn-primary btn-large" href="https://discord.gg/HR2UsPE">
@@ -79,7 +85,7 @@ if(user !== undefined) {
                             src="images/DiscordLogo2.png" alt=""> <span class="div-space-around">Discord</span>
                     </div>
                 </a></li>
-            <li><a class="btn btn-primary btn-large" href="https://www.youtube.com/c/Danidre15Dev">
+            <li><a class="btn btn-primary btn-large" href="https://www.youtube.com/@Danidre">
                     <div class="div-space-around">
                         <img style="width:1rem;height:1rem;margin-right:var(--mini-spacing);"
                             src="images/YoutubeLogo2.png" alt=""> <span class="div-space-around">Youtube</span>
@@ -91,3 +97,4 @@ if(user !== undefined) {
 <meta name="description" content="Contact Danidre via social media, or leave a message.">
 
 <script defer src="/javascripts/contactmeValidation.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

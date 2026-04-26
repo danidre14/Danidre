@@ -69,6 +69,12 @@ var e2Message; %>
             </div>
             -->*/%>
             <div>By signing up, you agree to our <a href="/legal/tos">Terms of Service</a> and <a href="/legal/privacy">Privacy Policy</a>.</div>
+            <div style="margin-top:1rem;">
+                <div class="g-recaptcha" data-sitekey="<%= recaptchaSiteKey %>"></div>
+            </div>
+            <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                <input id="contact_time" name="contact_time" type="text" autocomplete="off" />
+            </div>
             <button class="btn btn-primary" id="sBtn" type="submit"
             <% if (uMessage!=''||pMessage!='') { %>
                 style="display:none;"
@@ -85,3 +91,4 @@ var e2Message; %>
 <meta name="description" content="Sign up for a Danidre account.">
 
 <script defer src="/javascripts/signupValidation.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

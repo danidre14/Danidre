@@ -5,9 +5,11 @@ const crypto = require('crypto');
 const User = require('../models/user');
 const Token = require('../models/token');
 const { sendEmail, testEmail } = require('../utils/sendEmail');
+const { verifyRecaptcha } = require('../utils/recaptcha');
 
 router.get('/', checkNotAuthenticated, async (req, res) => {
     let vars = { cPage: "signup", searchOptions: req.query };
+    vars.recaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY || '';
     vars.uMessage = req.flash('uMessage');
     vars.pMessage = req.flash('pMessage');
     vars.p2Message = req.flash('p2Message');
@@ -24,7 +26,42 @@ router.get('/', checkNotAuthenticated, async (req, res) => {
     res.render('signup/index', vars);
 });
 
-router.post('/', checkNotAuthenticated, validateInfomation, checkUserExists, createUser);
+async function verifyRecaptchaMiddleware(req, res, next) {
+    try {
+        const token = req.body['g-recaptcha-response'];
+        if (!token) {
+            req.flash('outsert', { message: 'Please complete the captcha.' });
+            req.flash('bodyUname', req.body.username || '');
+            req.flash('bodyEmail', req.body.email || '');
+            return res.redirect('/signup');
+        }
+
+        const result = await verifyRecaptcha(token, req.ip);
+        if (!result || !result.success) {
+            req.flash('outsert', { message: 'Captcha verification failed. Please try again.' });
+            req.flash('bodyUname', req.body.username || '');
+            req.flash('bodyEmail', req.body.email || '');
+            return res.redirect('/signup');
+        }
+
+        next();
+    } catch (e) {
+        console.log('Captcha verify error:', e.message);
+        req.flash('outsert', { message: 'Captcha verification error. Please try again.' });
+        return res.redirect('/signup');
+    }
+}
+
+router.post('/', checkNotAuthenticated, verifyRecaptchaMiddleware, validateInfomation, checkUserExists, async (req, res, next) => {
+    // Honeypot field check - if filled, assume bot and silently drop
+    if (req.body.contact_time && req.body.contact_time.trim() !== '') {
+        console.log('Honeypot triggered for signup from', req.ip || req.connection.remoteAddress);
+        req.flash('outsert', { message: 'Your submission looks like spam.' });
+        return res.redirect('/signup');
+    }
+
+    next();
+}, createUser);
 
 //Verify Prompt Route
 router.get('/v', checkNotAuthenticated, async (req, res) => {
