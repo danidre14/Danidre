@@ -16,7 +16,7 @@ async function sendEmail(mailOptions, email) {
     if (process.env.NODE_ENV !== 'production' && !testEmail) {
         console.log('--- Dev Mode: Email Simulation ---');
         console.log(`To: ${email} | Subject: ${mailOptions.subject}`);
-        return;
+        return false;
     }
 
     try {
@@ -27,8 +27,10 @@ async function sendEmail(mailOptions, email) {
         
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent successfully:', info.messageId);
+        return info;
     } catch (err) {
         console.error("SMTP Error:", err.message);
+        return false;
     }
 }
 

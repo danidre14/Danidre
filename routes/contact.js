@@ -69,11 +69,16 @@ router.post('/', verifyRecaptchaMiddleware, validateInfomation, async (req, res)
         // Send the email
         const mailOptions = getMailOptions(name, email, subject, message, req.headers.host);
 
-        await sendEmail(mailOptions, email);
+        const emailResult = await sendEmail(mailOptions, email);
 
-        console.log(`An email has been sent from ${email}.`);
+        if(!emailResult) {
+            console.error(`Failed to send email from ${email}.`);
+            req.flash('outsert', { message: 'Failed to send your message. Please try again later.' });
+        } else {
+            console.log(`An email has been sent from ${email}.`);
+            req.flash('outsert', { message: 'Your message has been sent.' });
+        }
 
-        req.flash('outsert', { message: 'Your message has been sent.' });
         res.redirect('/contact');
     } catch (e) {
         console.log("Message:", e.message);

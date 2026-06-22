@@ -23,7 +23,7 @@ const sessionConfig = {
     resave: false, //dont save variables if nothing has changed
     saveUninitialized: false, //dont save empty value in session if there is no value
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Set to true in prod
+        secure: process.env.NODE_ENV === "production", // Set to true in prod
         maxAge: 28 * 24 * 60 * 60 * 1000 // 28 days in milliseconds
     },
     store: MongoStore.create({
